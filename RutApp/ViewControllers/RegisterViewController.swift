@@ -39,7 +39,7 @@ final class RegisterViewController: UIViewController, UITextFieldDelegate {
     
     private lazy var loginLabel: UILabel = {
         let label = UILabel()
-        label.text = "Авторизация"
+        label.text = "Регистрация"
         label.font = .systemFont(ofSize: 24, weight: .bold)
         label.textColor = .white
         
@@ -199,14 +199,15 @@ final class RegisterViewController: UIViewController, UITextFieldDelegate {
             make.height.equalTo(56)
             make.width.equalTo(298)
             make.leading.equalToSuperview().inset(78)
-            make.top.equalToSuperview().inset(45)
+            make.top.equalToSuperview().inset(30)
         }
         
         backgroundView.snp.makeConstraints { make in
             make.width.equalTo(289)
             make.height.equalTo(620)
-            make.top.equalToSuperview().inset(160)
+            make.top.equalToSuperview().inset(122)
             make.leading.equalToSuperview().inset(37)
+            make.trailing.equalTo(-37)
         }
         
         loginLabel.snp.makeConstraints { make in
