@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8E293EE52B55A12900C9ADA3 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E293EE42B55A12900C9ADA3 /* InfoViewController.swift */; };
+		8E293EE72B55A14C00C9ADA3 /* BookingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E293EE62B55A14C00C9ADA3 /* BookingViewController.swift */; };
+		8E293EE92B55A15C00C9ADA3 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E293EE82B55A15C00C9ADA3 /* AccountViewController.swift */; };
 		8E57BAF42B5540B30012E598 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E57BAF32B5540B30012E598 /* LoginViewController.swift */; };
 		8E8FD0072B554BCA0085C16A /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8E8FD0062B554BCA0085C16A /* SnapKit */; };
 		8EDEC6662B5456F4007146D6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EDEC6652B5456F4007146D6 /* AppDelegate.swift */; };
@@ -53,6 +56,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8E293EE42B55A12900C9ADA3 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
+		8E293EE62B55A14C00C9ADA3 /* BookingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookingViewController.swift; sourceTree = "<group>"; };
+		8E293EE82B55A15C00C9ADA3 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		8E57BAF32B5540B30012E598 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		8EDEC6622B5456F4007146D6 /* RutApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RutApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EDEC6652B5456F4007146D6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -110,6 +116,9 @@
 			children = (
 				8E57BAF32B5540B30012E598 /* LoginViewController.swift */,
 				8EDEC6692B5456F4007146D6 /* RegisterViewController.swift */,
+				8E293EE42B55A12900C9ADA3 /* InfoViewController.swift */,
+				8E293EE62B55A14C00C9ADA3 /* BookingViewController.swift */,
+				8E293EE82B55A15C00C9ADA3 /* AccountViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -136,10 +145,10 @@
 			children = (
 				8EDEC6652B5456F4007146D6 /* AppDelegate.swift */,
 				8EDEC6672B5456F4007146D6 /* SceneDelegate.swift */,
-				8EDEC66E2B5456F6007146D6 /* Assets.xcassets */,
 				8EDEC6702B5456F6007146D6 /* LaunchScreen.storyboard */,
 				8E8FD0082B5571B50085C16A /* ViewControllers */,
 				8EDEC6732B5456F6007146D6 /* Info.plist */,
+				8EDEC66E2B5456F6007146D6 /* Assets.xcassets */,
 			);
 			path = RutApp;
 			sourceTree = "<group>";
@@ -247,8 +256,11 @@
 			files = (
 				8E57BAF42B5540B30012E598 /* LoginViewController.swift in Sources */,
 				8EDEC66A2B5456F4007146D6 /* RegisterViewController.swift in Sources */,
+				8E293EE92B55A15C00C9ADA3 /* AccountViewController.swift in Sources */,
 				8EDEC6662B5456F4007146D6 /* AppDelegate.swift in Sources */,
 				8EDEC6682B5456F4007146D6 /* SceneDelegate.swift in Sources */,
+				8E293EE72B55A14C00C9ADA3 /* BookingViewController.swift in Sources */,
+				8E293EE52B55A12900C9ADA3 /* InfoViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
