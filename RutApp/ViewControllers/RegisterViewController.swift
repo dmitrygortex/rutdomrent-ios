@@ -7,14 +7,18 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+final class RegisterViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setUp()
         
     }
-
+    
+    private func setUp() {
+        
+    }
 
 }
 
