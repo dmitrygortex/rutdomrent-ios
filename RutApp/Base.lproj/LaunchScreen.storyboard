@@ -16,18 +16,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Мой Дом" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Di-fO-YB6">
-                                <rect key="frame" x="95.333333333333329" y="401.66666666666669" width="202.33333333333337" height="48.666666666666686"/>
-                                <fontDescription key="fontDescription" name="Verdana-Bold" family="Verdana" pointSize="40"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="T" translatesAutoresizingMaskIntoConstraints="NO" id="qIe-gU-ES3">
+                                <rect key="frame" x="76.666666666666686" y="362" width="240" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="Rwp-e0-FI6"/>
+                                    <constraint firstAttribute="width" constant="240" id="leQ-kv-HgE"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" red="0.16470588235294117" green="0.36862745098039218" blue="0.74117647058823533" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="5Di-fO-YB6" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="AOe-EE-NZX"/>
-                            <constraint firstItem="5Di-fO-YB6" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="F4S-Nd-SV9"/>
+                            <constraint firstItem="qIe-gU-ES3" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="KZ5-pI-UD1"/>
+                            <constraint firstItem="qIe-gU-ES3" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="rCM-Us-e80"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -36,4 +38,7 @@
             <point key="canvasLocation" x="52.671755725190835" y="374.64788732394368"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="T" width="439.37008666992188" height="113.38582611083984"/>
+    </resources>
 </document>
