@@ -42,7 +42,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let login = UITextField()
         login.textColor = .black
         login.backgroundColor = AppColors.grayColor
-        login.layer.cornerRadius = 24
+        login.layer.cornerRadius = 12
         login.attributedPlaceholder = NSAttributedString(
             string: " Логин",
             attributes: [NSAttributedString.Key.foregroundColor: AppColors.placeholderColor]
@@ -58,7 +58,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         password.textColor = .black
         password.isSecureTextEntry = true
         password.backgroundColor = AppColors.grayColor
-        password.layer.cornerRadius = 24
+        password.layer.cornerRadius = 12
         password.attributedPlaceholder = NSAttributedString(
             string: " Пароль",
             attributes: [NSAttributedString.Key.foregroundColor: AppColors.placeholderColor]
@@ -116,7 +116,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         titlelabel.snp.makeConstraints { make in
             make.height.equalTo(56)
             make.width.equalTo(298)
-            make.leading.equalToSuperview().inset(78)
+            make.leading.equalToSuperview().inset(81)
             make.top.equalToSuperview().inset(80)
         }
         

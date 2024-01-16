@@ -24,19 +24,10 @@ final class RegisterViewController: UIViewController, UITextFieldDelegate {
         return view
     }()
     
-    private lazy var titlelabel: UILabel = {
-        let label = UILabel()
-        label.text = "Мой дом"
-        label.font = .systemFont(ofSize: 48, weight: .bold)
-        label.textColor = AppColors.blueColor
-        
-        return label
-    }()
-    
     private lazy var loginLabel: UILabel = {
         let label = UILabel()
         label.text = "Регистрация"
-        label.font = .systemFont(ofSize: 24, weight: .bold)
+        label.font = .systemFont(ofSize: 26, weight: .bold)
         label.textColor = .white
         
         return label
@@ -44,8 +35,8 @@ final class RegisterViewController: UIViewController, UITextFieldDelegate {
     
     private lazy var backgroundView: UIView = {
         let view = UIView()
-        view.backgroundColor = AppColors.blueColor
-        view.layer.cornerRadius = 8
+        view.backgroundColor = AppColors.miitColor
+        view.layer.cornerRadius = 12
        
         return view
     }()
@@ -53,12 +44,13 @@ final class RegisterViewController: UIViewController, UITextFieldDelegate {
     private lazy var loginTextField: UITextField = {
         let login = UITextField()
         login.textColor = .black
-        login.backgroundColor = AppColors.grayColor
-        login.layer.cornerRadius = 24
+        login.backgroundColor = .white
+        login.layer.cornerRadius = 12
         login.attributedPlaceholder = NSAttributedString(
-            string: " Логин",
+            string: "Логин",
             attributes: [NSAttributedString.Key.foregroundColor: AppColors.placeholderColor]
         )
+        login.textAlignment = .center
         login.delegate = self
         login.returnKeyType = .go
         
@@ -68,12 +60,13 @@ final class RegisterViewController: UIViewController, UITextFieldDelegate {
     private lazy var FIOTextField: UITextField = {
         let fio = UITextField()
         fio.textColor = .black
-        fio.backgroundColor = AppColors.grayColor
-        fio.layer.cornerRadius = 24
+        fio.backgroundColor = .white
+        fio.layer.cornerRadius = 12
         fio.attributedPlaceholder = NSAttributedString(
-            string: " ФИО",
+            string: "ФИО",
             attributes: [NSAttributedString.Key.foregroundColor: AppColors.placeholderColor]
         )
+        fio.textAlignment = .center
         fio.delegate = self
         fio.returnKeyType = .go
         
@@ -83,12 +76,13 @@ final class RegisterViewController: UIViewController, UITextFieldDelegate {
     private lazy var emailTextField: UITextField = {
         let email = UITextField()
         email.textColor = .black
-        email.backgroundColor = AppColors.grayColor
-        email.layer.cornerRadius = 24
+        email.backgroundColor = .white
+        email.layer.cornerRadius = 12
         email.attributedPlaceholder = NSAttributedString(
-            string: " Email",
+            string: "Email",
             attributes: [NSAttributedString.Key.foregroundColor: AppColors.placeholderColor]
         )
+        email.textAlignment = .center
         email.delegate = self
         email.returnKeyType = .go
         email.keyboardType = .emailAddress
@@ -99,12 +93,13 @@ final class RegisterViewController: UIViewController, UITextFieldDelegate {
     private lazy var instituteTextField: UITextField = {
         let institute = UITextField()
         institute.textColor = .black
-        institute.backgroundColor = AppColors.grayColor
-        institute.layer.cornerRadius = 24
+        institute.backgroundColor = .white
+        institute.layer.cornerRadius = 12
         institute.attributedPlaceholder = NSAttributedString(
-            string: " Институт",
+            string: "Институт",
             attributes: [NSAttributedString.Key.foregroundColor: AppColors.placeholderColor]
         )
+        institute.textAlignment = .center
         institute.delegate = self
         institute.returnKeyType = .go
         
@@ -115,16 +110,33 @@ final class RegisterViewController: UIViewController, UITextFieldDelegate {
         let password = UITextField()
         password.textColor = .black
         password.isSecureTextEntry = true
-        password.backgroundColor = AppColors.grayColor
-        password.layer.cornerRadius = 24
+        password.backgroundColor = .white
+        password.layer.cornerRadius = 12
         password.attributedPlaceholder = NSAttributedString(
-            string: " Пароль",
+            string: "Пароль",
             attributes: [NSAttributedString.Key.foregroundColor: AppColors.placeholderColor]
         )
+        password.textAlignment = .center
         password.delegate = self
         password.returnKeyType = .go
         
         return password
+    }()
+    
+    private lazy var phoneTextField: UITextField = {
+        let phone = UITextField()
+        phone.textColor = .black
+        phone.backgroundColor = .white
+        phone.layer.cornerRadius = 12
+        phone.attributedPlaceholder = NSAttributedString(
+            string: "Номер телефона",
+            attributes: [NSAttributedString.Key.foregroundColor: AppColors.placeholderColor]
+        )
+        phone.textAlignment = .center
+        phone.delegate = self
+        phone.returnKeyType = .go
+        
+        return phone
     }()
     
     //TODO: Add action to buttons
@@ -133,8 +145,8 @@ final class RegisterViewController: UIViewController, UITextFieldDelegate {
         let button = UIButton(type: .system)
         button.setTitle("Регистрация", for: .normal)
         button.backgroundColor = .white
-        button.layer.cornerRadius = 24
-        button.setTitleColor(AppColors.blueColor, for: .normal)
+        button.layer.cornerRadius = 12
+        button.setTitleColor(AppColors.miitColor, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
         
         return button
@@ -143,7 +155,7 @@ final class RegisterViewController: UIViewController, UITextFieldDelegate {
     private lazy var loginButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Уже есть аккаунт? Войдите", for: .normal)
-        button.backgroundColor = AppColors.blueColor
+        button.backgroundColor = AppColors.miitColor
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 15, weight: .medium)
         
@@ -164,44 +176,30 @@ final class RegisterViewController: UIViewController, UITextFieldDelegate {
         view.addSubview(scrollView)
         scrollView.addSubview(viewback)
         viewback.addSubview(backgroundView)
-        viewback.addSubview(titlelabel)
         backgroundView.addSubview(loginLabel)
         backgroundView.addSubview(registerButton)
         backgroundView.addSubview(loginButton)
         
-        [loginTextField, passwordTextField, FIOTextField, instituteTextField, emailTextField].forEach {
+        [loginTextField, passwordTextField, FIOTextField, instituteTextField, emailTextField, phoneTextField].forEach {
             backgroundView.addSubview($0)
         }
     }
     
     private func setUpConstraints() {
         scrollView.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.leading.equalToSuperview()
-            make.bottom.equalToSuperview()
-            make.trailing.equalToSuperview()
+            make.top.leading.bottom.trailing.equalToSuperview()
         }
         
         viewback.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.leading.equalToSuperview()
-            make.bottom.equalToSuperview()
-            make.trailing.equalToSuperview()
-            make.height.equalTo(950)
+            make.top.leading.bottom.trailing.equalToSuperview()
+            make.height.equalTo(910)
             make.width.equalTo(self.view)
-        }
-        
-        titlelabel.snp.makeConstraints { make in
-            make.height.equalTo(56)
-            make.width.equalTo(298)
-            make.leading.equalToSuperview().inset(78)
-            make.top.equalToSuperview().inset(30)
         }
         
         backgroundView.snp.makeConstraints { make in
             make.width.equalTo(289)
-            make.height.equalTo(620)
-            make.top.equalToSuperview().inset(122)
+            make.height.equalTo(700)
+            make.top.equalToSuperview().inset(50)
             make.leading.equalToSuperview().inset(37)
             make.trailing.equalTo(-37)
         }
@@ -209,59 +207,68 @@ final class RegisterViewController: UIViewController, UITextFieldDelegate {
         loginLabel.snp.makeConstraints { make in
             make.width.equalTo(165)
             make.height.equalTo(84)
-            make.top.equalToSuperview().inset(5)
-            make.leading.equalToSuperview().inset(65)
+            make.top.equalToSuperview().inset(4)
+            make.centerX.equalToSuperview()
         }
         
         loginTextField.snp.makeConstraints { make in
             make.width.equalTo(247)
             make.height.equalTo(50)
-            make.leading.equalToSuperview().inset(23)
+            make.centerX.equalToSuperview()
             make.top.equalToSuperview().inset(100)
         }
         
         passwordTextField.snp.makeConstraints { make in
             make.width.equalTo(247)
             make.height.equalTo(50)
-            make.leading.equalToSuperview().inset(23)
+            make.centerX.equalToSuperview()
             make.top.equalToSuperview().inset(180)
         }
         
         emailTextField.snp.makeConstraints { make in
             make.width.equalTo(247)
             make.height.equalTo(50)
-            make.leading.equalToSuperview().inset(23)
+            make.centerX.equalToSuperview()
             make.top.equalToSuperview().inset(260)
         }
         
         FIOTextField.snp.makeConstraints { make in
             make.width.equalTo(247)
             make.height.equalTo(50)
-            make.leading.equalToSuperview().inset(23)
+            make.centerX.equalToSuperview()
             make.top.equalToSuperview().inset(340)
         }
         
         instituteTextField.snp.makeConstraints { make in
             make.width.equalTo(247)
             make.height.equalTo(50)
-            make.leading.equalToSuperview().inset(23)
+            make.centerX.equalToSuperview()
             make.top.equalToSuperview().inset(420)
+        }
+        
+        phoneTextField.snp.makeConstraints { make in
+            make.width.equalTo(247)
+            make.height.equalTo(50)
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().inset(500)
         }
         
         registerButton.snp.makeConstraints { make in
             make.height.equalTo(56)
             make.width.equalTo(192)
-            make.top.equalToSuperview().inset(500)
-            make.leading.equalToSuperview().inset(46)
+            make.top.equalToSuperview().inset(580)
+            make.centerX.equalToSuperview()
         }
         
         loginButton.snp.makeConstraints { make in
             make.height.equalTo(28)
             make.width.equalTo(230)
-            make.top.equalToSuperview().inset(575)
-            make.leading.equalToSuperview().inset(38)
+            make.top.equalToSuperview().inset(650)
+            make.centerX.equalToSuperview()
         }
     }
+    
+    //MARK: -UITextFieldDelegate
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.endEditing(true)
