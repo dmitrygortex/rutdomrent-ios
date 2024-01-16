@@ -11,11 +11,7 @@ import SnapKit
 final class RegisterViewController: UIViewController, UITextFieldDelegate {
 
     // MARK: -Properties
-    
-    let blueColor = UIColor(red: 43 / 255, green: 94 / 255, blue: 189 / 255, alpha: 1)
-    let grayColor = UIColor(red: 234 / 255, green: 235 / 255, blue: 248 / 255, alpha: 1)
-    let placeholderColor = UIColor(red: 186 / 255, green: 186 / 255, blue: 186 / 255, alpha: 1)
-    
+
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         
@@ -32,7 +28,7 @@ final class RegisterViewController: UIViewController, UITextFieldDelegate {
         let label = UILabel()
         label.text = "Мой дом"
         label.font = .systemFont(ofSize: 48, weight: .bold)
-        label.textColor = blueColor
+        label.textColor = AppColors.blueColor
         
         return label
     }()
@@ -48,7 +44,7 @@ final class RegisterViewController: UIViewController, UITextFieldDelegate {
     
     private lazy var backgroundView: UIView = {
         let view = UIView()
-        view.backgroundColor = blueColor
+        view.backgroundColor = AppColors.blueColor
         view.layer.cornerRadius = 8
        
         return view
@@ -57,11 +53,11 @@ final class RegisterViewController: UIViewController, UITextFieldDelegate {
     private lazy var loginTextField: UITextField = {
         let login = UITextField()
         login.textColor = .black
-        login.backgroundColor = grayColor
+        login.backgroundColor = AppColors.grayColor
         login.layer.cornerRadius = 24
         login.attributedPlaceholder = NSAttributedString(
             string: " Логин",
-            attributes: [NSAttributedString.Key.foregroundColor: placeholderColor]
+            attributes: [NSAttributedString.Key.foregroundColor: AppColors.placeholderColor]
         )
         login.delegate = self
         login.returnKeyType = .go
@@ -72,11 +68,11 @@ final class RegisterViewController: UIViewController, UITextFieldDelegate {
     private lazy var FIOTextField: UITextField = {
         let fio = UITextField()
         fio.textColor = .black
-        fio.backgroundColor = grayColor
+        fio.backgroundColor = AppColors.grayColor
         fio.layer.cornerRadius = 24
         fio.attributedPlaceholder = NSAttributedString(
             string: " ФИО",
-            attributes: [NSAttributedString.Key.foregroundColor: placeholderColor]
+            attributes: [NSAttributedString.Key.foregroundColor: AppColors.placeholderColor]
         )
         fio.delegate = self
         fio.returnKeyType = .go
@@ -87,11 +83,11 @@ final class RegisterViewController: UIViewController, UITextFieldDelegate {
     private lazy var emailTextField: UITextField = {
         let email = UITextField()
         email.textColor = .black
-        email.backgroundColor = grayColor
+        email.backgroundColor = AppColors.grayColor
         email.layer.cornerRadius = 24
         email.attributedPlaceholder = NSAttributedString(
             string: " Email",
-            attributes: [NSAttributedString.Key.foregroundColor: placeholderColor]
+            attributes: [NSAttributedString.Key.foregroundColor: AppColors.placeholderColor]
         )
         email.delegate = self
         email.returnKeyType = .go
@@ -103,11 +99,11 @@ final class RegisterViewController: UIViewController, UITextFieldDelegate {
     private lazy var instituteTextField: UITextField = {
         let institute = UITextField()
         institute.textColor = .black
-        institute.backgroundColor = grayColor
+        institute.backgroundColor = AppColors.grayColor
         institute.layer.cornerRadius = 24
         institute.attributedPlaceholder = NSAttributedString(
             string: " Институт",
-            attributes: [NSAttributedString.Key.foregroundColor: placeholderColor]
+            attributes: [NSAttributedString.Key.foregroundColor: AppColors.placeholderColor]
         )
         institute.delegate = self
         institute.returnKeyType = .go
@@ -119,11 +115,11 @@ final class RegisterViewController: UIViewController, UITextFieldDelegate {
         let password = UITextField()
         password.textColor = .black
         password.isSecureTextEntry = true
-        password.backgroundColor = grayColor
+        password.backgroundColor = AppColors.grayColor
         password.layer.cornerRadius = 24
         password.attributedPlaceholder = NSAttributedString(
             string: " Пароль",
-            attributes: [NSAttributedString.Key.foregroundColor: placeholderColor]
+            attributes: [NSAttributedString.Key.foregroundColor: AppColors.placeholderColor]
         )
         password.delegate = self
         password.returnKeyType = .go
@@ -138,7 +134,7 @@ final class RegisterViewController: UIViewController, UITextFieldDelegate {
         button.setTitle("Регистрация", for: .normal)
         button.backgroundColor = .white
         button.layer.cornerRadius = 24
-        button.setTitleColor(blueColor, for: .normal)
+        button.setTitleColor(AppColors.blueColor, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
         
         return button
@@ -147,7 +143,7 @@ final class RegisterViewController: UIViewController, UITextFieldDelegate {
     private lazy var loginButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Уже есть аккаунт? Войдите", for: .normal)
-        button.backgroundColor = blueColor
+        button.backgroundColor = AppColors.blueColor
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 15, weight: .medium)
         

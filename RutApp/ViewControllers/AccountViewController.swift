@@ -12,10 +12,6 @@ class AccountViewController: UIViewController, UITextFieldDelegate {
 
     // MARK: -Properties
     
-    let blueColor = UIColor(red: 43 / 255, green: 94 / 255, blue: 189 / 255, alpha: 1)
-    let grayColor = UIColor(red: 234 / 255, green: 235 / 255, blue: 248 / 255, alpha: 1)
-    let placeholderColor = UIColor(red: 186 / 255, green: 186 / 255, blue: 186 / 255, alpha: 1)
-    
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         
@@ -32,7 +28,7 @@ class AccountViewController: UIViewController, UITextFieldDelegate {
         let label = UILabel()
         label.text = "Настройки профиля"
         label.font = .systemFont(ofSize: 40, weight: .bold)
-        label.textColor = blueColor
+        label.textColor = AppColors.blueColor
         label.numberOfLines = 0
         
         return label
@@ -41,11 +37,11 @@ class AccountViewController: UIViewController, UITextFieldDelegate {
     private lazy var loginTextField: UITextField = {
         let login = UITextField()
         login.textColor = .black
-        login.backgroundColor = grayColor
+        login.backgroundColor = AppColors.grayColor
         login.layer.cornerRadius = 24
         login.attributedPlaceholder = NSAttributedString(
             string: " Логин",
-            attributes: [NSAttributedString.Key.foregroundColor: placeholderColor]
+            attributes: [NSAttributedString.Key.foregroundColor: AppColors.placeholderColor]
         )
         login.delegate = self
         login.returnKeyType = .go
@@ -56,11 +52,11 @@ class AccountViewController: UIViewController, UITextFieldDelegate {
     private lazy var FIOTextField: UITextField = {
         let fio = UITextField()
         fio.textColor = .black
-        fio.backgroundColor = grayColor
+        fio.backgroundColor = AppColors.grayColor
         fio.layer.cornerRadius = 24
         fio.attributedPlaceholder = NSAttributedString(
             string: " ФИО",
-            attributes: [NSAttributedString.Key.foregroundColor: placeholderColor]
+            attributes: [NSAttributedString.Key.foregroundColor: AppColors.placeholderColor]
         )
         fio.delegate = self
         fio.returnKeyType = .go
@@ -71,11 +67,11 @@ class AccountViewController: UIViewController, UITextFieldDelegate {
     private lazy var emailTextField: UITextField = {
         let email = UITextField()
         email.textColor = .black
-        email.backgroundColor = grayColor
+        email.backgroundColor = AppColors.grayColor
         email.layer.cornerRadius = 24
         email.attributedPlaceholder = NSAttributedString(
             string: " Email",
-            attributes: [NSAttributedString.Key.foregroundColor: placeholderColor]
+            attributes: [NSAttributedString.Key.foregroundColor: AppColors.placeholderColor]
         )
         email.delegate = self
         email.returnKeyType = .go
@@ -87,11 +83,11 @@ class AccountViewController: UIViewController, UITextFieldDelegate {
     private lazy var instituteTextField: UITextField = {
         let institute = UITextField()
         institute.textColor = .black
-        institute.backgroundColor = grayColor
+        institute.backgroundColor = AppColors.grayColor
         institute.layer.cornerRadius = 24
         institute.attributedPlaceholder = NSAttributedString(
             string: " Институт",
-            attributes: [NSAttributedString.Key.foregroundColor: placeholderColor]
+            attributes: [NSAttributedString.Key.foregroundColor: AppColors.placeholderColor]
         )
         institute.delegate = self
         institute.returnKeyType = .go
@@ -103,11 +99,11 @@ class AccountViewController: UIViewController, UITextFieldDelegate {
         let password = UITextField()
         password.textColor = .black
         password.isSecureTextEntry = true
-        password.backgroundColor = grayColor
+        password.backgroundColor = AppColors.grayColor
         password.layer.cornerRadius = 24
         password.attributedPlaceholder = NSAttributedString(
             string: " Пароль",
-            attributes: [NSAttributedString.Key.foregroundColor: placeholderColor]
+            attributes: [NSAttributedString.Key.foregroundColor: AppColors.placeholderColor]
         )
         password.delegate = self
         password.returnKeyType = .go
@@ -121,7 +117,7 @@ class AccountViewController: UIViewController, UITextFieldDelegate {
     private lazy var changeDataButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Изменить данные", for: .normal)
-        button.backgroundColor = blueColor
+        button.backgroundColor = AppColors.blueColor
         button.layer.cornerRadius = 24
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)

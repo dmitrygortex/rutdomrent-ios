@@ -13,6 +13,7 @@ class TabBarController: UITabBarController {
         super.viewDidLoad()
 
         generateTabBar()
+        tabBar.tintColor = AppColors.blueColor
     }
     
     private func generateTabBar() {

@@ -12,15 +12,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: -Properties
     
-    let blueColor = UIColor(red: 43 / 255, green: 94 / 255, blue: 189 / 255, alpha: 1)
-    let grayColor = UIColor(red: 234 / 255, green: 235 / 255, blue: 248 / 255, alpha: 1)
-    let placeholderColor = UIColor(red: 186 / 255, green: 186 / 255, blue: 186 / 255, alpha: 1)
-    
     private lazy var titlelabel: UILabel = {
         let label = UILabel()
         label.text = "Мой дом"
         label.font = .systemFont(ofSize: 48, weight: .bold)
-        label.textColor = blueColor
+        label.textColor = AppColors.blueColor
         
         return label
     }()
@@ -36,7 +32,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     private lazy var backgroundView: UIView = {
         let view = UIView()
-        view.backgroundColor = blueColor
+        view.backgroundColor = AppColors.blueColor
         view.layer.cornerRadius = 8
        
         return view
@@ -45,11 +41,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     private lazy var loginTextField: UITextField = {
         let login = UITextField()
         login.textColor = .black
-        login.backgroundColor = grayColor
+        login.backgroundColor = AppColors.grayColor
         login.layer.cornerRadius = 24
         login.attributedPlaceholder = NSAttributedString(
             string: " Логин",
-            attributes: [NSAttributedString.Key.foregroundColor: placeholderColor]
+            attributes: [NSAttributedString.Key.foregroundColor: AppColors.placeholderColor]
         )
         login.delegate = self
         login.returnKeyType = .go
@@ -61,11 +57,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let password = UITextField()
         password.textColor = .black
         password.isSecureTextEntry = true
-        password.backgroundColor = grayColor
+        password.backgroundColor = AppColors.grayColor
         password.layer.cornerRadius = 24
         password.attributedPlaceholder = NSAttributedString(
             string: " Пароль",
-            attributes: [NSAttributedString.Key.foregroundColor: placeholderColor]
+            attributes: [NSAttributedString.Key.foregroundColor: AppColors.placeholderColor]
         )
         password.delegate = self
         password.returnKeyType = .go
@@ -80,7 +76,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         button.setTitle("Войти", for: .normal)
         button.backgroundColor = .white
         button.layer.cornerRadius = 24
-        button.setTitleColor(blueColor, for: .normal)
+        button.setTitleColor(AppColors.blueColor, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
         
         return button
@@ -89,7 +85,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     private lazy var makeAccountButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Создать аккаунт", for: .normal)
-        button.backgroundColor = blueColor
+        button.backgroundColor = AppColors.blueColor
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 15, weight: .medium)
         
