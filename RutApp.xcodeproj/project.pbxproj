@@ -120,10 +120,10 @@
 			children = (
 				8E57BAF32B5540B30012E598 /* LoginViewController.swift */,
 				8EDEC6692B5456F4007146D6 /* RegisterViewController.swift */,
+				8EFCC2CC2B55AC90003EBD7E /* TabBarController.swift */,
 				8E293EE42B55A12900C9ADA3 /* InfoViewController.swift */,
 				8E293EE62B55A14C00C9ADA3 /* BookingViewController.swift */,
 				8E293EE82B55A15C00C9ADA3 /* AccountViewController.swift */,
-				8EFCC2CC2B55AC90003EBD7E /* TabBarController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";

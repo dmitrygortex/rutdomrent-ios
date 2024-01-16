@@ -27,7 +27,7 @@ class AccountViewController: UIViewController, UITextFieldDelegate {
     private lazy var titlelabel: UILabel = {
         let label = UILabel()
         label.text = "Настройки профиля"
-        label.font = .systemFont(ofSize: 40, weight: .bold)
+        label.font = .systemFont(ofSize: 30, weight: .bold)
         label.textColor = AppColors.blueColor
         label.numberOfLines = 0
         
@@ -39,10 +39,6 @@ class AccountViewController: UIViewController, UITextFieldDelegate {
         login.textColor = .black
         login.backgroundColor = AppColors.grayColor
         login.layer.cornerRadius = 24
-        login.attributedPlaceholder = NSAttributedString(
-            string: " Логин",
-            attributes: [NSAttributedString.Key.foregroundColor: AppColors.placeholderColor]
-        )
         login.delegate = self
         login.returnKeyType = .go
         
@@ -54,10 +50,6 @@ class AccountViewController: UIViewController, UITextFieldDelegate {
         fio.textColor = .black
         fio.backgroundColor = AppColors.grayColor
         fio.layer.cornerRadius = 24
-        fio.attributedPlaceholder = NSAttributedString(
-            string: " ФИО",
-            attributes: [NSAttributedString.Key.foregroundColor: AppColors.placeholderColor]
-        )
         fio.delegate = self
         fio.returnKeyType = .go
         
@@ -69,10 +61,6 @@ class AccountViewController: UIViewController, UITextFieldDelegate {
         email.textColor = .black
         email.backgroundColor = AppColors.grayColor
         email.layer.cornerRadius = 24
-        email.attributedPlaceholder = NSAttributedString(
-            string: " Email",
-            attributes: [NSAttributedString.Key.foregroundColor: AppColors.placeholderColor]
-        )
         email.delegate = self
         email.returnKeyType = .go
         email.keyboardType = .emailAddress
@@ -85,10 +73,6 @@ class AccountViewController: UIViewController, UITextFieldDelegate {
         institute.textColor = .black
         institute.backgroundColor = AppColors.grayColor
         institute.layer.cornerRadius = 24
-        institute.attributedPlaceholder = NSAttributedString(
-            string: " Институт",
-            attributes: [NSAttributedString.Key.foregroundColor: AppColors.placeholderColor]
-        )
         institute.delegate = self
         institute.returnKeyType = .go
         
@@ -101,15 +85,56 @@ class AccountViewController: UIViewController, UITextFieldDelegate {
         password.isSecureTextEntry = true
         password.backgroundColor = AppColors.grayColor
         password.layer.cornerRadius = 24
-        password.attributedPlaceholder = NSAttributedString(
-            string: " Пароль",
-            attributes: [NSAttributedString.Key.foregroundColor: AppColors.placeholderColor]
-        )
         password.delegate = self
         password.returnKeyType = .go
         password.allowsEditingTextAttributes = false
         
         return password
+    }()
+    
+    private lazy var loginLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Логин:"
+        label.textColor = AppColors.placeholderColor
+        label.font = UIFont(name: "Extra Light", size: 20)
+        
+        return label
+    }()
+    
+    private lazy var passwordLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Пароль:"
+        label.textColor = AppColors.placeholderColor
+        label.font = UIFont(name: "Extra Light", size: 20)
+        
+        return label
+    }()
+    
+    private lazy var emailLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Email:"
+        label.textColor = AppColors.placeholderColor
+        label.font = UIFont(name: "Extra Light", size: 20)
+        
+        return label
+    }()
+    
+    private lazy var FIOLabel: UILabel = {
+        let label = UILabel()
+        label.text = "ФИО:"
+        label.textColor = AppColors.placeholderColor
+        label.font = UIFont(name: "Extra Light", size: 20)
+        
+        return label
+    }()
+    
+    private lazy var instituteLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Институт:"
+        label.textColor = AppColors.placeholderColor
+        label.font = UIFont(name: "Extra Light", size: 20)
+        
+        return label
     }()
     
     //TODO: Add action to buttons
@@ -144,6 +169,10 @@ class AccountViewController: UIViewController, UITextFieldDelegate {
         [loginTextField, passwordTextField, FIOTextField, instituteTextField, emailTextField].forEach {
             viewback.addSubview($0)
         }
+        
+        [loginLabel, passwordLabel, emailLabel, FIOLabel, instituteLabel].forEach {
+            viewback.addSubview($0)
+        }
     }
     
     private func setUpConstraints() {
@@ -159,56 +188,92 @@ class AccountViewController: UIViewController, UITextFieldDelegate {
             make.leading.equalToSuperview()
             make.bottom.equalToSuperview()
             make.trailing.equalToSuperview()
-            make.height.equalTo(950)
+            make.height.equalTo(830)
             make.width.equalTo(self.view)
         }
         
         titlelabel.snp.makeConstraints { make in
             make.height.equalTo(56)
-            make.width.equalTo(200)
-            make.leading.equalToSuperview().inset(48)
-            make.top.equalToSuperview().inset(30)
+            make.width.equalTo(370)
+            make.leading.equalToSuperview().inset(44)
+            make.top.equalToSuperview().inset(35)
         }
         
         loginTextField.snp.makeConstraints { make in
             make.width.equalTo(247)
             make.height.equalTo(50)
-            make.top.equalToSuperview().inset(100)
+            make.top.equalToSuperview().inset(150)
+            make.centerX.equalToSuperview()
         }
         
         passwordTextField.snp.makeConstraints { make in
             make.width.equalTo(247)
             make.height.equalTo(50)
-            make.leading.equalToSuperview().inset(23)
-            make.top.equalToSuperview().inset(180)
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().inset(240)
         }
         
         emailTextField.snp.makeConstraints { make in
             make.width.equalTo(247)
             make.height.equalTo(50)
-            make.leading.equalToSuperview().inset(23)
-            make.top.equalToSuperview().inset(260)
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().inset(330)
         }
         
         FIOTextField.snp.makeConstraints { make in
             make.width.equalTo(247)
             make.height.equalTo(50)
-            make.leading.equalToSuperview().inset(23)
-            make.top.equalToSuperview().inset(340)
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().inset(420)
         }
         
         instituteTextField.snp.makeConstraints { make in
             make.width.equalTo(247)
             make.height.equalTo(50)
-            make.leading.equalToSuperview().inset(23)
-            make.top.equalToSuperview().inset(420)
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().inset(510)
+        }
+        
+        loginLabel.snp.makeConstraints { make in
+            make.height.equalTo(17)
+            make.width.equalTo(200)
+            make.leading.equalToSuperview().inset(70)
+            make.top.equalToSuperview().inset(127)
+        }
+        
+        passwordLabel.snp.makeConstraints { make in
+            make.height.equalTo(17)
+            make.width.equalTo(200)
+            make.leading.equalToSuperview().inset(70)
+            make.top.equalToSuperview().inset(217)
+        }
+        
+        emailLabel.snp.makeConstraints { make in
+            make.height.equalTo(17)
+            make.width.equalTo(200)
+            make.leading.equalToSuperview().inset(70)
+            make.top.equalToSuperview().inset(308)
+        }
+        
+        FIOLabel.snp.makeConstraints { make in
+            make.height.equalTo(17)
+            make.width.equalTo(200)
+            make.leading.equalToSuperview().inset(70)
+            make.top.equalToSuperview().inset(399)
+        }
+        
+        instituteLabel.snp.makeConstraints { make in
+            make.height.equalTo(17)
+            make.width.equalTo(200)
+            make.leading.equalToSuperview().inset(70)
+            make.top.equalToSuperview().inset(488)
         }
         
         changeDataButton.snp.makeConstraints { make in
-            make.height.equalTo(56)
-            make.width.equalTo(192)
-            make.top.equalToSuperview().inset(500)
-            make.leading.equalToSuperview().inset(46)
+            make.height.equalTo(63)
+            make.width.equalTo(200)
+            make.top.equalToSuperview().inset(600)
+            make.centerX.equalToSuperview()
         }
     }
     
