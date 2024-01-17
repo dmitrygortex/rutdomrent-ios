@@ -28,8 +28,7 @@ class InfoViewController: UIViewController {
         let label = UILabel()
         label.text = "Информация"
         label.font = .systemFont(ofSize: 30, weight: .bold)
-        label.textColor = AppColors.blueColor
-        label.numberOfLines = 0
+        label.textColor = AppColors.miitColor
         
         return label
     }()
@@ -65,8 +64,10 @@ class InfoViewController: UIViewController {
         let label = UILabel()
         label.backgroundColor = AppColors.grayColor
         label.text = "Мой Дом - это приложение для резервирования специальных помещений Дома молодёжи РУТ МИИТ под мероприятия.\n\nНужно провести конференцию? Организовать митап? Сделать профессиональные фотографии? Дом моложёжи РУТ МИИТ - это Ваш вариант!"
+        label.font = .systemFont(ofSize: 20)
         label.numberOfLines = 0
         label.textColor = .black
+        label.layer.cornerRadius = 12
         
         return label
     }()
@@ -75,6 +76,7 @@ class InfoViewController: UIViewController {
         let label = UILabel()
         label.backgroundColor = AppColors.grayColor
         label.text = "По будням с 10:00 до 20:00"
+        label.layer.cornerRadius = 12
         
         return label
     }()
@@ -83,6 +85,7 @@ class InfoViewController: UIViewController {
         let label = UILabel()
         label.backgroundColor = AppColors.grayColor
         label.text = "ул. Образцова, 21"
+        label.layer.cornerRadius = 12
         
         return label
     }()
@@ -115,19 +118,30 @@ class InfoViewController: UIViewController {
         }
         
         viewback.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.leading.equalToSuperview()
-            make.bottom.equalToSuperview()
-            make.trailing.equalToSuperview()
-            make.height.equalTo(830)
+            make.top.leading.trailing.bottom.equalToSuperview()
+            make.height.equalTo(900)
             make.width.equalTo(self.view)
         }
         
         titlelabel.snp.makeConstraints { make in
             make.height.equalTo(56)
             make.width.equalTo(370)
-            make.leading.equalToSuperview().inset(44)
-            make.top.equalToSuperview().inset(35)
+            make.leading.equalTo(85)
+            make.top.equalToSuperview().inset(4)
+        }
+        
+        infoLabel.snp.makeConstraints { make in
+            make.height.equalTo(55)
+            make.width.equalTo(280)
+            make.leading.equalTo(20)
+            make.top.equalTo(60)
+        }
+        
+        infoText.snp.makeConstraints { make in
+            make.height.equalTo(312)
+            make.width.equalTo(334)
+            make.leading.equalTo(20)
+            make.top.equalTo(123)
         }
     }
 

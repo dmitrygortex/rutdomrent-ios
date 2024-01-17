@@ -62,6 +62,8 @@
 		8E293EE62B55A14C00C9ADA3 /* BookingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookingViewController.swift; sourceTree = "<group>"; };
 		8E293EE82B55A15C00C9ADA3 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		8E57BAF32B5540B30012E598 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		8E8D84E72B57FF2200EA6A8E /* Lato-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Bold.ttf"; sourceTree = "<group>"; };
+		8E8D84E82B57FF2200EA6A8E /* Lato-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Black.ttf"; sourceTree = "<group>"; };
 		8EDEC6622B5456F4007146D6 /* RutApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RutApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EDEC6652B5456F4007146D6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8EDEC6672B5456F4007146D6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -115,6 +117,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		8E8D84E62B57FF1100EA6A8E /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				8E8D84E82B57FF2200EA6A8E /* Lato-Black.ttf */,
+				8E8D84E72B57FF2200EA6A8E /* Lato-Bold.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		8E8FD0082B5571B50085C16A /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -154,6 +165,7 @@
 				8EDEC6702B5456F6007146D6 /* LaunchScreen.storyboard */,
 				8E8FD0082B5571B50085C16A /* ViewControllers */,
 				8EDEC6732B5456F6007146D6 /* Info.plist */,
+				8E8D84E62B57FF1100EA6A8E /* Fonts */,
 				8EDEC66E2B5456F6007146D6 /* Assets.xcassets */,
 			);
 			path = RutApp;
@@ -419,7 +431,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -451,7 +463,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
