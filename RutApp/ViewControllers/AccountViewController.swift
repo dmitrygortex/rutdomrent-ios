@@ -42,6 +42,10 @@ class AccountViewController: UIViewController, UITextFieldDelegate {
         login.delegate = self
         login.returnKeyType = .go
         
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 11, height: login.frame.height))
+        login.leftView = paddingView
+        login.leftViewMode = .always
+        
         return login
     }()
     
@@ -52,6 +56,10 @@ class AccountViewController: UIViewController, UITextFieldDelegate {
         fio.layer.cornerRadius = 12
         fio.delegate = self
         fio.returnKeyType = .go
+        
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 11, height: fio.frame.height))
+        fio.leftView = paddingView
+        fio.leftViewMode = .always
         
         return fio
     }()
@@ -65,6 +73,10 @@ class AccountViewController: UIViewController, UITextFieldDelegate {
         email.returnKeyType = .go
         email.keyboardType = .emailAddress
         
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 11, height: email.frame.height))
+        email.leftView = paddingView
+        email.leftViewMode = .always
+        
         return email
     }()
     
@@ -75,6 +87,10 @@ class AccountViewController: UIViewController, UITextFieldDelegate {
         institute.layer.cornerRadius = 12
         institute.delegate = self
         institute.returnKeyType = .go
+        
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 11, height: institute.frame.height))
+        institute.leftView = paddingView
+        institute.leftViewMode = .always
         
         return institute
     }()
@@ -88,6 +104,10 @@ class AccountViewController: UIViewController, UITextFieldDelegate {
         password.delegate = self
         password.returnKeyType = .go
         password.allowsEditingTextAttributes = false
+        
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 11, height: password.frame.height))
+        password.leftView = paddingView
+        password.leftViewMode = .always
         
         return password
     }()

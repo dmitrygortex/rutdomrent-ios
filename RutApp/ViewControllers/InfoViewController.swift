@@ -60,32 +60,46 @@ class InfoViewController: UIViewController {
         return label
     }()
     
-    private lazy var infoText: UILabel = {
-        let label = UILabel()
+    private lazy var infoText: PaddedLabel = {
+        let label = PaddedLabel()
         label.backgroundColor = AppColors.grayColor
-        label.text = "Мой Дом - это приложение для резервирования специальных помещений Дома молодёжи РУТ МИИТ под мероприятия.\n\nНужно провести конференцию? Организовать митап? Сделать профессиональные фотографии? Дом моложёжи РУТ МИИТ - это Ваш вариант!"
-        label.font = .systemFont(ofSize: 20)
+        label.text = "Мой Дом - это приложение для резервирования специальных помещений Дома молодёжи РУТ(МИИТ) под мероприятия.\n\nНужно провести конференцию? Организовать митап? Сделать профессиональные фотографии? Дом моложёжи РУТ(МИИТ) - это Ваш вариант!"
+        label.font = UIFont(name: "Lato-Black", size: 30)
         label.numberOfLines = 0
         label.textColor = .black
         label.layer.cornerRadius = 12
+        label.layer.masksToBounds = true
         
         return label
     }()
     
-    private lazy var scheduleText: UILabel = {
-        let label = UILabel()
+    private lazy var scheduleText: PaddedLabel = {
+        let label = PaddedLabel()
         label.backgroundColor = AppColors.grayColor
         label.text = "По будням с 10:00 до 20:00"
         label.layer.cornerRadius = 12
-        
+        label.textColor = .black
+        label.layer.masksToBounds = true
+
         return label
     }()
     
-    private lazy var adressText: UILabel = {
-        let label = UILabel()
+    private lazy var adressText: PaddedLabel = {
+        let label = PaddedLabel()
         label.backgroundColor = AppColors.grayColor
-        label.text = "ул. Образцова, 21"
+        label.text = "ул. Образцова, 21, г. Москва"
         label.layer.cornerRadius = 12
+        label.layer.masksToBounds = true
+        label.textColor = .black
+
+        return label
+    }()
+    
+    private lazy var roomlabel: UILabel = {
+        let label = UILabel()
+        label.text = "Помещения"
+        label.font = .systemFont(ofSize: 30, weight: .bold)
+        label.textColor = AppColors.miitColor
         
         return label
     }()
@@ -126,7 +140,7 @@ class InfoViewController: UIViewController {
         titlelabel.snp.makeConstraints { make in
             make.height.equalTo(56)
             make.width.equalTo(370)
-            make.leading.equalTo(85)
+            make.leading.equalTo(95)
             make.top.equalToSuperview().inset(4)
         }
         
@@ -134,15 +148,45 @@ class InfoViewController: UIViewController {
             make.height.equalTo(55)
             make.width.equalTo(280)
             make.leading.equalTo(20)
-            make.top.equalTo(60)
+            make.top.equalTo(68)
         }
         
         infoText.snp.makeConstraints { make in
-            make.height.equalTo(312)
+            make.height.equalTo(220)
             make.width.equalTo(334)
             make.leading.equalTo(20)
-            make.top.equalTo(123)
+            make.top.equalTo(114)
+        }
+        
+        scheduleLabel.snp.makeConstraints { make in
+            make.height.equalTo(55)
+            make.width.equalTo(280)
+            make.leading.equalTo(20)
+            make.top.equalTo(354)
+        }
+        
+        scheduleText.snp.makeConstraints { make in
+            make.height.equalTo(44)
+            make.width.equalTo(334)
+            make.leading.equalTo(20)
+            make.top.equalTo(400)
+        }
+        
+        adressLabel.snp.makeConstraints { make in
+            make.height.equalTo(55)
+            make.width.equalTo(280)
+            make.leading.equalTo(20)
+            make.top.equalTo(439)
+        }
+        
+        adressText.snp.makeConstraints { make in
+            make.height.equalTo(44)
+            make.width.equalTo(334)
+            make.leading.equalTo(20)
+            make.top.equalTo(485)
         }
     }
 
 }
+
+
