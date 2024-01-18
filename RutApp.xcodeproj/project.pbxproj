@@ -12,6 +12,7 @@
 		8E293EE92B55A15C00C9ADA3 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E293EE82B55A15C00C9ADA3 /* AccountViewController.swift */; };
 		8E57BAF42B5540B30012E598 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E57BAF32B5540B30012E598 /* LoginViewController.swift */; };
 		8E8D84EA2B58214400EA6A8E /* PaddedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8D84E92B58214400EA6A8E /* PaddedLabel.swift */; };
+		8E8D850E2B59B88900EA6A8E /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8D850D2B59B88900EA6A8E /* ScheduleViewController.swift */; };
 		8E8FD0072B554BCA0085C16A /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8E8FD0062B554BCA0085C16A /* SnapKit */; };
 		8EDEC6662B5456F4007146D6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EDEC6652B5456F4007146D6 /* AppDelegate.swift */; };
 		8EDEC6682B5456F4007146D6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EDEC6672B5456F4007146D6 /* SceneDelegate.swift */; };
@@ -66,6 +67,7 @@
 		8E8D84E72B57FF2200EA6A8E /* Lato-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Bold.ttf"; sourceTree = "<group>"; };
 		8E8D84E82B57FF2200EA6A8E /* Lato-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Black.ttf"; sourceTree = "<group>"; };
 		8E8D84E92B58214400EA6A8E /* PaddedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddedLabel.swift; sourceTree = "<group>"; };
+		8E8D850D2B59B88900EA6A8E /* ScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
 		8EDEC6622B5456F4007146D6 /* RutApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RutApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EDEC6652B5456F4007146D6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8EDEC6672B5456F4007146D6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 				8EFCC2CC2B55AC90003EBD7E /* TabBarController.swift */,
 				8E293EE42B55A12900C9ADA3 /* InfoViewController.swift */,
 				8E293EE62B55A14C00C9ADA3 /* BookingViewController.swift */,
+				8E8D850D2B59B88900EA6A8E /* ScheduleViewController.swift */,
 				8E293EE82B55A15C00C9ADA3 /* AccountViewController.swift */,
 			);
 			path = ViewControllers;
@@ -284,6 +287,7 @@
 				8EDEC6682B5456F4007146D6 /* SceneDelegate.swift in Sources */,
 				8E293EE72B55A14C00C9ADA3 /* BookingViewController.swift in Sources */,
 				8E8D84EA2B58214400EA6A8E /* PaddedLabel.swift in Sources */,
+				8E8D850E2B59B88900EA6A8E /* ScheduleViewController.swift in Sources */,
 				8E293EE52B55A12900C9ADA3 /* InfoViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
