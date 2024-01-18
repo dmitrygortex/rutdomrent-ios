@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class AccountViewController: UIViewController, UITextFieldDelegate {
+class AccountViewController: UIViewController {
 
     // MARK: -Properties
     
@@ -291,9 +291,11 @@ class AccountViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+}
+
+extension AccountViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.endEditing(true)
         return true
     }
-    
 }
