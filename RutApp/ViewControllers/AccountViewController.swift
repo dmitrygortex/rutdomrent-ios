@@ -11,19 +11,7 @@ import SnapKit
 class AccountViewController: UIViewController {
 
     // MARK: -Properties
-    
-//    private lazy var scrollView: UIScrollView = {
-//        let scrollView = UIScrollView()
-//        
-//        return scrollView
-//    }()
-//    
-//    private lazy var viewback: UIView = {
-//        let view = UIView()
-//        
-//        return view
-//    }()
-    
+      
     private lazy var titlelabel: UILabel = {
         let label = UILabel()
         label.text = "Настройки профиля"
@@ -41,6 +29,7 @@ class AccountViewController: UIViewController {
         login.layer.cornerRadius = 12
         login.delegate = self
         login.returnKeyType = .go
+        login.isUserInteractionEnabled = false
         
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 11, height: login.frame.height))
         login.leftView = paddingView
@@ -56,6 +45,7 @@ class AccountViewController: UIViewController {
         fio.layer.cornerRadius = 12
         fio.delegate = self
         fio.returnKeyType = .go
+        login.isUserInteractionEnabled = false
         
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 11, height: fio.frame.height))
         fio.leftView = paddingView
@@ -72,7 +62,8 @@ class AccountViewController: UIViewController {
         email.delegate = self
         email.returnKeyType = .go
         email.keyboardType = .emailAddress
-        
+        login.isUserInteractionEnabled = false
+
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 11, height: email.frame.height))
         email.leftView = paddingView
         email.leftViewMode = .always
@@ -87,7 +78,8 @@ class AccountViewController: UIViewController {
         institute.layer.cornerRadius = 12
         institute.delegate = self
         institute.returnKeyType = .go
-        
+        login.isUserInteractionEnabled = false
+
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 11, height: institute.frame.height))
         institute.leftView = paddingView
         institute.leftViewMode = .always
@@ -104,12 +96,33 @@ class AccountViewController: UIViewController {
         password.delegate = self
         password.returnKeyType = .go
         password.allowsEditingTextAttributes = false
-        
+        login.isUserInteractionEnabled = false
+
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 11, height: password.frame.height))
         password.leftView = paddingView
         password.leftViewMode = .always
         
         return password
+    }()
+    
+    private lazy var phoneTextField: UITextField = {
+        let phone = UITextField()
+        phone.textColor = .black
+        phone.isSecureTextEntry = true
+        phone.backgroundColor = AppColors.grayColor
+        phone.layer.cornerRadius = 12
+        phone.delegate = self
+        phone.returnKeyType = .go
+        phone.allowsEditingTextAttributes = false
+        phone.keyboardType = .phonePad
+        phone.isHidden = false
+        phone.isUserInteractionEnabled = false
+
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 11, height: phone.frame.height))
+        phone.leftView = paddingView
+        phone.leftViewMode = .always
+        
+        return phone
     }()
     
     private lazy var loginLabel: UILabel = {
@@ -157,6 +170,15 @@ class AccountViewController: UIViewController {
         return label
     }()
     
+    private lazy var phoneLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Номер телефона:"
+        label.textColor = AppColors.placeholderColor
+        label.font = UIFont(name: "Extra Light", size: 20)
+        
+        return label
+    }()
+    
     //TODO: Add action to buttons
     
     private lazy var changeDataButton: UIButton = {
@@ -166,6 +188,7 @@ class AccountViewController: UIViewController {
         button.layer.cornerRadius = 12
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
+        button.addTarget(self, action: #selector(changeDataButtonTapped), for: .touchUpInside)
         
         return button
     }()
@@ -181,31 +204,19 @@ class AccountViewController: UIViewController {
     }
     
     private func addSubviews() {
-//        view.addSubview(scrollView)
-//        scrollView.addSubview(viewback)
         view.addSubview(titlelabel)
         view.addSubview(changeDataButton)
         
-        [loginTextField, passwordTextField, FIOTextField, instituteTextField, emailTextField].forEach {
+        [loginTextField, passwordTextField, FIOTextField, instituteTextField, emailTextField, phoneTextField].forEach {
             view.addSubview($0)
         }
         
-        [loginLabel, passwordLabel, emailLabel, FIOLabel, instituteLabel].forEach {
+        [loginLabel, passwordLabel, emailLabel, FIOLabel, instituteLabel, phoneLabel].forEach {
             view.addSubview($0)
         }
     }
     
     private func setUpConstraints() {
-//        scrollView.snp.makeConstraints { make in
-//            make.top.leading.bottom.trailing.equalToSuperview()
-//        }
-//        
-//        viewback.snp.makeConstraints { make in
-//            make.top.leading.bottom.trailing.equalToSuperview()
-//            make.height.equalTo(830)
-//            make.width.equalTo(self.view)
-//        }
-        
         titlelabel.snp.makeConstraints { make in
             make.height.equalTo(56)
             make.width.equalTo(340)
@@ -216,7 +227,7 @@ class AccountViewController: UIViewController {
         loginTextField.snp.makeConstraints { make in
             make.width.equalTo(247)
             make.height.equalTo(50)
-            make.top.equalToSuperview().inset(115) // 150
+            make.top.equalToSuperview().inset(115) 
             make.centerX.equalToSuperview()
         }
         
@@ -224,70 +235,90 @@ class AccountViewController: UIViewController {
             make.width.equalTo(247)
             make.height.equalTo(50)
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().inset(206) // 240
+            make.top.equalToSuperview().inset(206)
         }
         
         emailTextField.snp.makeConstraints { make in
             make.width.equalTo(247)
             make.height.equalTo(50)
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().inset(297) // 330
+            make.top.equalToSuperview().inset(297)
         }
         
         FIOTextField.snp.makeConstraints { make in
             make.width.equalTo(247)
             make.height.equalTo(50)
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().inset(388) //420
+            make.top.equalToSuperview().inset(388)
         }
         
         instituteTextField.snp.makeConstraints { make in
             make.width.equalTo(247)
             make.height.equalTo(50)
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().inset(479) //510
+            make.top.equalToSuperview().inset(479)
+        }
+        
+        phoneTextField.snp.makeConstraints { make in
+            make.width.equalTo(247)
+            make.height.equalTo(50)
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().inset(569)
         }
         
         loginLabel.snp.makeConstraints { make in
             make.height.equalTo(17)
             make.width.equalTo(200)
             make.leading.equalToSuperview().inset(70)
-            make.top.equalToSuperview().inset(92) // 123
+            make.top.equalToSuperview().inset(92)
         }
         
         passwordLabel.snp.makeConstraints { make in
             make.height.equalTo(17)
             make.width.equalTo(200)
             make.leading.equalToSuperview().inset(70)
-            make.top.equalToSuperview().inset(183) // 217
+            make.top.equalToSuperview().inset(183)
         }
         
         emailLabel.snp.makeConstraints { make in
             make.height.equalTo(17)
             make.width.equalTo(200)
             make.leading.equalToSuperview().inset(70)
-            make.top.equalToSuperview().inset(274) //308
+            make.top.equalToSuperview().inset(274)
         }
         
         FIOLabel.snp.makeConstraints { make in
             make.height.equalTo(17)
             make.width.equalTo(200)
             make.leading.equalToSuperview().inset(70)
-            make.top.equalToSuperview().inset(365) // 399
+            make.top.equalToSuperview().inset(365)
         }
         
         instituteLabel.snp.makeConstraints { make in
             make.height.equalTo(17)
             make.width.equalTo(200)
             make.leading.equalToSuperview().inset(70)
-            make.top.equalToSuperview().inset(456) //488
+            make.top.equalToSuperview().inset(456)
+        }
+        
+        phoneLabel.snp.makeConstraints { make in
+            make.height.equalTo(17)
+            make.width.equalTo(200)
+            make.leading.equalToSuperview().inset(70)
+            make.top.equalToSuperview().inset(546)
         }
         
         changeDataButton.snp.makeConstraints { make in
             make.height.equalTo(63)
             make.width.equalTo(215)
-            make.top.equalToSuperview().inset(555) //600
+            make.top.equalToSuperview().inset(652)
             make.centerX.equalToSuperview()
+        }
+    }
+    
+    @objc private func changeDataButtonTapped() {
+        [loginTextField, passwordTextField, FIOTextField, instituteTextField, emailTextField, phoneTextField].forEach {
+            $0.isUserInteractionEnabled = true
         }
     }
     
@@ -295,7 +326,12 @@ class AccountViewController: UIViewController {
 
 extension AccountViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.endEditing(true)
+        textField.resignFirstResponder()
         return true
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
+
 }

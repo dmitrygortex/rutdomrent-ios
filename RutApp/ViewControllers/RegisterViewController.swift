@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class RegisterViewController: UIViewController, UITextFieldDelegate {
+final class RegisterViewController: UIViewController {
 
     // MARK: -Properties
 
@@ -158,6 +158,7 @@ final class RegisterViewController: UIViewController, UITextFieldDelegate {
         button.backgroundColor = AppColors.miitColor
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 15, weight: .medium)
+        button.addTarget(self, action: #selector(loginButtonPressed), for: .touchUpInside)
         
         return button
     }()
@@ -168,6 +169,7 @@ final class RegisterViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         
         view.backgroundColor = .white
+        self.navigationItem.setHidesBackButton(true, animated:true)
         addSubviews()
         setUpConstraints()
     }
@@ -192,14 +194,14 @@ final class RegisterViewController: UIViewController, UITextFieldDelegate {
         
         viewback.snp.makeConstraints { make in
             make.top.leading.bottom.trailing.equalToSuperview()
-            make.height.equalTo(910)
+            make.height.equalTo(810)
             make.width.equalTo(self.view)
         }
         
         backgroundView.snp.makeConstraints { make in
             make.width.equalTo(289)
             make.height.equalTo(700)
-            make.top.equalToSuperview().inset(50)
+            make.top.equalToSuperview().inset(4)
             make.leading.equalToSuperview().inset(37)
             make.trailing.equalTo(-37)
         }
@@ -268,12 +270,15 @@ final class RegisterViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    //MARK: -UITextFieldDelegate
+    @objc private func loginButtonPressed() {
+        navigationController?.pushViewController(LoginViewController(), animated: true)
+    }
     
+}
+
+extension RegisterViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.endEditing(true)
         return true
     }
-
 }
-

@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class LoginViewController: UIViewController, UITextFieldDelegate {
+class LoginViewController: UIViewController {
     
     // MARK: -Properties
     
@@ -82,6 +82,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         button.layer.cornerRadius = 12
         button.setTitleColor(AppColors.miitColor, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
+        button.addTarget(self, action: #selector(loginButtonPressed), for: .touchUpInside)
         
         return button
     }()
@@ -92,6 +93,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         button.backgroundColor = AppColors.miitColor
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 15, weight: .medium)
+        button.addTarget(self, action: #selector(makeAccountButtonPressed), for: .touchUpInside)
         
         return button
     }()
@@ -167,11 +169,21 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    // MARK: -UITextFieldDelegate
+    @objc private func loginButtonPressed() {
+        navigationController?.setNavigationBarHidden(true, animated: false)
+        navigationController?.pushViewController(TabBarController(), animated: true)
+    }
     
+    @objc private func makeAccountButtonPressed() {
+        navigationController?.setNavigationBarHidden(true, animated: false)
+        navigationController?.pushViewController(RegisterViewController(), animated: true)
+    }
+
+}
+
+extension LoginViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.endEditing(true)
         return true
     }
-
 }
