@@ -45,7 +45,7 @@ class AccountViewController: UIViewController {
         fio.layer.cornerRadius = 12
         fio.delegate = self
         fio.returnKeyType = .go
-        login.isUserInteractionEnabled = false
+        fio.isUserInteractionEnabled = false
         
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 11, height: fio.frame.height))
         fio.leftView = paddingView
@@ -62,7 +62,7 @@ class AccountViewController: UIViewController {
         email.delegate = self
         email.returnKeyType = .go
         email.keyboardType = .emailAddress
-        login.isUserInteractionEnabled = false
+        email.isUserInteractionEnabled = false
 
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 11, height: email.frame.height))
         email.leftView = paddingView
@@ -78,7 +78,7 @@ class AccountViewController: UIViewController {
         institute.layer.cornerRadius = 12
         institute.delegate = self
         institute.returnKeyType = .go
-        login.isUserInteractionEnabled = false
+        institute.isUserInteractionEnabled = false
 
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 11, height: institute.frame.height))
         institute.leftView = paddingView
@@ -96,7 +96,7 @@ class AccountViewController: UIViewController {
         password.delegate = self
         password.returnKeyType = .go
         password.allowsEditingTextAttributes = false
-        login.isUserInteractionEnabled = false
+        password.isUserInteractionEnabled = false
 
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 11, height: password.frame.height))
         password.leftView = paddingView
@@ -115,7 +115,7 @@ class AccountViewController: UIViewController {
         phone.returnKeyType = .go
         phone.allowsEditingTextAttributes = false
         phone.keyboardType = .phonePad
-        phone.isHidden = false
+        phone.isSecureTextEntry = false
         phone.isUserInteractionEnabled = false
 
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 11, height: phone.frame.height))
@@ -221,13 +221,13 @@ class AccountViewController: UIViewController {
             make.height.equalTo(56)
             make.width.equalTo(340)
             make.leading.equalTo(44)
-            make.top.equalToSuperview().inset(35)
+            make.top.equalToSuperview().inset(45)
         }
         
         loginTextField.snp.makeConstraints { make in
             make.width.equalTo(247)
             make.height.equalTo(50)
-            make.top.equalToSuperview().inset(115) 
+            make.top.equalToSuperview().inset(131)
             make.centerX.equalToSuperview()
         }
         
@@ -235,77 +235,77 @@ class AccountViewController: UIViewController {
             make.width.equalTo(247)
             make.height.equalTo(50)
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().inset(206)
+            make.top.equalToSuperview().inset(222)
         }
         
         emailTextField.snp.makeConstraints { make in
             make.width.equalTo(247)
             make.height.equalTo(50)
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().inset(297)
+            make.top.equalToSuperview().inset(313)
         }
         
         FIOTextField.snp.makeConstraints { make in
             make.width.equalTo(247)
             make.height.equalTo(50)
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().inset(388)
+            make.top.equalToSuperview().inset(404)
         }
         
         instituteTextField.snp.makeConstraints { make in
             make.width.equalTo(247)
             make.height.equalTo(50)
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().inset(479)
+            make.top.equalToSuperview().inset(495)
         }
         
         phoneTextField.snp.makeConstraints { make in
             make.width.equalTo(247)
             make.height.equalTo(50)
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().inset(569)
+            make.top.equalToSuperview().inset(585) // 569
         }
         
         loginLabel.snp.makeConstraints { make in
             make.height.equalTo(17)
             make.width.equalTo(200)
             make.leading.equalToSuperview().inset(70)
-            make.top.equalToSuperview().inset(92)
+            make.top.equalToSuperview().inset(108)
         }
         
         passwordLabel.snp.makeConstraints { make in
             make.height.equalTo(17)
             make.width.equalTo(200)
             make.leading.equalToSuperview().inset(70)
-            make.top.equalToSuperview().inset(183)
+            make.top.equalToSuperview().inset(199)
         }
         
         emailLabel.snp.makeConstraints { make in
             make.height.equalTo(17)
             make.width.equalTo(200)
             make.leading.equalToSuperview().inset(70)
-            make.top.equalToSuperview().inset(274)
+            make.top.equalToSuperview().inset(290)
         }
         
         FIOLabel.snp.makeConstraints { make in
             make.height.equalTo(17)
             make.width.equalTo(200)
             make.leading.equalToSuperview().inset(70)
-            make.top.equalToSuperview().inset(365)
+            make.top.equalToSuperview().inset(381)
         }
         
         instituteLabel.snp.makeConstraints { make in
             make.height.equalTo(17)
             make.width.equalTo(200)
             make.leading.equalToSuperview().inset(70)
-            make.top.equalToSuperview().inset(456)
+            make.top.equalToSuperview().inset(472)
         }
         
         phoneLabel.snp.makeConstraints { make in
             make.height.equalTo(17)
             make.width.equalTo(200)
             make.leading.equalToSuperview().inset(70)
-            make.top.equalToSuperview().inset(546)
+            make.top.equalToSuperview().inset(562)
         }
         
         changeDataButton.snp.makeConstraints { make in

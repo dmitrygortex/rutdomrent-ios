@@ -24,6 +24,18 @@ class BookingViewController: UIViewController {
         return label
     }()
     
+    private lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        
+        return scrollView
+    }()
+    
+    private lazy var viewback: UIView = {
+        let view = UIView()
+        
+        return view
+    }()
+    
     private lazy var calendar: UICalendarView = {
         let calendarView = UICalendarView()
         calendarView.calendar = .current
@@ -32,7 +44,12 @@ class BookingViewController: UIViewController {
         calendarView.layer.cornerRadius = 12
         calendarView.delegate = self
         calendarView.backgroundColor = AppColors.miitColor
+        calendarView.delegate = self
+        calendarView.availableDateRange = DateInterval.init(start: Date.now, end: Date.distantFuture)
         
+        let dateSelection = UICalendarSelectionSingleDate(delegate: self)
+        calendarView.selectionBehavior = dateSelection
+
         return calendarView
     }()
     
@@ -91,6 +108,29 @@ class BookingViewController: UIViewController {
         return purpose
     }()
     
+    private lazy var continueButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Далее", for: .normal)
+        button.backgroundColor = AppColors.miitColor
+        button.layer.cornerRadius = 12
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
+        //button.addTarget(self, action: #selector(), for: .touchUpInside)
+        
+        return button
+    }()
+    
+    private lazy var myBookingsButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Мои Бронирования", for: .normal)
+        button.backgroundColor = AppColors.miitColor
+        button.layer.cornerRadius = 12
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
+        //button.addTarget(self, action: #selector(), for: .touchUpInside)
+        
+        return button
+    }()
     
     // MARK: - Methods
 
@@ -106,22 +146,35 @@ class BookingViewController: UIViewController {
     }
     
     private func addSubviews() {
-        view.addSubview(titlelabel)
-        view.addSubview(calendar)
-        [roomLabel, purposeLabel].forEach { view.addSubview($0) }
-        [roomTextField, purposeTextField].forEach { view.addSubview($0) }
+        view.addSubview(scrollView)
+        scrollView.addSubview(viewback)
+        viewback.addSubview(titlelabel)
+        viewback.addSubview(calendar)
+        [continueButton, myBookingsButton].forEach { viewback.addSubview($0) }
+        [roomLabel, purposeLabel].forEach { viewback.addSubview($0) }
+        [roomTextField, purposeTextField].forEach { viewback.addSubview($0) }
     }
     
     private func setUpConstraints() {
+        scrollView.snp.makeConstraints { make in
+            make.top.leading.bottom.trailing.equalToSuperview()
+        }
+        
+        viewback.snp.makeConstraints { make in
+            make.top.leading.trailing.bottom.equalToSuperview()
+            make.height.equalTo(930)
+            make.width.equalTo(self.view)
+        }
+        
         titlelabel.snp.makeConstraints { make in
             make.height.equalTo(56)
             make.width.equalTo(370)
             make.leading.equalTo(75)
-            make.top.equalToSuperview().inset(35)
+            make.top.equalToSuperview().inset(4)
         }
         
         calendar.snp.makeConstraints { make in
-            make.height.equalTo(400)
+            make.height.equalTo(411)
             make.width.equalTo(414)
             make.top.equalToSuperview().inset(106)
             make.leading.equalToSuperview().inset(10)
@@ -132,28 +185,42 @@ class BookingViewController: UIViewController {
             make.height.equalTo(55)
             make.width.equalTo(280)
             make.leading.equalTo(20)
-            make.top.equalTo(506)
+            make.top.equalTo(524)
         }
         
         roomTextField.snp.makeConstraints { make in
             make.height.equalTo(44)
             make.width.equalTo(334)
             make.leading.equalTo(20)
-            make.top.equalTo(560)
+            make.top.equalTo(578)
         }
         
         purposeLabel.snp.makeConstraints { make in
             make.height.equalTo(55)
             make.width.equalTo(280)
             make.leading.equalTo(20)
-            make.top.equalTo(600)
+            make.top.equalTo(618)
         }
         
         purposeTextField.snp.makeConstraints { make in
             make.height.equalTo(44)
             make.width.equalTo(334)
             make.leading.equalTo(20)
-            make.top.equalTo(653)
+            make.top.equalTo(671)
+        }
+        
+        continueButton.snp.makeConstraints { make in
+            make.height.equalTo(63)
+            make.width.equalTo(215)
+            make.top.equalToSuperview().inset(742)
+            make.centerX.equalToSuperview()
+        }
+        
+        myBookingsButton.snp.makeConstraints { make in
+            make.height.equalTo(63)
+            make.width.equalTo(315)
+            make.top.equalToSuperview().inset(829)
+            make.centerX.equalToSuperview()
         }
     }
     
@@ -184,6 +251,22 @@ extension BookingViewController: UICalendarViewDelegate {
     func calendarView(_ calendarView: UICalendarView, decorationFor dateComponents: DateComponents) -> UICalendarView.Decoration? {
         return nil
     }
+}
+
+extension BookingViewController: UICalendarSelectionSingleDateDelegate {
+    func dateSelection(_ selection: UICalendarSelectionSingleDate, didSelectDate dateComponents: DateComponents?) {
+        guard let data = dateComponents else {
+            print("Error on data")
+            return
+        }
+        print("Выбранная дата: \(data)")
+    }
+
+      
+    func dateSelection(_ selection: UICalendarSelectionSingleDate, canSelectDate dateComponents: DateComponents?) -> Bool {
+        return true
+    }
+    
 }
 
 extension BookingViewController: UITextFieldDelegate {
