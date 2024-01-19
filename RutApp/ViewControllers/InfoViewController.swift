@@ -95,11 +95,131 @@ class InfoViewController: UIViewController {
         return label
     }()
     
-    private lazy var roomlabel: UILabel = {
+    private lazy var roomtitle: UILabel = {
         let label = UILabel()
         label.text = "Помещения"
         label.font = .systemFont(ofSize: 30, weight: .bold)
         label.textColor = AppColors.miitColor
+        
+        return label
+    }()
+    
+    private lazy var lectureLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Лекторий:"
+        label.textColor = AppColors.placeholderColor
+        label.font = UIFont(name: "Extra Light", size: 20)
+        
+        return label
+    }()
+    
+    private lazy var meetingLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Переговорная:"
+        label.textColor = AppColors.placeholderColor
+        label.font = UIFont(name: "Extra Light", size: 20)
+        
+        return label
+    }()
+    
+    private lazy var photoStudioLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Фотостудия:"
+        label.textColor = AppColors.placeholderColor
+        label.font = UIFont(name: "Extra Light", size: 20)
+        
+        return label
+    }()
+    
+    private lazy var coworkingLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Коворкинг:"
+        label.textColor = AppColors.placeholderColor
+        label.font = UIFont(name: "Extra Light", size: 20)
+        
+        return label
+    }()
+    
+    private lazy var lectureImage: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: "lecture"))
+        imageView.layer.cornerRadius = 12
+        imageView.layer.masksToBounds = true
+        
+        return imageView
+    }()
+    
+    private lazy var meetingImage: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: "meeting"))
+        imageView.layer.cornerRadius = 12
+        imageView.layer.masksToBounds = true
+        
+        return imageView
+    }()
+    
+    private lazy var photoStudioImage: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: "photo"))
+        imageView.layer.cornerRadius = 12
+        imageView.layer.masksToBounds = true
+        
+        return imageView
+    }()
+    
+    private lazy var coworkingImage: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: "coworking"))
+        imageView.layer.cornerRadius = 12
+        imageView.layer.masksToBounds = true
+        
+        return imageView
+    }()
+    
+    private lazy var lectureText: PaddedLabel = {
+        let label = PaddedLabel()
+        label.backgroundColor = AppColors.grayColor
+        label.text = "40 посадочных мест с мини-столиками, маркерная доска, жк-экран 60 дюймов"
+        label.font = UIFont(name: "Lato-Black", size: 30)
+        label.numberOfLines = 0
+        label.textColor = .black
+        label.layer.cornerRadius = 12
+        label.layer.masksToBounds = true
+        
+        return label
+    }()
+    
+    private lazy var meetingText: PaddedLabel = {
+        let label = PaddedLabel()
+        label.backgroundColor = AppColors.grayColor
+        label.text = "12 посадочных мест, из них отдельная зона на 6 мест, маркерная доска"
+        label.font = UIFont(name: "Lato-Black", size: 30)
+        label.numberOfLines = 0
+        label.textColor = .black
+        label.layer.cornerRadius = 12
+        label.layer.masksToBounds = true
+        
+        return label
+    }()
+    
+    private lazy var photoStudioText: PaddedLabel = {
+        let label = PaddedLabel()
+        label.backgroundColor = AppColors.grayColor
+        label.text = "два гримёрных зеркала, белый фотофон, хромакей, шторы блэкаут"
+        label.font = UIFont(name: "Lato-Black", size: 30)
+        label.numberOfLines = 0
+        label.textColor = .black
+        label.layer.cornerRadius = 12
+        label.layer.masksToBounds = true
+        
+        return label
+    }()
+    
+    private lazy var coworkingText: PaddedLabel = {
+        let label = PaddedLabel()
+        label.backgroundColor = AppColors.grayColor
+        label.text = "8 рабочих мест с розетками, 11 посадочных мест, из них отдельная зона на 6 мест, маркерная доска"
+        label.font = UIFont(name: "Lato-Black", size: 30)
+        label.numberOfLines = 0
+        label.textColor = .black
+        label.layer.cornerRadius = 12
+        label.layer.masksToBounds = true
         
         return label
     }()
@@ -117,13 +237,11 @@ class InfoViewController: UIViewController {
     private func addSubviews() {
         view.addSubview(scrollView)
         scrollView.addSubview(viewback)
-        [titlelabel, infoLabel, scheduleLabel, adressLabel].forEach {
-            viewback.addSubview($0)
-        }
         
-        [infoText, scheduleText, adressText].forEach {
-            viewback.addSubview($0)
-        }
+        [titlelabel, infoLabel, scheduleLabel, adressLabel, roomtitle, lectureLabel, meetingLabel, photoStudioLabel, coworkingLabel, lectureText, meetingText, photoStudioText, coworkingText, infoText, scheduleText, adressText].forEach { viewback.addSubview($0) }
+                
+        [lectureImage, meetingImage, photoStudioImage, coworkingImage].forEach { viewback.addSubview($0) }
+        
     }
     
     private func setUpConstraints() {
@@ -133,7 +251,7 @@ class InfoViewController: UIViewController {
         
         viewback.snp.makeConstraints { make in
             make.top.leading.trailing.bottom.equalToSuperview()
-            make.height.equalTo(900)
+            make.height.equalTo(2015)
             make.width.equalTo(self.view)
         }
         
@@ -184,6 +302,97 @@ class InfoViewController: UIViewController {
             make.width.equalTo(334)
             make.leading.equalTo(20)
             make.top.equalTo(485)
+        }
+        
+        roomtitle.snp.makeConstraints { make in
+            make.height.equalTo(56)
+            make.width.equalTo(370)
+            make.leading.equalTo(95)
+            make.top.equalToSuperview().inset(549)
+        }
+        
+        lectureLabel.snp.makeConstraints { make in
+            make.height.equalTo(55)
+            make.width.equalTo(280)
+            make.leading.equalTo(20)
+            make.top.equalTo(613)
+        }
+        
+        lectureImage.snp.makeConstraints { make in
+            make.height.equalTo(199)
+            make.width.equalTo(337)
+            make.leading.equalTo(20)
+            make.top.equalTo(663)
+        }
+        
+        lectureText.snp.makeConstraints { make in
+            make.height.equalTo(72)
+            make.width.equalTo(337)
+            make.leading.equalTo(20)
+            make.top.equalTo(873)
+        }
+        
+        meetingLabel.snp.makeConstraints { make in
+            make.height.equalTo(55)
+            make.width.equalTo(280)
+            make.leading.equalTo(20)
+            make.top.equalTo(962)
+        }
+        
+        meetingImage.snp.makeConstraints { make in
+            make.height.equalTo(199)
+            make.width.equalTo(337)
+            make.leading.equalTo(20)
+            make.top.equalTo(1012)
+        }
+        
+        meetingText.snp.makeConstraints { make in
+            make.height.equalTo(72)
+            make.width.equalTo(337)
+            make.leading.equalTo(20)
+            make.top.equalTo(1222)
+        }
+        
+        photoStudioLabel.snp.makeConstraints { make in
+            make.height.equalTo(55)
+            make.width.equalTo(280)
+            make.leading.equalTo(20)
+            make.top.equalTo(1311)
+        }
+        
+        photoStudioImage.snp.makeConstraints { make in
+            make.height.equalTo(199)
+            make.width.equalTo(337)
+            make.leading.equalTo(20)
+            make.top.equalTo(1361)
+        }
+        
+        photoStudioText.snp.makeConstraints { make in
+            make.height.equalTo(72)
+            make.width.equalTo(337)
+            make.leading.equalTo(20)
+            make.top.equalTo(1571)
+        }
+        
+        coworkingLabel.snp.makeConstraints { make in
+            make.height.equalTo(55)
+            make.width.equalTo(280)
+            make.leading.equalTo(20)
+            make.top.equalTo(1660)
+        }
+        
+        coworkingImage.snp.makeConstraints { make in
+            make.height.equalTo(199)
+            make.width.equalTo(337)
+            make.leading.equalTo(20)
+            make.top.equalTo(1710)
+        }
+        
+        coworkingText.snp.makeConstraints { make in
+            make.height.equalTo(72)
+            make.width.equalTo(337)
+            make.leading.equalTo(20)
+            make.top.equalTo(1920)
         }
     }
 
