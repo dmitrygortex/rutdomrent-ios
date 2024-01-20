@@ -115,7 +115,7 @@ class BookingViewController: UIViewController {
         button.layer.cornerRadius = 12
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
-        //button.addTarget(self, action: #selector(), for: .touchUpInside)
+        button.addTarget(self, action: #selector(continueButtonTapped), for: .touchUpInside)
         
         return button
     }()
@@ -127,7 +127,7 @@ class BookingViewController: UIViewController {
         button.layer.cornerRadius = 12
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
-        //button.addTarget(self, action: #selector(), for: .touchUpInside)
+        button.addTarget(self, action: #selector(myBookingsButtonTapped), for: .touchUpInside)
         
         return button
     }()
@@ -137,12 +137,22 @@ class BookingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
+        setUp()
         addSubviews()
         setUpConstraints()
+    }
+    
+    private func setUp() {
+        view.backgroundColor = .white
         
         roomPicker.dataSource = self
         roomPicker.delegate = self
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        viewback.addGestureRecognizer(tapGesture)
     }
     
     private func addSubviews() {
@@ -224,7 +234,32 @@ class BookingViewController: UIViewController {
         }
     }
     
+    @objc private func continueButtonTapped() {
+        navigationController?.pushViewController(ScheduleViewController(), animated: true)
+    }
     
+    // TODO: Add VC
+    
+    @objc private func myBookingsButtonTapped() {
+        
+    }
+    
+    @objc func keyboardWillShow(_ notification: Notification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
+            scrollView.contentInset = contentInsets
+            scrollView.scrollIndicatorInsets = contentInsets
+        }
+    }
+
+    @objc func keyboardWillHide(_ notification: Notification) {
+        scrollView.contentInset = UIEdgeInsets.zero
+        scrollView.scrollIndicatorInsets = UIEdgeInsets.zero
+    }
+    
+    @objc private func handleTap() {
+        view.endEditing(true)
+    }
 }
 
 extension BookingViewController: UIPickerViewDataSource, UIPickerViewDelegate {

@@ -11,6 +11,18 @@ import SnapKit
 class AccountViewController: UIViewController {
 
     // MARK: -Properties
+    
+    private lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        
+        return scrollView
+    }()
+    
+    private lazy var viewback: UIView = {
+        let view = UIView()
+        
+        return view
+    }()
       
     private lazy var titlelabel: UILabel = {
         let label = UILabel()
@@ -108,7 +120,6 @@ class AccountViewController: UIViewController {
     private lazy var phoneTextField: UITextField = {
         let phone = UITextField()
         phone.textColor = .black
-        phone.isSecureTextEntry = true
         phone.backgroundColor = AppColors.grayColor
         phone.layer.cornerRadius = 12
         phone.delegate = self
@@ -178,9 +189,7 @@ class AccountViewController: UIViewController {
         
         return label
     }()
-    
-    //TODO: Add action to buttons
-    
+        
     private lazy var changeDataButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Изменить данные", for: .normal)
@@ -198,30 +207,52 @@ class AccountViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
+        setUp()
         addSubviews()
         setUpConstraints()
     }
     
+    private func setUp() {
+        view.backgroundColor = .white
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        viewback.addGestureRecognizer(tapGesture)
+    }
+    
     private func addSubviews() {
-        view.addSubview(titlelabel)
-        view.addSubview(changeDataButton)
+        view.addSubview(scrollView)
+        scrollView.addSubview(viewback)
+        viewback.addSubview(titlelabel)
+        viewback.addSubview(changeDataButton)
         
         [loginTextField, passwordTextField, FIOTextField, instituteTextField, emailTextField, phoneTextField].forEach {
-            view.addSubview($0)
+            viewback.addSubview($0)
         }
         
         [loginLabel, passwordLabel, emailLabel, FIOLabel, instituteLabel, phoneLabel].forEach {
-            view.addSubview($0)
+            viewback.addSubview($0)
         }
     }
     
     private func setUpConstraints() {
+        scrollView.snp.makeConstraints { make in
+            make.top.leading.bottom.trailing.equalToSuperview()
+        }
+        
+        viewback.snp.makeConstraints { make in
+            make.top.leading.trailing.bottom.equalToSuperview()
+            make.height.equalTo(800)
+            make.width.equalTo(self.view)
+        }
+        
         titlelabel.snp.makeConstraints { make in
             make.height.equalTo(56)
             make.width.equalTo(340)
             make.leading.equalTo(44)
-            make.top.equalToSuperview().inset(45)
+            make.top.equalToSuperview().inset(4)
         }
         
         loginTextField.snp.makeConstraints { make in
@@ -311,7 +342,7 @@ class AccountViewController: UIViewController {
         changeDataButton.snp.makeConstraints { make in
             make.height.equalTo(63)
             make.width.equalTo(215)
-            make.top.equalToSuperview().inset(652)
+            make.top.equalToSuperview().inset(665)
             make.centerX.equalToSuperview()
         }
     }
@@ -322,6 +353,22 @@ class AccountViewController: UIViewController {
         }
     }
     
+    @objc func keyboardWillShow(_ notification: Notification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
+            scrollView.contentInset = contentInsets
+            scrollView.scrollIndicatorInsets = contentInsets
+        }
+    }
+
+    @objc func keyboardWillHide(_ notification: Notification) {
+        scrollView.contentInset = UIEdgeInsets.zero
+        scrollView.scrollIndicatorInsets = UIEdgeInsets.zero
+    }
+    
+    @objc private func handleTap() {
+        view.endEditing(true)
+    }
 }
 
 extension AccountViewController: UITextFieldDelegate {
@@ -329,9 +376,4 @@ extension AccountViewController: UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        view.endEditing(true)
-    }
-
 }

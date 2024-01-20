@@ -135,12 +135,11 @@ final class RegisterViewController: UIViewController {
         phone.textAlignment = .center
         phone.delegate = self
         phone.returnKeyType = .go
+        phone.keyboardType = .phonePad
         
         return phone
     }()
-    
-    //TODO: Add action to buttons
-    
+        
     private lazy var registerButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Регистрация", for: .normal)
@@ -168,10 +167,20 @@ final class RegisterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
-        self.navigationItem.setHidesBackButton(true, animated:true)
+        setUp()
         addSubviews()
         setUpConstraints()
+    }
+    
+    private func setUp() {
+        view.backgroundColor = .white
+        self.navigationItem.setHidesBackButton(true, animated:true)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        viewback.addGestureRecognizer(tapGesture)
     }
     
     private func addSubviews() {
@@ -194,14 +203,14 @@ final class RegisterViewController: UIViewController {
         
         viewback.snp.makeConstraints { make in
             make.top.leading.bottom.trailing.equalToSuperview()
-            make.height.equalTo(810)
+            make.height.equalTo(785)
             make.width.equalTo(self.view)
         }
         
         backgroundView.snp.makeConstraints { make in
             make.width.equalTo(289)
             make.height.equalTo(700)
-            make.top.equalToSuperview().inset(4)
+            make.top.equalToSuperview().inset(25)
             make.leading.equalToSuperview().inset(37)
             make.trailing.equalTo(-37)
         }
@@ -272,6 +281,23 @@ final class RegisterViewController: UIViewController {
     
     @objc private func loginButtonPressed() {
         navigationController?.pushViewController(LoginViewController(), animated: true)
+    }
+    
+    @objc func keyboardWillShow(_ notification: Notification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
+            scrollView.contentInset = contentInsets
+            scrollView.scrollIndicatorInsets = contentInsets
+        }
+    }
+
+    @objc func keyboardWillHide(_ notification: Notification) {
+        scrollView.contentInset = UIEdgeInsets.zero
+        scrollView.scrollIndicatorInsets = UIEdgeInsets.zero
+    }
+    
+    @objc private func handleTap() {
+        view.endEditing(true)
     }
     
 }

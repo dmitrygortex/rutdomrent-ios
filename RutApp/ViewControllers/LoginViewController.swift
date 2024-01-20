@@ -72,9 +72,7 @@ class LoginViewController: UIViewController {
         
         return password
     }()
-    
-    //TODO: Add action to buttons
-    
+        
     private lazy var loginButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Войти", for: .normal)
@@ -103,9 +101,16 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
+        setUp()
         addSubviews()
         setUpConstraints()
+    }
+    
+    private func setUp() {
+        view.backgroundColor = .white
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        view.addGestureRecognizer(tapGesture)
     }
     
     private func addSubviews() {
@@ -177,6 +182,10 @@ class LoginViewController: UIViewController {
     @objc private func makeAccountButtonPressed() {
         navigationController?.setNavigationBarHidden(true, animated: false)
         navigationController?.pushViewController(RegisterViewController(), animated: true)
+    }
+    
+    @objc private func handleTap() {
+        view.endEditing(true)
     }
 
 }

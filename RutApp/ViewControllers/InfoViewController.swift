@@ -229,9 +229,13 @@ class InfoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
+        setUp()
         addSubviews()
         setUpConstraints()
+    }
+    
+    private func setUp() {
+        view.backgroundColor = .white
     }
     
     private func addSubviews() {

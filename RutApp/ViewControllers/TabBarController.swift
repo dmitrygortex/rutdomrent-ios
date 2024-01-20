@@ -11,8 +11,12 @@ class TabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         generateTabBar()
+        setUp()
+    }
+    
+    private func setUp() {
         tabBar.backgroundColor = AppColors.miitColor
         tabBar.tintColor = .white
         tabBar.barStyle = .default
