@@ -244,7 +244,7 @@ class AccountViewController: UIViewController {
         
         viewback.snp.makeConstraints { make in
             make.top.leading.trailing.bottom.equalToSuperview()
-            make.height.equalTo(800)
+            make.height.equalTo(740)
             make.width.equalTo(self.view)
         }
         
@@ -258,7 +258,7 @@ class AccountViewController: UIViewController {
         loginTextField.snp.makeConstraints { make in
             make.width.equalTo(247)
             make.height.equalTo(50)
-            make.top.equalToSuperview().inset(131)
+            make.top.equalToSuperview().inset(109)
             make.centerX.equalToSuperview()
         }
         
@@ -266,83 +266,83 @@ class AccountViewController: UIViewController {
             make.width.equalTo(247)
             make.height.equalTo(50)
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().inset(222)
+            make.top.equalToSuperview().inset(200)
         }
         
         emailTextField.snp.makeConstraints { make in
             make.width.equalTo(247)
             make.height.equalTo(50)
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().inset(313)
+            make.top.equalToSuperview().inset(291)
         }
         
         FIOTextField.snp.makeConstraints { make in
             make.width.equalTo(247)
             make.height.equalTo(50)
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().inset(404)
+            make.top.equalToSuperview().inset(382)
         }
         
         instituteTextField.snp.makeConstraints { make in
             make.width.equalTo(247)
             make.height.equalTo(50)
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().inset(495)
+            make.top.equalToSuperview().inset(473)
         }
         
         phoneTextField.snp.makeConstraints { make in
             make.width.equalTo(247)
             make.height.equalTo(50)
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().inset(585) // 569
+            make.top.equalToSuperview().inset(563)
         }
         
         loginLabel.snp.makeConstraints { make in
             make.height.equalTo(17)
             make.width.equalTo(200)
             make.leading.equalToSuperview().inset(70)
-            make.top.equalToSuperview().inset(108)
+            make.top.equalToSuperview().inset(86)
         }
         
         passwordLabel.snp.makeConstraints { make in
             make.height.equalTo(17)
             make.width.equalTo(200)
             make.leading.equalToSuperview().inset(70)
-            make.top.equalToSuperview().inset(199)
+            make.top.equalToSuperview().inset(177)
         }
         
         emailLabel.snp.makeConstraints { make in
             make.height.equalTo(17)
             make.width.equalTo(200)
             make.leading.equalToSuperview().inset(70)
-            make.top.equalToSuperview().inset(290)
+            make.top.equalToSuperview().inset(268)
         }
         
         FIOLabel.snp.makeConstraints { make in
             make.height.equalTo(17)
             make.width.equalTo(200)
             make.leading.equalToSuperview().inset(70)
-            make.top.equalToSuperview().inset(381)
+            make.top.equalToSuperview().inset(359)
         }
         
         instituteLabel.snp.makeConstraints { make in
             make.height.equalTo(17)
             make.width.equalTo(200)
             make.leading.equalToSuperview().inset(70)
-            make.top.equalToSuperview().inset(472)
+            make.top.equalToSuperview().inset(450)
         }
         
         phoneLabel.snp.makeConstraints { make in
             make.height.equalTo(17)
             make.width.equalTo(200)
             make.leading.equalToSuperview().inset(70)
-            make.top.equalToSuperview().inset(562)
+            make.top.equalToSuperview().inset(540)
         }
         
         changeDataButton.snp.makeConstraints { make in
             make.height.equalTo(63)
             make.width.equalTo(215)
-            make.top.equalToSuperview().inset(665)
+            make.top.equalToSuperview().inset(631)
             make.centerX.equalToSuperview()
         }
     }
