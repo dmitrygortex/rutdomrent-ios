@@ -147,6 +147,7 @@ final class RegisterViewController: UIViewController {
         button.layer.cornerRadius = 12
         button.setTitleColor(AppColors.miitColor, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
+        button.addTarget(self, action: #selector(registerButtonTapped), for: .touchUpInside)
         
         return button
     }()
@@ -281,6 +282,10 @@ final class RegisterViewController: UIViewController {
     
     @objc private func loginButtonPressed() {
         navigationController?.pushViewController(LoginViewController(), animated: true)
+    }
+    
+    @objc private func registerButtonTapped() {
+        // ...
     }
     
     @objc func keyboardWillShow(_ notification: Notification) {

@@ -150,9 +150,6 @@ class BookingViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-        viewback.addGestureRecognizer(tapGesture)
     }
     
     private func addSubviews() {
@@ -257,9 +254,6 @@ class BookingViewController: UIViewController {
         scrollView.scrollIndicatorInsets = UIEdgeInsets.zero
     }
     
-    @objc private func handleTap() {
-        view.endEditing(true)
-    }
 }
 
 extension BookingViewController: UIPickerViewDataSource, UIPickerViewDelegate {

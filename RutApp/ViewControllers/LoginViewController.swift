@@ -175,6 +175,8 @@ class LoginViewController: UIViewController {
     }
     
     @objc private func loginButtonPressed() {
+        // ...
+        
         navigationController?.setNavigationBarHidden(true, animated: false)
         navigationController?.pushViewController(TabBarController(), animated: true)
     }
