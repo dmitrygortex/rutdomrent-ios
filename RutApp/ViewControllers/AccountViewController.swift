@@ -34,21 +34,21 @@ class AccountViewController: UIViewController {
         return label
     }()
     
-    private lazy var loginTextField: UITextField = {
-        let login = UITextField()
-        login.textColor = .black
-        login.backgroundColor = AppColors.grayColor
-        login.layer.cornerRadius = 12
-        login.delegate = self
-        login.returnKeyType = .go
-        login.isUserInteractionEnabled = false
-        
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 11, height: login.frame.height))
-        login.leftView = paddingView
-        login.leftViewMode = .always
-        
-        return login
-    }()
+//    private lazy var loginTextField: UITextField = {
+//        let login = UITextField()
+//        login.textColor = .black
+//        login.backgroundColor = AppColors.grayColor
+//        login.layer.cornerRadius = 12
+//        login.delegate = self
+//        login.returnKeyType = .go
+//        login.isUserInteractionEnabled = false
+//        
+//        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 11, height: login.frame.height))
+//        login.leftView = paddingView
+//        login.leftViewMode = .always
+//        
+//        return login
+//    }()
     
     private lazy var FIOTextField: UITextField = {
         let fio = UITextField()
@@ -117,28 +117,28 @@ class AccountViewController: UIViewController {
         return password
     }()
     
-    private lazy var phoneTextField: UITextField = {
-        let phone = UITextField()
-        phone.textColor = .black
-        phone.backgroundColor = AppColors.grayColor
-        phone.layer.cornerRadius = 12
-        phone.delegate = self
-        phone.returnKeyType = .go
-        phone.allowsEditingTextAttributes = false
-        phone.keyboardType = .phonePad
-        phone.isSecureTextEntry = false
-        phone.isUserInteractionEnabled = false
-
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 11, height: phone.frame.height))
-        phone.leftView = paddingView
-        phone.leftViewMode = .always
-        
-        return phone
-    }()
+//    private lazy var phoneTextField: UITextField = {
+//        let phone = UITextField()
+//        phone.textColor = .black
+//        phone.backgroundColor = AppColors.grayColor
+//        phone.layer.cornerRadius = 12
+//        phone.delegate = self
+//        phone.returnKeyType = .go
+//        phone.allowsEditingTextAttributes = false
+//        phone.keyboardType = .phonePad
+//        phone.isSecureTextEntry = false
+//        phone.isUserInteractionEnabled = false
+//
+//        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 11, height: phone.frame.height))
+//        phone.leftView = paddingView
+//        phone.leftViewMode = .always
+//        
+//        return phone
+//    }()
     
-    private lazy var loginLabel: UILabel = {
+    private lazy var emailLabel: UILabel = {
         let label = UILabel()
-        label.text = "Логин:"
+        label.text = "Email:"
         label.textColor = AppColors.placeholderColor
         label.font = UIFont(name: "Extra Light", size: 20)
         
@@ -154,16 +154,7 @@ class AccountViewController: UIViewController {
         return label
     }()
     
-    private lazy var emailLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Email:"
-        label.textColor = AppColors.placeholderColor
-        label.font = UIFont(name: "Extra Light", size: 20)
-        
-        return label
-    }()
-    
-    private lazy var FIOLabel: UILabel = {
+    private lazy var fioLabel: UILabel = {
         let label = UILabel()
         label.text = "ФИО:"
         label.textColor = AppColors.placeholderColor
@@ -181,14 +172,23 @@ class AccountViewController: UIViewController {
         return label
     }()
     
-    private lazy var phoneLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Номер телефона:"
-        label.textColor = AppColors.placeholderColor
-        label.font = UIFont(name: "Extra Light", size: 20)
-        
-        return label
-    }()
+//    private lazy var instituteLabel: UILabel = {
+//        let label = UILabel()
+//        label.text = "Институт:"
+//        label.textColor = AppColors.placeholderColor
+//        label.font = UIFont(name: "Extra Light", size: 20)
+//        
+//        return label
+//    }()
+    
+//    private lazy var phoneLabel: UILabel = {
+//        let label = UILabel()
+//        label.text = "Номер телефона:"
+//        label.textColor = AppColors.placeholderColor
+//        label.font = UIFont(name: "Extra Light", size: 20)
+//        
+//        return label
+//    }()
         
     private lazy var changeDataButton: UIButton = {
         let button = UIButton(type: .system)
@@ -228,11 +228,11 @@ class AccountViewController: UIViewController {
         viewback.addSubview(titlelabel)
         viewback.addSubview(changeDataButton)
         
-        [loginTextField, passwordTextField, FIOTextField, instituteTextField, emailTextField, phoneTextField].forEach {
+        [passwordTextField, FIOTextField, instituteTextField, emailTextField].forEach {
             viewback.addSubview($0)
         }
         
-        [loginLabel, passwordLabel, emailLabel, FIOLabel, instituteLabel, phoneLabel].forEach {
+        [passwordLabel, emailLabel, fioLabel, instituteLabel].forEach {
             viewback.addSubview($0)
         }
     }
@@ -255,7 +255,7 @@ class AccountViewController: UIViewController {
             make.top.equalToSuperview().inset(4)
         }
         
-        loginTextField.snp.makeConstraints { make in
+        emailTextField.snp.makeConstraints { make in
             make.width.equalTo(247)
             make.height.equalTo(50)
             make.top.equalToSuperview().inset(109)
@@ -269,35 +269,35 @@ class AccountViewController: UIViewController {
             make.top.equalToSuperview().inset(200)
         }
         
-        emailTextField.snp.makeConstraints { make in
+        FIOTextField.snp.makeConstraints { make in
             make.width.equalTo(247)
             make.height.equalTo(50)
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().inset(291)
         }
         
-        FIOTextField.snp.makeConstraints { make in
+        instituteTextField.snp.makeConstraints { make in
             make.width.equalTo(247)
             make.height.equalTo(50)
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().inset(382)
         }
         
-        instituteTextField.snp.makeConstraints { make in
-            make.width.equalTo(247)
-            make.height.equalTo(50)
-            make.centerX.equalToSuperview()
-            make.top.equalToSuperview().inset(473)
-        }
+//        instituteTextField.snp.makeConstraints { make in
+//            make.width.equalTo(247)
+//            make.height.equalTo(50)
+//            make.centerX.equalToSuperview()
+//            make.top.equalToSuperview().inset(473)
+//        }
         
-        phoneTextField.snp.makeConstraints { make in
-            make.width.equalTo(247)
-            make.height.equalTo(50)
-            make.centerX.equalToSuperview()
-            make.top.equalToSuperview().inset(563)
-        }
+//        phoneTextField.snp.makeConstraints { make in
+//            make.width.equalTo(247)
+//            make.height.equalTo(50)
+//            make.centerX.equalToSuperview()
+//            make.top.equalToSuperview().inset(563)
+//        }
         
-        loginLabel.snp.makeConstraints { make in
+        emailLabel.snp.makeConstraints { make in
             make.height.equalTo(17)
             make.width.equalTo(200)
             make.leading.equalToSuperview().inset(70)
@@ -311,44 +311,44 @@ class AccountViewController: UIViewController {
             make.top.equalToSuperview().inset(177)
         }
         
-        emailLabel.snp.makeConstraints { make in
+        fioLabel.snp.makeConstraints { make in
             make.height.equalTo(17)
             make.width.equalTo(200)
             make.leading.equalToSuperview().inset(70)
             make.top.equalToSuperview().inset(268)
         }
         
-        FIOLabel.snp.makeConstraints { make in
+        instituteLabel.snp.makeConstraints { make in
             make.height.equalTo(17)
             make.width.equalTo(200)
             make.leading.equalToSuperview().inset(70)
             make.top.equalToSuperview().inset(359)
         }
         
-        instituteLabel.snp.makeConstraints { make in
-            make.height.equalTo(17)
-            make.width.equalTo(200)
-            make.leading.equalToSuperview().inset(70)
-            make.top.equalToSuperview().inset(450)
-        }
+//        instituteLabel.snp.makeConstraints { make in
+//            make.height.equalTo(17)
+//            make.width.equalTo(200)
+//            make.leading.equalToSuperview().inset(70)
+//            make.top.equalToSuperview().inset(450)
+//        }
         
-        phoneLabel.snp.makeConstraints { make in
-            make.height.equalTo(17)
-            make.width.equalTo(200)
-            make.leading.equalToSuperview().inset(70)
-            make.top.equalToSuperview().inset(540)
-        }
+//        phoneLabel.snp.makeConstraints { make in
+//            make.height.equalTo(17)
+//            make.width.equalTo(200)
+//            make.leading.equalToSuperview().inset(70)
+//            make.top.equalToSuperview().inset(540)
+//        }
         
         changeDataButton.snp.makeConstraints { make in
             make.height.equalTo(63)
             make.width.equalTo(215)
-            make.top.equalToSuperview().inset(631)
+            make.top.equalToSuperview().inset(460)
             make.centerX.equalToSuperview()
         }
     }
     
     @objc private func changeDataButtonTapped() {
-        [loginTextField, passwordTextField, FIOTextField, instituteTextField, emailTextField, phoneTextField].forEach {
+        [passwordTextField, FIOTextField, instituteTextField, emailTextField].forEach {
             $0.isUserInteractionEnabled = true
         }
     }

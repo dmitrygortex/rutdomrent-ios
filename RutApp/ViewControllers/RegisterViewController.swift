@@ -7,6 +7,8 @@
 
 import UIKit
 import SnapKit
+import Firebase
+import FirebaseAuth
 
 final class RegisterViewController: UIViewController {
 
@@ -41,20 +43,21 @@ final class RegisterViewController: UIViewController {
         return view
     }()
     
-    private lazy var loginTextField: UITextField = {
-        let login = UITextField()
-        login.textColor = .black
-        login.backgroundColor = .white
-        login.layer.cornerRadius = 12
-        login.attributedPlaceholder = NSAttributedString(
-            string: "Логин",
+    private lazy var emailTextField: UITextField = {
+        let email = UITextField()
+        email.textColor = .black
+        email.backgroundColor = .white
+        email.layer.cornerRadius = 12
+        email.attributedPlaceholder = NSAttributedString(
+            string: "Email",
             attributes: [NSAttributedString.Key.foregroundColor: AppColors.placeholderColor]
         )
-        login.textAlignment = .center
-        login.delegate = self
-        login.returnKeyType = .go
+        email.textAlignment = .center
+        email.delegate = self
+        email.returnKeyType = .go
+        email.keyboardType = .emailAddress
         
-        return login
+        return email
     }()
     
     private lazy var FIOTextField: UITextField = {
@@ -71,23 +74,6 @@ final class RegisterViewController: UIViewController {
         fio.returnKeyType = .go
         
         return fio
-    }()
-    
-    private lazy var emailTextField: UITextField = {
-        let email = UITextField()
-        email.textColor = .black
-        email.backgroundColor = .white
-        email.layer.cornerRadius = 12
-        email.attributedPlaceholder = NSAttributedString(
-            string: "Email",
-            attributes: [NSAttributedString.Key.foregroundColor: AppColors.placeholderColor]
-        )
-        email.textAlignment = .center
-        email.delegate = self
-        email.returnKeyType = .go
-        email.keyboardType = .emailAddress
-        
-        return email
     }()
     
     private lazy var instituteTextField: UITextField = {
@@ -123,22 +109,22 @@ final class RegisterViewController: UIViewController {
         return password
     }()
     
-    private lazy var phoneTextField: UITextField = {
-        let phone = UITextField()
-        phone.textColor = .black
-        phone.backgroundColor = .white
-        phone.layer.cornerRadius = 12
-        phone.attributedPlaceholder = NSAttributedString(
-            string: "Номер телефона",
-            attributes: [NSAttributedString.Key.foregroundColor: AppColors.placeholderColor]
-        )
-        phone.textAlignment = .center
-        phone.delegate = self
-        phone.returnKeyType = .go
-        phone.keyboardType = .phonePad
-        
-        return phone
-    }()
+//    private lazy var phoneTextField: UITextField = {
+//        let phone = UITextField()
+//        phone.textColor = .black
+//        phone.backgroundColor = .white
+//        phone.layer.cornerRadius = 12
+//        phone.attributedPlaceholder = NSAttributedString(
+//            string: "Номер телефона",
+//            attributes: [NSAttributedString.Key.foregroundColor: AppColors.placeholderColor]
+//        )
+//        phone.textAlignment = .center
+//        phone.delegate = self
+//        phone.returnKeyType = .go
+//        phone.keyboardType = .phonePad
+//        
+//        return phone
+//    }()
         
     private lazy var registerButton: UIButton = {
         let button = UIButton(type: .system)
@@ -192,7 +178,7 @@ final class RegisterViewController: UIViewController {
         backgroundView.addSubview(registerButton)
         backgroundView.addSubview(loginButton)
         
-        [loginTextField, passwordTextField, FIOTextField, instituteTextField, emailTextField, phoneTextField].forEach {
+        [passwordTextField, FIOTextField, instituteTextField, emailTextField].forEach {
             backgroundView.addSubview($0)
         }
     }
@@ -204,14 +190,14 @@ final class RegisterViewController: UIViewController {
         
         viewback.snp.makeConstraints { make in
             make.top.leading.bottom.trailing.equalToSuperview()
-            make.height.equalTo(785)
+            make.height.equalTo(685)
             make.width.equalTo(self.view)
         }
         
         backgroundView.snp.makeConstraints { make in
             make.width.equalTo(289)
-            make.height.equalTo(700)
-            make.top.equalToSuperview().inset(25)
+            make.height.equalTo(580)
+            make.top.equalToSuperview().inset(70)
             make.leading.equalToSuperview().inset(37)
             make.trailing.equalTo(-37)
         }
@@ -223,7 +209,7 @@ final class RegisterViewController: UIViewController {
             make.centerX.equalToSuperview()
         }
         
-        loginTextField.snp.makeConstraints { make in
+        emailTextField.snp.makeConstraints { make in
             make.width.equalTo(247)
             make.height.equalTo(50)
             make.centerX.equalToSuperview()
@@ -237,45 +223,45 @@ final class RegisterViewController: UIViewController {
             make.top.equalToSuperview().inset(180)
         }
         
-        emailTextField.snp.makeConstraints { make in
+        FIOTextField.snp.makeConstraints { make in
             make.width.equalTo(247)
             make.height.equalTo(50)
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().inset(260)
         }
         
-        FIOTextField.snp.makeConstraints { make in
+        instituteTextField.snp.makeConstraints { make in
             make.width.equalTo(247)
             make.height.equalTo(50)
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().inset(340)
         }
         
-        instituteTextField.snp.makeConstraints { make in
-            make.width.equalTo(247)
-            make.height.equalTo(50)
-            make.centerX.equalToSuperview()
-            make.top.equalToSuperview().inset(420)
-        }
+//        instituteTextField.snp.makeConstraints { make in
+//            make.width.equalTo(247)
+//            make.height.equalTo(50)
+//            make.centerX.equalToSuperview()
+//            make.top.equalToSuperview().inset(420)
+//        }
         
-        phoneTextField.snp.makeConstraints { make in
-            make.width.equalTo(247)
-            make.height.equalTo(50)
-            make.centerX.equalToSuperview()
-            make.top.equalToSuperview().inset(500)
-        }
+//        phoneTextField.snp.makeConstraints { make in
+//            make.width.equalTo(247)
+//            make.height.equalTo(50)
+//            make.centerX.equalToSuperview()
+//            make.top.equalToSuperview().inset(500)
+//        }
         
         registerButton.snp.makeConstraints { make in
             make.height.equalTo(56)
             make.width.equalTo(192)
-            make.top.equalToSuperview().inset(580)
+            make.top.equalToSuperview().inset(450)
             make.centerX.equalToSuperview()
         }
         
         loginButton.snp.makeConstraints { make in
             make.height.equalTo(28)
             make.width.equalTo(230)
-            make.top.equalToSuperview().inset(650)
+            make.top.equalToSuperview().inset(520)
             make.centerX.equalToSuperview()
         }
     }
@@ -285,7 +271,33 @@ final class RegisterViewController: UIViewController {
     }
     
     @objc private func registerButtonTapped() {
-        // ...
+        
+        // TODO: validate
+        
+        let email = emailTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        let password = passwordTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        let fio = FIOTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        let institute = instituteTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
+            
+            if error != nil {
+                print(error!.localizedDescription)
+            } else {
+                let db = Firestore.firestore()
+                
+                let uid = result!.user.uid
+                
+                db.collection("users").document(uid).setData(["email": email, "password": password, "fio": fio, "institute": institute, "uid": uid]) { error in
+                    if let error = error {
+                        print("Ошибка записи данных в Firestore: \(error.localizedDescription)")
+                    } else {
+                        print("Данные успешно записаны в Firestore для пользователя \(uid)")
+                    }
+                }
+            }
+            
+        }
     }
     
     @objc func keyboardWillShow(_ notification: Notification) {

@@ -40,14 +40,14 @@ class LoginViewController: UIViewController {
         return view
     }()
     
-    private lazy var loginTextField: UITextField = {
+    private lazy var email: UITextField = {
         let login = UITextField()
         login.textColor = .black
         login.backgroundColor = .white
         login.textAlignment = .center
         login.layer.cornerRadius = 12
         login.attributedPlaceholder = NSAttributedString(
-            string: "Логин",
+            string: "Email",
             attributes: [NSAttributedString.Key.foregroundColor: AppColors.placeholderColor]
         )
         login.delegate = self
@@ -117,7 +117,7 @@ class LoginViewController: UIViewController {
         view.addSubview(backgroundView)
         view.addSubview(titlelabel)
         backgroundView.addSubview(loginLabel)
-        backgroundView.addSubview(loginTextField)
+        backgroundView.addSubview(email)
         backgroundView.addSubview(passwordTextField)
         backgroundView.addSubview(loginButton)
         backgroundView.addSubview(makeAccountButton)
@@ -145,7 +145,7 @@ class LoginViewController: UIViewController {
             make.centerX.equalToSuperview()
         }
         
-        loginTextField.snp.makeConstraints { make in
+        email.snp.makeConstraints { make in
             make.width.equalTo(247)
             make.height.equalTo(50)
             make.centerX.equalToSuperview()
