@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import FirebaseAuth
 
 class BookingViewController: UIViewController {
     
@@ -234,9 +235,7 @@ class BookingViewController: UIViewController {
     @objc private func continueButtonTapped() {
         navigationController?.pushViewController(ScheduleViewController(), animated: true)
     }
-    
-    // TODO: Add VC
-    
+        
     @objc private func myBookingsButtonTapped() {
         
     }

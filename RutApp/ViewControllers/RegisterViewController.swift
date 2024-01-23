@@ -272,14 +272,40 @@ final class RegisterViewController: UIViewController {
     
     @objc private func registerButtonTapped() {
         
-        // TODO: validate
+        let email = emailTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+        let password = passwordTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+        let fio = FIOTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+        let institute = instituteTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         
-        let email = emailTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-        let password = passwordTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-        let fio = FIOTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-        let institute = instituteTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !Validate.emailIsValid(email) {
+            
+            let alert = Validate.showError(title: "Неверный email", message: "Введите корректный email")
+            present(alert, animated: true)
+            return
+        }
         
-        Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
+        if !Validate.passwordIsValid(password) {
+            
+            let alert = Validate.showError(title: "Неверный пароль", message: "Пароль должен быть не короче 8 символов, а также содержать хотя бы 1 цифру и 1 специальный знак")
+            present(alert, animated: true)
+            return
+        }
+        
+        if !Validate.fioIsValid(fio) {
+            
+            let alert = Validate.showError(title: "Неверный ФИО", message: "Введите ваш ФИО через пробел")
+            present(alert, animated: true)
+            return
+        }
+        
+        if !Validate.instituteIsValid(institute) {
+            
+            let alert = Validate.showError(title: "Неверный институт", message: "Институт должен входить в состав РУТ (МИИТ)")
+            present(alert, animated: true)
+            return
+        }
+        
+        Auth.auth().createUser(withEmail: email!, password: password!) { (result, error) in
             
             if error != nil {
                 print(error!.localizedDescription)
@@ -288,11 +314,12 @@ final class RegisterViewController: UIViewController {
                 
                 let uid = result!.user.uid
                 
-                db.collection("users").document(uid).setData(["email": email, "password": password, "fio": fio, "institute": institute, "uid": uid]) { error in
+                db.collection("users").document(uid).setData(["email": email!, "password": password!, "fio": fio!, "institute": institute!, "uid": uid]) { error in
                     if let error = error {
                         print("Ошибка записи данных в Firestore: \(error.localizedDescription)")
                     } else {
                         print("Данные успешно записаны в Firestore для пользователя \(uid)")
+                        self.navigationController?.pushViewController(TabBarController(), animated: true)
                     }
                 }
             }

@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import FirebaseAuth
 
 class LoginViewController: UIViewController {
     
@@ -40,20 +41,21 @@ class LoginViewController: UIViewController {
         return view
     }()
     
-    private lazy var email: UITextField = {
-        let login = UITextField()
-        login.textColor = .black
-        login.backgroundColor = .white
-        login.textAlignment = .center
-        login.layer.cornerRadius = 12
-        login.attributedPlaceholder = NSAttributedString(
+    private lazy var emailTextField: UITextField = {
+        let email = UITextField()
+        email.textColor = .black
+        email.backgroundColor = .white
+        email.textAlignment = .center
+        email.layer.cornerRadius = 12
+        email.attributedPlaceholder = NSAttributedString(
             string: "Email",
             attributes: [NSAttributedString.Key.foregroundColor: AppColors.placeholderColor]
         )
-        login.delegate = self
-        login.returnKeyType = .go
+        email.delegate = self
+        email.returnKeyType = .go
+        email.keyboardType = .emailAddress
         
-        return login
+        return email
     }()
     
     private lazy var passwordTextField: UITextField = {
@@ -117,7 +119,7 @@ class LoginViewController: UIViewController {
         view.addSubview(backgroundView)
         view.addSubview(titlelabel)
         backgroundView.addSubview(loginLabel)
-        backgroundView.addSubview(email)
+        backgroundView.addSubview(emailTextField)
         backgroundView.addSubview(passwordTextField)
         backgroundView.addSubview(loginButton)
         backgroundView.addSubview(makeAccountButton)
@@ -145,7 +147,7 @@ class LoginViewController: UIViewController {
             make.centerX.equalToSuperview()
         }
         
-        email.snp.makeConstraints { make in
+        emailTextField.snp.makeConstraints { make in
             make.width.equalTo(247)
             make.height.equalTo(50)
             make.centerX.equalToSuperview()
@@ -175,10 +177,31 @@ class LoginViewController: UIViewController {
     }
     
     @objc private func loginButtonPressed() {
-        // ...
+                
+        let email = emailTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+        let password = passwordTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         
-        navigationController?.setNavigationBarHidden(true, animated: false)
-        navigationController?.pushViewController(TabBarController(), animated: true)
+        if !Validate.emailIsValid(email) {
+            let alert = Validate.showError(title: "Неверный email", message: "Введите корректный email")
+            present(alert, animated: true)
+            return
+        }
+        
+        if !Validate.passwordIsValid(password) {
+            let alert = Validate.showError(title: "Неверный пароль", message: "Пароль должен быть не короче 8 символов, а также содержать хотя бы 1 цифру и 1 специальный знак")
+            present(alert, animated: true)
+            return
+        }
+        
+        Auth.auth().signIn(withEmail: email!, password: password!) { [weak self] authResult, error in
+            if let error = error {
+                print(error.localizedDescription)
+            } else {
+                print("Вход успешно выполнен")
+                self?.navigationController?.setNavigationBarHidden(true, animated: false)
+                self?.navigationController?.pushViewController(TabBarController(), animated: true)
+            }
+        }
     }
     
     @objc private func makeAccountButtonPressed() {
