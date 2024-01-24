@@ -108,23 +108,6 @@ final class RegisterViewController: UIViewController {
         
         return password
     }()
-    
-//    private lazy var phoneTextField: UITextField = {
-//        let phone = UITextField()
-//        phone.textColor = .black
-//        phone.backgroundColor = .white
-//        phone.layer.cornerRadius = 12
-//        phone.attributedPlaceholder = NSAttributedString(
-//            string: "Номер телефона",
-//            attributes: [NSAttributedString.Key.foregroundColor: AppColors.placeholderColor]
-//        )
-//        phone.textAlignment = .center
-//        phone.delegate = self
-//        phone.returnKeyType = .go
-//        phone.keyboardType = .phonePad
-//        
-//        return phone
-//    }()
         
     private lazy var registerButton: UIButton = {
         let button = UIButton(type: .system)
@@ -237,31 +220,17 @@ final class RegisterViewController: UIViewController {
             make.top.equalToSuperview().inset(340)
         }
         
-//        instituteTextField.snp.makeConstraints { make in
-//            make.width.equalTo(247)
-//            make.height.equalTo(50)
-//            make.centerX.equalToSuperview()
-//            make.top.equalToSuperview().inset(420)
-//        }
-        
-//        phoneTextField.snp.makeConstraints { make in
-//            make.width.equalTo(247)
-//            make.height.equalTo(50)
-//            make.centerX.equalToSuperview()
-//            make.top.equalToSuperview().inset(500)
-//        }
-        
         registerButton.snp.makeConstraints { make in
             make.height.equalTo(56)
             make.width.equalTo(192)
-            make.top.equalToSuperview().inset(450)
+            make.top.equalToSuperview().inset(440)
             make.centerX.equalToSuperview()
         }
         
         loginButton.snp.makeConstraints { make in
             make.height.equalTo(28)
             make.width.equalTo(230)
-            make.top.equalToSuperview().inset(520)
+            make.top.equalToSuperview().inset(510)
             make.centerX.equalToSuperview()
         }
     }
@@ -279,28 +248,28 @@ final class RegisterViewController: UIViewController {
         
         if !Validate.emailIsValid(email) {
             
-            let alert = Validate.showError(title: "Неверный email", message: "Введите корректный email")
+            let alert = Validate.showAlert(title: "Неверный email", message: "Введите корректный email")
             present(alert, animated: true)
             return
         }
         
         if !Validate.passwordIsValid(password) {
             
-            let alert = Validate.showError(title: "Неверный пароль", message: "Пароль должен быть не короче 8 символов, а также содержать хотя бы 1 цифру и 1 специальный знак")
+            let alert = Validate.showAlert(title: "Неверный пароль", message: "Пароль должен быть не короче 8 символов, а также содержать хотя бы 1 цифру и 1 специальный знак")
             present(alert, animated: true)
             return
         }
         
         if !Validate.fioIsValid(fio) {
             
-            let alert = Validate.showError(title: "Неверный ФИО", message: "Введите ваш ФИО через пробел")
+            let alert = Validate.showAlert(title: "Неверный ФИО", message: "Введите ваш ФИО через пробел")
             present(alert, animated: true)
             return
         }
         
         if !Validate.instituteIsValid(institute) {
             
-            let alert = Validate.showError(title: "Неверный институт", message: "Институт должен входить в состав РУТ (МИИТ)")
+            let alert = Validate.showAlert(title: "Неверный институт", message: "Институт должен входить в состав РУТ (МИИТ)")
             present(alert, animated: true)
             return
         }

@@ -21,7 +21,7 @@ class Validate {
         guard let password = password else { return false }
         if password == "" { return false }
         
-        let passwordTest = NSPredicate(format: "SELF MATCHES %@", "^(?=.*[a-z])(?=.*[$@$#!%;*?&])[А-Яа-яA-Za-z\\d$@$#!%*?&]{8,}")
+        let passwordTest = NSPredicate(format: "SELF MATCHES %@", "^(?=.*[a-z])(?=.*[$@$#!%;*?&])[А-Яа-яA-Za-z\\d$@$#!%*,.()?&]{8,}")
         return passwordTest.evaluate(with: password)
     }
     
@@ -54,7 +54,7 @@ class Validate {
         return false
     }
     
-    static func showError(title: String, message: String) -> UIAlertController {
+    static func showAlert(title: String, message: String) -> UIAlertController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Хорошо", style: .cancel, handler: { action in

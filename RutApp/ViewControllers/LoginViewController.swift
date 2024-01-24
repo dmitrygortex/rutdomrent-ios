@@ -164,14 +164,14 @@ class LoginViewController: UIViewController {
         loginButton.snp.makeConstraints { make in
             make.height.equalTo(56)
             make.width.equalTo(192)
-            make.top.equalToSuperview().inset(290)
+            make.top.equalToSuperview().inset(280)
             make.centerX.equalToSuperview()
         }
         
         makeAccountButton.snp.makeConstraints { make in
             make.height.equalTo(28)
             make.width.equalTo(140)
-            make.top.equalToSuperview().inset(365)
+            make.top.equalToSuperview().inset(355)
             make.centerX.equalToSuperview()
         }
     }
@@ -182,13 +182,13 @@ class LoginViewController: UIViewController {
         let password = passwordTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         
         if !Validate.emailIsValid(email) {
-            let alert = Validate.showError(title: "Неверный email", message: "Введите корректный email")
+            let alert = Validate.showAlert(title: "Неверный email", message: "Введите корректный email")
             present(alert, animated: true)
             return
         }
         
         if !Validate.passwordIsValid(password) {
-            let alert = Validate.showError(title: "Неверный пароль", message: "Пароль должен быть не короче 8 символов, а также содержать хотя бы 1 цифру и 1 специальный знак")
+            let alert = Validate.showAlert(title: "Неверный пароль", message: "Пароль должен быть не короче 8 символов, а также содержать хотя бы 1 цифру и 1 специальный знак")
             present(alert, animated: true)
             return
         }
@@ -196,6 +196,8 @@ class LoginViewController: UIViewController {
         Auth.auth().signIn(withEmail: email!, password: password!) { [weak self] authResult, error in
             if let error = error {
                 print(error.localizedDescription)
+                let alert = Validate.showAlert(title: "Ошибка", message: "Неверный email или пароль")
+                self?.present(alert, animated: true)
             } else {
                 print("Вход успешно выполнен")
                 self?.navigationController?.setNavigationBarHidden(true, animated: false)

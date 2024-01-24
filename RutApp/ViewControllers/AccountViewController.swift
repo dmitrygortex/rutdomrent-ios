@@ -334,6 +334,15 @@ class AccountViewController: UIViewController {
         }
     }
     
+    private func signInUser() {
+        Auth.auth().signIn(withEmail: emailText, password: passwordText) { result, error in
+            if error != nil {
+                print(error!.localizedDescription)
+                print("Sign In doesn't successful")
+            }
+        }
+    }
+    
     @objc private func changeDataButtonTapped() {
         [passwordTextField, FIOTextField, instituteTextField, emailTextField].forEach {
             $0.isUserInteractionEnabled = true
@@ -344,31 +353,45 @@ class AccountViewController: UIViewController {
         let firebaseAuth = Auth.auth()
         
         do {
+            signInUser()
           try firebaseAuth.signOut()
             print("Пользователь успешно вышел из аккаунта")
+            [passwordTextField, FIOTextField, instituteTextField, emailTextField].forEach { $0.text = "" }
+            let alert = Validate.showAlert(title: "Готово", message: "Вы успешно вышли из аккаунта")
+            present(alert, animated: true)
         } catch let signOutError as NSError {
           print("Error signing out: %@", signOutError)
         }
     }
     
     @objc private func deleteAccountButtonTapped() {
+        
+        signInUser()
+        
         let user = Auth.auth().currentUser
-
-        user?.delete { error in
-          if let error = error {
-              print(error.localizedDescription)
-          } else {
-            print("User Account successfully deleted.")
-          }
-        }
         
         Firestore.firestore().collection("users").document(user!.uid).delete { error in
             if error != nil {
                 print(error!.localizedDescription)
+                print("Account in Firestore doesn't deleted.")
+                
             } else {
                 print("Account in Firestore successfully deleted.")
             }
         }
+        
+        user?.delete { error in
+          if let error = error {
+              print(error.localizedDescription)
+              print("User account doesn't deleted.")
+          } else {
+            print("User Account successfully deleted.")
+              [self.passwordTextField, self.FIOTextField, self.instituteTextField, self.emailTextField].forEach { $0.text = "" }
+              let alert = Validate.showAlert(title: "Готово", message: "Вы успешно удалили аккаунт")
+              self.present(alert, animated: true)
+          }
+        }
+        
     }
     
     @objc func keyboardWillShow(_ notification: Notification) {
@@ -399,28 +422,28 @@ extension AccountViewController: UITextFieldDelegate {
             
             if !Validate.emailIsValid(email) {
                 
-                let alert = Validate.showError(title: "Неверный email", message: "Введите корректный email")
+                let alert = Validate.showAlert(title: "Неверный email", message: "Введите корректный email")
                 present(alert, animated: true)
                 return true
             }
             
             if !Validate.passwordIsValid(password) {
                 
-                let alert = Validate.showError(title: "Неверный пароль", message: "Пароль должен быть не короче 8 символов, а также содержать хотя бы 1 цифру и 1 специальный знак")
+                let alert = Validate.showAlert(title: "Неверный пароль", message: "Пароль должен быть не короче 8 символов, а также содержать хотя бы 1 цифру и 1 специальный знак")
                 present(alert, animated: true)
                 return true
             }
             
             if !Validate.fioIsValid(fio) {
                 
-                let alert = Validate.showError(title: "Неверный ФИО", message: "Введите ваш ФИО через пробел")
+                let alert = Validate.showAlert(title: "Неверный ФИО", message: "Введите ваш ФИО через пробел")
                 present(alert, animated: true)
                 return true
             }
             
             if !Validate.instituteIsValid(institute) {
                 
-                let alert = Validate.showError(title: "Неверный институт", message: "Институт должен входить в состав РУТ (МИИТ)")
+                let alert = Validate.showAlert(title: "Неверный институт", message: "Институт должен входить в состав РУТ (МИИТ)")
                 present(alert, animated: true)
                 return true
             }
@@ -435,15 +458,22 @@ extension AccountViewController: UITextFieldDelegate {
             let updatedData = ["email": newEmail, "password": newPassword, "fio": newFIO, "institute": newInstitute, "uid": uid!]
             
             if uid != nil {
-                
-                Auth.auth().currentUser?.sendEmailVerification(beforeUpdatingEmail: newEmail) { error in
-                    if let error = error {
-                        print("User email doesn't update.")
-                        print(error.localizedDescription)
-                    } else {
-                        print("User email updated successfully.")
+                if emailTextField.text != emailText {
+                    
+                    Auth.auth().currentUser?.sendEmailVerification(beforeUpdatingEmail: newEmail) { error in
+                        if let error = error {
+                            print("User email doesn't update.")
+                            print(error.localizedDescription)
+                        } else {
+                            print("User email updated successfully.")
+                        }
                     }
                 }
+                
+                emailText = newEmail
+                passwordText = newPassword
+                fioText = newFIO
+                instituteText = newInstitute
                 
                 let userDocument = Firestore.firestore().collection("users").document(uid!)
                 
@@ -452,6 +482,8 @@ extension AccountViewController: UITextFieldDelegate {
                         print("Ошибка обновления дных пользователя: \(error.localizedDescription)")
                     } else {
                         print("Данные пользователя успешно обновлены")
+                        let alert = Validate.showAlert(title: "Готово", message: "Ваши данные успешно обновлены")
+                        self.present(alert, animated: true)
                     }
                 }
                 
