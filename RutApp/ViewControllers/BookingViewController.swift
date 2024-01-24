@@ -15,6 +15,8 @@ class BookingViewController: UIViewController {
     
     let rooms = ["Лекторий", "Переговорная", "Фотостудия"]
     
+    var vc = ScheduleViewController()
+    
     private lazy var titlelabel: UILabel = {
         let label = UILabel()
         label.text = "Бронирование"
@@ -233,6 +235,9 @@ class BookingViewController: UIViewController {
     }
     
     @objc private func continueButtonTapped() {
+        vc.room = roomTextField.text!
+        vc.purpose = purposeTextField.text ?? ""
+        
         navigationController?.pushViewController(ScheduleViewController(), animated: true)
     }
         
@@ -288,6 +293,7 @@ extension BookingViewController: UICalendarSelectionSingleDateDelegate {
             return
         }
         print("Выбранная дата: \(data)")
+        vc.date = data
     }
 
       

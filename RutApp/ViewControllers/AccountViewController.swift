@@ -353,7 +353,6 @@ class AccountViewController: UIViewController {
         let firebaseAuth = Auth.auth()
         
         do {
-            signInUser()
           try firebaseAuth.signOut()
             print("Пользователь успешно вышел из аккаунта")
             [passwordTextField, FIOTextField, instituteTextField, emailTextField].forEach { $0.text = "" }
