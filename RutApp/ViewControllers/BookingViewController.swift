@@ -15,6 +15,12 @@ class BookingViewController: UIViewController {
     
     let rooms = ["Лекторий", "Переговорная", "Фотостудия"]
     
+    var userRoom = ""
+    
+    var userPurpose = ""
+    
+    var userDate: DateComponents?
+    
     var vc = ScheduleViewController()
     
     private lazy var titlelabel: UILabel = {
@@ -235,8 +241,14 @@ class BookingViewController: UIViewController {
     }
     
     @objc private func continueButtonTapped() {
-        vc.room = roomTextField.text!
-        vc.purpose = purposeTextField.text ?? ""
+        if roomTextField.text == "" || purposeTextField.text == "" {
+            let alert = Validate.showAlert(title: "Ошибка", message: "Заполните все поля")
+            present(alert, animated: true)
+            return
+        }
+        
+        userRoom = roomTextField.text!
+        userPurpose = purposeTextField.text!
         
         navigationController?.pushViewController(ScheduleViewController(), animated: true)
     }
@@ -256,6 +268,13 @@ class BookingViewController: UIViewController {
     @objc func keyboardWillHide(_ notification: Notification) {
         scrollView.contentInset = UIEdgeInsets.zero
         scrollView.scrollIndicatorInsets = UIEdgeInsets.zero
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationVC = segue.destination as! ScheduleViewController
+        destinationVC.room = userRoom
+        destinationVC.purpose = userPurpose
+        destinationVC.date = userDate
     }
     
 }
@@ -293,7 +312,7 @@ extension BookingViewController: UICalendarSelectionSingleDateDelegate {
             return
         }
         print("Выбранная дата: \(data)")
-        vc.date = data
+        self.userDate = data
     }
 
       

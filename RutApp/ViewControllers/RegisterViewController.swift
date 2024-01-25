@@ -106,6 +106,20 @@ final class RegisterViewController: UIViewController {
         password.delegate = self
         password.returnKeyType = .go
         
+        let eye = UIButton(type: .custom)
+        eye.setImage(UIImage(systemName: "eye.slash"), for: .normal)
+        eye.setImage(UIImage(systemName: "eye"), for: .selected)
+        eye.addTarget(self, action: #selector(eyeTapped), for: .touchUpInside)
+        eye.tintColor = AppColors.hintColor
+        eye.frame = CGRect(x: 50, y: 0, width: 30, height: 20)
+        
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 42, height: 20))
+        eye.center = view.center
+        view.addSubview(eye)
+        
+        password.rightView = view
+        password.rightViewMode = .always
+        
         return password
     }()
         
@@ -235,6 +249,11 @@ final class RegisterViewController: UIViewController {
         }
     }
     
+    @objc private func eyeTapped(sender: UIButton) {
+        passwordTextField.isSecureTextEntry.toggle()
+        sender.isSelected.toggle()
+    }
+    
     @objc private func loginButtonPressed() {
         navigationController?.pushViewController(LoginViewController(), animated: true)
     }
@@ -255,7 +274,7 @@ final class RegisterViewController: UIViewController {
         
         if !Validate.passwordIsValid(password) {
             
-            let alert = Validate.showAlert(title: "Неверный пароль", message: "Пароль должен быть не короче 8 символов, а также содержать хотя бы 1 цифру и 1 специальный знак")
+            let alert = Validate.showAlert(title: "Неверный пароль", message: "Пароль должен состоять из не менее 8 символов, цифр, специальных знаков, а также букв в обоих регистрах")
             present(alert, animated: true)
             return
         }

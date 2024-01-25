@@ -229,13 +229,12 @@ class AccountViewController: UIViewController {
     private func addSubviews() {
         view.addSubview(scrollView)
         scrollView.addSubview(viewback)
-        viewback.addSubview(titlelabel)
         
         [changeDataButton, signOutButton, deleteAccountButton].forEach { viewback.addSubview($0) }
         
         [passwordTextField, FIOTextField, instituteTextField, emailTextField].forEach { viewback.addSubview($0) }
         
-        [passwordLabel, emailLabel, fioLabel, instituteLabel].forEach { viewback.addSubview($0) }
+        [titlelabel, passwordLabel, emailLabel, fioLabel, instituteLabel].forEach { viewback.addSubview($0) }
     }
     
     private func setUpConstraints() {
@@ -428,7 +427,7 @@ extension AccountViewController: UITextFieldDelegate {
             
             if !Validate.passwordIsValid(password) {
                 
-                let alert = Validate.showAlert(title: "Неверный пароль", message: "Пароль должен быть не короче 8 символов, а также содержать хотя бы 1 цифру и 1 специальный знак")
+                let alert = Validate.showAlert(title: "Неверный пароль", message: "Пароль должен состоять из не менее 8 символов, цифр, специальных знаков, а также букв в обоих регистрах")
                 present(alert, animated: true)
                 return true
             }
@@ -465,6 +464,17 @@ extension AccountViewController: UITextFieldDelegate {
                             print(error.localizedDescription)
                         } else {
                             print("User email updated successfully.")
+                        }
+                    }
+                }
+                
+                if passwordTextField.text != passwordText {
+                    Auth.auth().currentUser?.updatePassword(to: newPassword) { error in
+                        if let error = error {
+                            print("User password doesn't update.")
+                            print(error.localizedDescription)
+                        } else {
+                            print("User password updated successfully.")
                         }
                     }
                 }

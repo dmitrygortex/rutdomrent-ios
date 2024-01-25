@@ -57,7 +57,7 @@ class Validate {
     static func showAlert(title: String, message: String) -> UIAlertController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
-        alert.addAction(UIAlertAction(title: "Хорошо", style: .cancel, handler: { action in
+        alert.addAction(UIAlertAction(title: "Понятно", style: .cancel, handler: { action in
             print("Alert successful")
         }))
         

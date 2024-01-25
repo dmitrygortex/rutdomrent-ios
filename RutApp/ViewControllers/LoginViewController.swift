@@ -188,7 +188,7 @@ class LoginViewController: UIViewController {
         }
         
         if !Validate.passwordIsValid(password) {
-            let alert = Validate.showAlert(title: "Неверный пароль", message: "Пароль должен быть не короче 8 символов, а также содержать хотя бы 1 цифру и 1 специальный знак")
+            let alert = Validate.showAlert(title: "Неверный пароль", message: "Пароль должен состоять из не менее 8 символов, цифр, специальных знаков, а также букв в обоих регистрах")
             present(alert, animated: true)
             return
         }
