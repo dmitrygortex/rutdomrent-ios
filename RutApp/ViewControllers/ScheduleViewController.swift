@@ -165,7 +165,7 @@ class ScheduleViewController: UIViewController {
         
         viewback.snp.makeConstraints { make in
             make.top.leading.trailing.bottom.equalToSuperview()
-            make.height.equalTo(870)
+            make.height.equalTo(830)
             make.width.equalTo(self.view)
         }
         
@@ -173,7 +173,7 @@ class ScheduleViewController: UIViewController {
             make.height.equalTo(54)
             make.width.equalTo(292)
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().inset(70)
+            make.top.equalToSuperview().inset(40)
         }
         
         secondButton.snp.makeConstraints { make in

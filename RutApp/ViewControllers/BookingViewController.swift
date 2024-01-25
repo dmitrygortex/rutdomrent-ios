@@ -13,6 +13,8 @@ class BookingViewController: UIViewController {
     
     //MARK: -Properties
     
+    var scheduleVC = ScheduleViewController()
+    
     let rooms = ["Лекторий", "Переговорная", "Фотостудия"]
     
     var userRoom = ""
@@ -20,9 +22,7 @@ class BookingViewController: UIViewController {
     var userPurpose = ""
     
     var userDate: DateComponents?
-    
-    var vc = ScheduleViewController()
-    
+        
     private lazy var titlelabel: UILabel = {
         let label = UILabel()
         label.text = "Бронирование"
@@ -151,6 +151,13 @@ class BookingViewController: UIViewController {
         setUpConstraints()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        scheduleVC.room = userRoom
+        scheduleVC.date = userDate
+        scheduleVC.purpose = userPurpose
+    }
+    
     private func setUp() {
         view.backgroundColor = .white
         
@@ -250,7 +257,7 @@ class BookingViewController: UIViewController {
         userRoom = roomTextField.text!
         userPurpose = purposeTextField.text!
         
-        navigationController?.pushViewController(ScheduleViewController(), animated: true)
+        navigationController?.pushViewController(scheduleVC, animated: true)
     }
         
     @objc private func myBookingsButtonTapped() {
@@ -268,13 +275,6 @@ class BookingViewController: UIViewController {
     @objc func keyboardWillHide(_ notification: Notification) {
         scrollView.contentInset = UIEdgeInsets.zero
         scrollView.scrollIndicatorInsets = UIEdgeInsets.zero
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destinationVC = segue.destination as! ScheduleViewController
-        destinationVC.room = userRoom
-        destinationVC.purpose = userPurpose
-        destinationVC.date = userDate
     }
     
 }
