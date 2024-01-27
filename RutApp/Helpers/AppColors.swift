@@ -19,8 +19,6 @@ struct AppColors {
     static let hintColor = UIColor(red: 125 / 255, green: 125 / 255, blue: 125 / 255, alpha: 1)
     
     static let freeColor = UIColor(red: 57 / 255, green: 214 / 255, blue: 101 / 255, alpha: 1)
-    
-    static let freeSelectedColor = UIColor(red: 57 / 255, green: 214 / 255, blue: 101 / 255, alpha: 0.5)
-    
-    static let busyColor = UIColor(red: 141 / 255, green: 141 / 255, blue: 141 / 255, alpha: 1)
+        
+    static let busyColor = UIColor(red: 141 / 255, green: 141 / 255, blue: 141 / 255, alpha: 0.5)
 }

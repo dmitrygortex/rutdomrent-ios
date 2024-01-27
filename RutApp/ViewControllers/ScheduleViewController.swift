@@ -128,7 +128,7 @@ class ScheduleViewController: UIViewController {
         setUp()
         addSubviews()
         setUpConstraints()
-        checkFreeTime()
+        // print(date) - nil
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -138,7 +138,7 @@ class ScheduleViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        checkFreeTime()
         setUp()
     }
     
@@ -256,7 +256,56 @@ class ScheduleViewController: UIViewController {
     }
     
     private func checkFreeTime() {
+        let dataFull = getFullDate(self.date)
         
+        let _ = Firestore.firestore().collection("booking").document(dataFull).getDocument { document, error in
+            if error != nil {
+                print("Error on checking date for bookings: \(error?.localizedDescription)")
+            }
+            
+            if let document = document, document.exists {
+                let data = document.data()
+                if let data = data {
+                    print("Данные о бронировании: \(data)")
+                    
+                    for (time, _) in data {
+                        print(time)
+                        
+                        if time == "10.00-11.00" {
+                            self.disableButton(button: self.firstButton)
+                        } else if time == "11.00-12.00" {
+                            self.disableButton(button: self.secondButton)
+                        } else if time == "12.00-13.00" {
+                            self.disableButton(button: self.thirdButton)
+                        } else if time == "13.00-14.00" {
+                            self.disableButton(button: self.fourthButton)
+                        } else if time == "14.00-15.00" {
+                            self.disableButton(button: self.fifthButton)
+                        } else if time == "15.00-16.00" {
+                            self.disableButton(button: self.sixthButton)
+                        } else if time == "16.00-17.00" {
+                            self.disableButton(button: self.seventhButton)
+                        } else if time == "17.00-18.00" {
+                            self.disableButton(button: self.eighthButton)
+                        } else if time == "18.00-19.00" {
+                            self.disableButton(button: self.ninthButton)
+                        } else if time == "19.00-20.00" {
+                            self.disableButton(button: self.tenthButton)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    private func disableButton(button: UIButton) {
+        button.layer.borderColor = AppColors.busyColor.cgColor
+        button.setTitleColor(AppColors.busyColor, for: .normal)
+        button.isEnabled = false
+    }
+    
+    private func getFullDate(_ date: DateComponents?) -> String {
+        return String(date!.day!) + "." + String(date!.month!) + "." + String(date!.year!)
     }
     
     @objc private func timeButtonTapped(sender: UIButton) {
@@ -311,7 +360,7 @@ class ScheduleViewController: UIViewController {
         //MARK: Add to firestore
         
         let db = Firestore.firestore()
-        let dataFull = String(date!.day!) + "." + String(date!.month!) + "." + String(date!.year!)
+        let dataFull = getFullDate(date)
         let uid = Auth.auth().currentUser?.uid
         let bookingData = [time: ["uid": uid, "room": room, "purpose": purpose]]
         
@@ -324,6 +373,7 @@ class ScheduleViewController: UIViewController {
         }
         
         //MARK: Add to users collection
+        // TODO: REWRITING
         
         db.collection("users").document(uid!).setData(["bookings": [db.collection("booking").document(dataFull)]], merge: true) { error in
             if let error = error {
@@ -335,12 +385,15 @@ class ScheduleViewController: UIViewController {
             }
         }
         
+        self.checkFreeTime()
         
-        [firstButton, secondButton, thirdButton, fourthButton, fifthButton, sixthButton, seventhButton, eighthButton, ninthButton, tenthButton].forEach { buttton in
-            buttton.setTitleColor(AppColors.freeColor, for: .normal)
-            buttton.layer.borderColor = AppColors.freeColor.cgColor
-            buttton.layer.borderWidth = 2
-            buttton.tag = 0
+        [firstButton, secondButton, thirdButton, fourthButton, fifthButton, sixthButton, seventhButton, eighthButton, ninthButton, tenthButton].forEach { button in
+            if button.layer.borderColor != AppColors.busyColor.cgColor {
+                button.setTitleColor(AppColors.freeColor, for: .normal)
+                button.layer.borderColor = AppColors.freeColor.cgColor
+                button.layer.borderWidth = 2
+                button.tag = 0
+            }
         }
         disableButtons(disable: false)
         self.time = ""
@@ -348,7 +401,7 @@ class ScheduleViewController: UIViewController {
     
     private func disableButtons(disable: Bool) {
         [firstButton, secondButton, thirdButton, fourthButton, fifthButton, sixthButton, seventhButton, eighthButton, ninthButton, tenthButton].forEach { button in
-            if button.tag != 1 {
+            if button.tag != 1 && button.layer.borderColor != AppColors.busyColor.cgColor {
                 button.isEnabled = !disable
             }
         }
