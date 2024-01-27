@@ -128,11 +128,18 @@ class ScheduleViewController: UIViewController {
         setUp()
         addSubviews()
         setUpConstraints()
+        checkFreeTime()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        setUp()
     }
     
     private func setUp() {
@@ -248,9 +255,8 @@ class ScheduleViewController: UIViewController {
         }
     }
     
-    @objc private func back() {
-        navigationController?.setNavigationBarHidden(true, animated: true)
-        navigationController?.popViewController(animated: true)
+    private func checkFreeTime() {
+        
     }
     
     @objc private func timeButtonTapped(sender: UIButton) {
@@ -263,18 +269,18 @@ class ScheduleViewController: UIViewController {
             sender.tag = 1
             disableButtons(disable: true)
             
+            print("User time - \(time)")
+            print(date?.day, date?.month, date?.year)
+            print(room)
+            print(purpose)
         } else if sender.titleLabel?.textColor == AppColors.miitColor {
             sender.setTitleColor(AppColors.freeColor, for: .normal)
             sender.layer.borderColor = AppColors.freeColor.cgColor
             sender.layer.borderWidth = 2
             disableButtons(disable: false)
             sender.tag = 0
+            self.time = ""
         }
-        
-        print("User time - \(time)")
-        print(date?.day, date?.month, date?.year)
-        print(room)
-        print(purpose)
     }
     
     @objc private func bookingButtonTapped() {
@@ -282,6 +288,51 @@ class ScheduleViewController: UIViewController {
             let alert = Validate.showAlert(title: "Ошибка", message: "Укажите время посещения")
             present(alert, animated: true)
             return
+        }
+        
+        if self.date == nil {
+            let alert = Validate.showAlert(title: "Ошибка", message: "Укажите дату бронирования")
+            present(alert, animated: true)
+            return
+        }
+        
+        if self.room == "" {
+            let alert = Validate.showAlert(title: "Ошибка", message: "Укажите помещение, которое хотите забронировать")
+            present(alert, animated: true)
+            return
+        }
+        
+        if self.purpose == "" {
+            let alert = Validate.showAlert(title: "Ошибка", message: "Укажите цель бронирования")
+            present(alert, animated: true)
+            return
+        }
+        
+        //MARK: Add to firestore
+        
+        let db = Firestore.firestore()
+        let dataFull = String(date!.day!) + "." + String(date!.month!) + "." + String(date!.year!)
+        let uid = Auth.auth().currentUser?.uid
+        let bookingData = [time: ["uid": uid, "room": room, "purpose": purpose]]
+        
+        db.collection("booking").document(dataFull).setData(bookingData, merge: true) { error in
+            if let error = error {
+                print("Error on booking to firestore: \(error.localizedDescription)")
+            } else {
+                print("Successfully added a new booking to firestore")
+            }
+        }
+        
+        //MARK: Add to users collection
+        
+        db.collection("users").document(uid!).setData(["bookings": [db.collection("booking").document(dataFull)]], merge: true) { error in
+            if let error = error {
+                print("Error on adding user booking to firestore: \(error.localizedDescription)")
+            } else {
+                print("Successfully added user booking to firestore")
+                let alert = Validate.showAlert(title: "Готово!", message: "Вы успешно забронированы")
+                self.present(alert, animated: true)
+            }
         }
         
         

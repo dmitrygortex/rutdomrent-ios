@@ -125,6 +125,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		8E7359742B65049100AD3C80 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				8EDEC6652B5456F4007146D6 /* AppDelegate.swift */,
+				8EDEC6672B5456F4007146D6 /* SceneDelegate.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
 		8E8D84E62B57FF1100EA6A8E /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -168,8 +177,7 @@
 		8EDEC6642B5456F4007146D6 /* RutApp */ = {
 			isa = PBXGroup;
 			children = (
-				8EDEC6652B5456F4007146D6 /* AppDelegate.swift */,
-				8EDEC6672B5456F4007146D6 /* SceneDelegate.swift */,
+				8E7359742B65049100AD3C80 /* Application */,
 				8EE81D8D2B5ECFF1003D3596 /* Helpers */,
 				8E8FD0082B5571B50085C16A /* ViewControllers */,
 				8EDEC6732B5456F6007146D6 /* Info.plist */,

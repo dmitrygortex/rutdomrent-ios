@@ -248,7 +248,7 @@ class BookingViewController: UIViewController {
     }
     
     @objc private func continueButtonTapped() {
-        if roomTextField.text == "" || purposeTextField.text == "" {
+        if roomTextField.text == "" || purposeTextField.text == "" || userDate == nil {
             let alert = Validate.showAlert(title: "Ошибка", message: "Заполните все поля")
             present(alert, animated: true)
             return
@@ -309,6 +309,8 @@ extension BookingViewController: UICalendarSelectionSingleDateDelegate {
     func dateSelection(_ selection: UICalendarSelectionSingleDate, didSelectDate dateComponents: DateComponents?) {
         guard let data = dateComponents else {
             print("Error on data")
+            let alert = Validate.showAlert(title: "Ошибка", message: "Выберите дату")
+            present(alert, animated: true)
             return
         }
         print("Выбранная дата: \(data)")
