@@ -124,7 +124,7 @@ class ScheduleViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print("viewDidLoad - schedule")
         setUp()
         addSubviews()
         setUpConstraints()
@@ -134,12 +134,21 @@ class ScheduleViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(true, animated: true)
+        
+        [firstButton, secondButton, thirdButton, fourthButton, fifthButton, sixthButton, seventhButton, eighthButton, ninthButton, tenthButton].forEach { button in
+            button.setTitleColor(AppColors.freeColor, for: .normal)
+            button.layer.borderColor = AppColors.freeColor.cgColor
+            button.isEnabled = true
+        }
+        
+        print("viewWillDisappear - schedule")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         checkFreeTime()
         setUp()
+        print("viewWillAppear - schedule")
     }
     
     private func setUp() {
@@ -255,7 +264,7 @@ class ScheduleViewController: UIViewController {
         }
     }
     
-    private func checkFreeTime() {
+    func checkFreeTime() {
         let dataFull = getFullDate(self.date)
         
         let _ = Firestore.firestore().collection("booking").document(dataFull).getDocument { document, error in

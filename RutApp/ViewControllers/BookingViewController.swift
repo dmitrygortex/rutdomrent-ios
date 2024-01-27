@@ -145,7 +145,7 @@ class BookingViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print("viewDidLoad - booking")
         setUp()
         addSubviews()
         setUpConstraints()
@@ -156,6 +156,12 @@ class BookingViewController: UIViewController {
         scheduleVC.room = userRoom
         scheduleVC.date = userDate
         scheduleVC.purpose = userPurpose
+        print("viewWillDisappear - booking")
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        print("viewDidDisappear - booking")
     }
     
     private func setUp() {
@@ -257,6 +263,9 @@ class BookingViewController: UIViewController {
         userRoom = roomTextField.text!
         userPurpose = purposeTextField.text!
         
+        scheduleVC.room = userRoom
+        scheduleVC.date = userDate
+        scheduleVC.purpose = userPurpose
         navigationController?.pushViewController(scheduleVC, animated: true)
     }
         
