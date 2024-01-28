@@ -21,4 +21,5 @@ struct AppColors {
     static let freeColor = UIColor(red: 57 / 255, green: 214 / 255, blue: 101 / 255, alpha: 1)
         
     static let busyColor = UIColor(red: 141 / 255, green: 141 / 255, blue: 141 / 255, alpha: 0.5)
+    static let backViewColor = UIColor(red: 226 / 255, green: 226 / 255, blue: 226 / 255, alpha: 1)
 }

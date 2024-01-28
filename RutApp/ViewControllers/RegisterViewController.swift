@@ -111,7 +111,7 @@ final class RegisterViewController: UIViewController {
         eye.setImage(UIImage(systemName: "eye"), for: .selected)
         eye.addTarget(self, action: #selector(eyeTapped), for: .touchUpInside)
         eye.tintColor = AppColors.hintColor
-        eye.frame = CGRect(x: 50, y: 0, width: 30, height: 20)
+        eye.frame = CGRect(x: 0, y: 0, width: 30, height: 20)
         
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 42, height: 20))
         eye.center = view.center

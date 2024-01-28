@@ -124,11 +124,10 @@ class ScheduleViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("viewDidLoad - schedule")
+
         setUp()
         addSubviews()
         setUpConstraints()
-        // print(date) - nil
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -140,15 +139,12 @@ class ScheduleViewController: UIViewController {
             button.layer.borderColor = AppColors.freeColor.cgColor
             button.isEnabled = true
         }
-        
-        print("viewWillDisappear - schedule")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         checkFreeTime()
         setUp()
-        print("viewWillAppear - schedule")
     }
     
     private func setUp() {
@@ -331,6 +327,7 @@ class ScheduleViewController: UIViewController {
             print(date?.day, date?.month, date?.year)
             print(room)
             print(purpose)
+            
         } else if sender.titleLabel?.textColor == AppColors.miitColor {
             sender.setTitleColor(AppColors.freeColor, for: .normal)
             sender.layer.borderColor = AppColors.freeColor.cgColor
@@ -384,15 +381,36 @@ class ScheduleViewController: UIViewController {
         //MARK: Add to users collection
         // TODO: REWRITING
         
-        db.collection("users").document(uid!).setData(["bookings": [db.collection("booking").document(dataFull)]], merge: true) { error in
-            if let error = error {
-                print("Error on adding user booking to firestore: \(error.localizedDescription)")
-            } else {
-                print("Successfully added user booking to firestore")
-                let alert = Validate.showAlert(title: "Готово!", message: "Вы успешно забронированы")
-                self.present(alert, animated: true)
+        var oldvalue: [String: Any] = [:]
+        
+        db.collection("users").document(uid!).getDocument { doc, error in
+            if error != nil {
+                print(error?.localizedDescription)
+            }
+            
+            if let doc = doc, doc.exists {
+                if let data = doc.data() {
+                    for (key, value) in data {
+                        oldvalue[key] = value
+                    }
+                }
             }
         }
+
+        print(oldvalue)
+
+//        let ref = db.collection("booking").document(dataFull)
+//        oldvalue["bookings"].append(ref)
+//        
+//        db.collection("users").document(uid!).setData(oldvalue, merge: true) { error in
+//            if let error = error {
+//                print("Error on adding user booking to firestore: \(error.localizedDescription)")
+//            } else {
+//                print("Successfully added user booking to firestore")
+//                let alert = Validate.showAlert(title: "Готово!", message: "Вы успешно забронированы")
+//                self.present(alert, animated: true)
+//            }
+//        }
         
         self.checkFreeTime()
         

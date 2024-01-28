@@ -145,7 +145,7 @@ class BookingViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("viewDidLoad - booking")
+        
         setUp()
         addSubviews()
         setUpConstraints()
@@ -156,12 +156,6 @@ class BookingViewController: UIViewController {
         scheduleVC.room = userRoom
         scheduleVC.date = userDate
         scheduleVC.purpose = userPurpose
-        print("viewWillDisappear - booking")
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        print("viewDidDisappear - booking")
     }
     
     private func setUp() {
@@ -203,9 +197,9 @@ class BookingViewController: UIViewController {
         }
         
         calendar.snp.makeConstraints { make in
-            make.height.equalTo(411)
+            make.height.equalTo(420)
             make.width.equalTo(414)
-            make.top.equalToSuperview().inset(106)
+            make.top.equalToSuperview().inset(100)
             make.leading.equalToSuperview().inset(10)
             make.trailing.equalToSuperview().inset(10)
         }
@@ -270,7 +264,7 @@ class BookingViewController: UIViewController {
     }
         
     @objc private func myBookingsButtonTapped() {
-        
+        navigationController?.pushViewController(MyBookingsViewController(), animated: true)
     }
     
     @objc func keyboardWillShow(_ notification: Notification) {
