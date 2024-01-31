@@ -328,7 +328,7 @@ class AccountViewController: UIViewController {
         deleteAccountButton.snp.makeConstraints { make in
             make.height.equalTo(63)
             make.width.equalTo(215)
-            make.top.equalToSuperview().inset(616)
+            make.top.equalToSuperview().inset(606)
             make.centerX.equalToSuperview()
         }
     }

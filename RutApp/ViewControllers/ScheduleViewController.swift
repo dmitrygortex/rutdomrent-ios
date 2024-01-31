@@ -383,9 +383,17 @@ class ScheduleViewController: UIViewController {
         }
         
         // MARK: Add to users collection
-        // TODO: REWRITING
         
-
+        let ref = db.collection(room).document(dataFull)
+        let userData = ["bookings": FieldValue.arrayUnion([ref])]
+        
+        db.collection("users").document(uid!).updateData(userData) { error in
+            if let error = error {
+                print("Error: \(error.localizedDescription)")
+            } else {
+                print("Successfully added to user account booking")
+            }
+        }
         
         self.checkFreeTime()
         
