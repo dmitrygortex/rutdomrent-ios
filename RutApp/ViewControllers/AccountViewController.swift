@@ -321,14 +321,14 @@ class AccountViewController: UIViewController {
         signOutButton.snp.makeConstraints { make in
             make.height.equalTo(63)
             make.width.equalTo(215)
-            make.top.equalToSuperview().inset(543)
+            make.top.equalToSuperview().inset(533)
             make.centerX.equalToSuperview()
         }
         
         deleteAccountButton.snp.makeConstraints { make in
             make.height.equalTo(63)
             make.width.equalTo(215)
-            make.top.equalToSuperview().inset(626)
+            make.top.equalToSuperview().inset(616)
             make.centerX.equalToSuperview()
         }
     }

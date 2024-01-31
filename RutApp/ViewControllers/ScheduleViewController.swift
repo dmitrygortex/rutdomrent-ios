@@ -377,6 +377,8 @@ class ScheduleViewController: UIViewController {
                 print("Error on booking to firestore: \(error.localizedDescription)")
             } else {
                 print("Successfully added a new booking to firestore")
+                let alert = Validate.showAlert(title: "Готово", message: "Вы успешно забронированы")
+                self.present(alert, animated: true)
             }
         }
         
