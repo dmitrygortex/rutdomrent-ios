@@ -262,8 +262,9 @@ class ScheduleViewController: UIViewController {
     
     func checkFreeTime() {
         let dataFull = getFullDate(self.date)
+        let db = Firestore.firestore()
         
-        let _ = Firestore.firestore().collection("booking").document(dataFull).getDocument { document, error in
+        db.collection(self.room).document(dataFull).getDocument { document, error in
             if error != nil {
                 print("Error on checking date for bookings: \(error?.localizedDescription)")
             }
@@ -306,6 +307,7 @@ class ScheduleViewController: UIViewController {
     private func disableButton(button: UIButton) {
         button.layer.borderColor = AppColors.busyColor.cgColor
         button.setTitleColor(AppColors.busyColor, for: .normal)
+        button.layer.borderWidth = 2
         button.isEnabled = false
     }
     
@@ -352,7 +354,7 @@ class ScheduleViewController: UIViewController {
         }
         
         if self.room == "" {
-            let alert = Validate.showAlert(title: "Ошибка", message: "Укажите помещение, которое хотите забронировать")
+            let alert = Validate.showAlert(title: "Ошибка", message: "Укажите помещение для бронирования")
             present(alert, animated: true)
             return
         }
@@ -368,9 +370,9 @@ class ScheduleViewController: UIViewController {
         let db = Firestore.firestore()
         let dataFull = getFullDate(date)
         let uid = Auth.auth().currentUser?.uid
-        let bookingData = [time: ["uid": uid, "room": room, "purpose": purpose]]
+        let bookingData = [time: ["uid": uid, "purpose": purpose]]
         
-        db.collection("booking").document(dataFull).setData(bookingData, merge: true) { error in
+        db.collection(room).document(dataFull).setData(bookingData, merge: true) { error in
             if let error = error {
                 print("Error on booking to firestore: \(error.localizedDescription)")
             } else {
@@ -378,39 +380,10 @@ class ScheduleViewController: UIViewController {
             }
         }
         
-        //MARK: Add to users collection
+        // MARK: Add to users collection
         // TODO: REWRITING
         
-        var oldvalue: [String: Any] = [:]
-        
-        db.collection("users").document(uid!).getDocument { doc, error in
-            if error != nil {
-                print(error?.localizedDescription)
-            }
-            
-            if let doc = doc, doc.exists {
-                if let data = doc.data() {
-                    for (key, value) in data {
-                        oldvalue[key] = value
-                    }
-                }
-            }
-        }
 
-        print(oldvalue)
-
-//        let ref = db.collection("booking").document(dataFull)
-//        oldvalue["bookings"].append(ref)
-//        
-//        db.collection("users").document(uid!).setData(oldvalue, merge: true) { error in
-//            if let error = error {
-//                print("Error on adding user booking to firestore: \(error.localizedDescription)")
-//            } else {
-//                print("Successfully added user booking to firestore")
-//                let alert = Validate.showAlert(title: "Готово!", message: "Вы успешно забронированы")
-//                self.present(alert, animated: true)
-//            }
-//        }
         
         self.checkFreeTime()
         

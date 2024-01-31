@@ -94,14 +94,14 @@ final class RegisterViewController: UIViewController {
     
     private lazy var passwordTextField: UITextField = {
         let password = UITextField()
+        
         password.textColor = .black
         password.isSecureTextEntry = true
         password.backgroundColor = .white
         password.layer.cornerRadius = 12
         password.attributedPlaceholder = NSAttributedString(
             string: "Пароль",
-            attributes: [NSAttributedString.Key.foregroundColor: AppColors.placeholderColor]
-        )
+            attributes: [.foregroundColor: AppColors.placeholderColor])
         password.textAlignment = .center
         password.delegate = self
         password.returnKeyType = .go
@@ -293,6 +293,8 @@ final class RegisterViewController: UIViewController {
             return
         }
         
+        // MARK: Create user
+        
         Auth.auth().createUser(withEmail: email!, password: password!) { (result, error) in
             
             if error != nil {
@@ -301,8 +303,9 @@ final class RegisterViewController: UIViewController {
                 let db = Firestore.firestore()
                 
                 let uid = result!.user.uid
+                let userData = ["email": email!, "password": password!, "fio": fio!, "institute": institute!, "uid": uid]
                 
-                db.collection("users").document(uid).setData(["email": email!, "password": password!, "fio": fio!, "institute": institute!, "uid": uid]) { error in
+                db.collection("users").document(uid).setData(userData) { error in
                     if let error = error {
                         print("Ошибка записи данных в Firestore: \(error.localizedDescription)")
                     } else {

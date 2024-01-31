@@ -312,8 +312,6 @@ extension BookingViewController: UICalendarSelectionSingleDateDelegate {
     func dateSelection(_ selection: UICalendarSelectionSingleDate, didSelectDate dateComponents: DateComponents?) {
         guard let data = dateComponents else {
             print("Error on data")
-            let alert = Validate.showAlert(title: "Ошибка", message: "Выберите дату")
-            present(alert, animated: true)
             return
         }
         print("Выбранная дата: \(data)")

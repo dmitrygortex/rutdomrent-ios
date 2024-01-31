@@ -141,7 +141,7 @@ class InfoViewController: UIViewController {
     }()
     
     private lazy var lectureImage: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "lecture"))
+        let imageView = UIImageView(image: .init(named: "lecture"))
         imageView.layer.cornerRadius = 12
         imageView.layer.masksToBounds = true
         
@@ -149,7 +149,7 @@ class InfoViewController: UIViewController {
     }()
     
     private lazy var meetingImage: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "meeting"))
+        let imageView = UIImageView(image: .init(named: "meeting"))
         imageView.layer.cornerRadius = 12
         imageView.layer.masksToBounds = true
         
@@ -157,7 +157,7 @@ class InfoViewController: UIViewController {
     }()
     
     private lazy var photoStudioImage: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "photo"))
+        let imageView = UIImageView(image: .init(named: "photo"))
         imageView.layer.cornerRadius = 12
         imageView.layer.masksToBounds = true
         
@@ -165,7 +165,7 @@ class InfoViewController: UIViewController {
     }()
     
     private lazy var coworkingImage: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "coworking"))
+        let imageView = UIImageView(image: .init(named: "coworking"))
         imageView.layer.cornerRadius = 12
         imageView.layer.masksToBounds = true
         

@@ -1,0 +1,65 @@
+
+Showing Recent Issues
+
+GoogleUtilities
+
+Creating working copy
+The source control operation was cancelled
+
+
+gtm-session-fetcher
+
+Creating working copy
+The source control operation was cancelled
+
+
+SnapKit
+
+Creating working copy
+The source control operation was cancelled
+
+
+promises
+
+Creating working copy
+The source control operation was cancelled
+
+
+interop-ios-for-google-sdks
+
+Creating working copy
+The source control operation was cancelled
+
+
+GoogleAppMeasurement
+Operation cancelled
+
+Operation cancelled
+
+
+nanopb
+
+Creating working copy
+The source control operation was cancelled
+
+
+app-check
+
+Creating working copy
+The source control operation was cancelled
+
+
+leveldb
+
+Creating working copy
+The source control operation was cancelled
+
+
+grpc-binary
+
+Creating working copy
+The source control operation was cancelled
+
+
+
+Resolving Package Graph Failed    30/01/2024, 19:08    23.9 seconds

@@ -32,7 +32,7 @@ class MyBookingsViewController: UIViewController {
         view.backgroundColor = AppColors.backViewColor
         view.layer.cornerRadius = 12
         
-        let image = UIImageView(image: UIImage(named: "bookingView"))
+        let image = UIImageView(image: .init(named: "bookingView"))
         view.addSubview(image)
         image.snp.makeConstraints { make in
             make.leading.trailing.bottom.top.equalToSuperview()

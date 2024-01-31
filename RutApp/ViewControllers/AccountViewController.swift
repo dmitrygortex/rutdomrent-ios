@@ -355,15 +355,14 @@ class AccountViewController: UIViewController {
           try firebaseAuth.signOut()
             print("Пользователь успешно вышел из аккаунта")
             [passwordTextField, FIOTextField, instituteTextField, emailTextField].forEach { $0.text = "" }
-            let alert = Validate.showAlert(title: "Готово", message: "Вы успешно вышли из аккаунта")
-            present(alert, animated: true)
+//            let alert = Validate.showAlert(title: "Готово", message: "Вы успешно вышли из аккаунта")
+//            present(alert, animated: true)
         } catch let signOutError as NSError {
           print("Error signing out: %@", signOutError)
         }
     }
     
     @objc private func deleteAccountButtonTapped() {
-        
         signInUser()
         
         let user = Auth.auth().currentUser
@@ -458,6 +457,8 @@ extension AccountViewController: UITextFieldDelegate {
             if uid != nil {
                 if emailTextField.text != emailText {
                     
+                    // MARK: Update email
+                    
                     Auth.auth().currentUser?.sendEmailVerification(beforeUpdatingEmail: newEmail) { error in
                         if let error = error {
                             print("User email doesn't update.")
@@ -467,6 +468,8 @@ extension AccountViewController: UITextFieldDelegate {
                         }
                     }
                 }
+                
+                // MARK: Update password
                 
                 if passwordTextField.text != passwordText {
                     Auth.auth().currentUser?.updatePassword(to: newPassword) { error in
@@ -486,6 +489,8 @@ extension AccountViewController: UITextFieldDelegate {
                 
                 let userDocument = Firestore.firestore().collection("users").document(uid!)
                 
+                // MARK: Update user data
+                
                 userDocument.updateData(updatedData) { error in
                     if let error = error {
                         print("Ошибка обновления дных пользователя: \(error.localizedDescription)")
@@ -495,9 +500,7 @@ extension AccountViewController: UITextFieldDelegate {
                         self.present(alert, animated: true)
                     }
                 }
-                
             }
-            
         }
         return true
     }
