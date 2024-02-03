@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import FirebaseAuth
 
-class BookingViewController: UIViewController {
+final class BookingViewController: UIViewController {
     
     //MARK: -Properties
     

@@ -10,7 +10,7 @@ import SnapKit
 import FirebaseAuth
 import Firebase
 
-class AccountViewController: UIViewController {
+final class AccountViewController: UIViewController {
 
     // MARK: -Properties
     
@@ -202,28 +202,39 @@ class AccountViewController: UIViewController {
     }
     
     private func setData() {
-        let uid = Auth.auth().currentUser?.uid
+//        let uid = Auth.auth().currentUser?.uid
         
-        Firestore.firestore().collection("users").document(uid!).getDocument { document, error in
-            if let document = document, document.exists {
-                let data = document.data()
-                print("Данные пользователя: \(data ?? [:])")
-                
-                self.emailText = (data?["email"]! as? String)!
-                self.passwordText = (data?["password"]! as? String)!
-                self.fioText = (data?["fio"]! as? String)!
-                self.instituteText = (data?["institute"]! as? String)!
-                
-                self.emailTextField.text = self.emailText
-                self.passwordTextField.text = self.passwordText
-                self.FIOTextField.text = self.fioText
-                self.instituteTextField.text = self.instituteText
-                
-            } else {
-                print("Документ пользователя не найден")
-            }
-        }
-
+//        Firestore.firestore().collection("users").document(uid!).getDocument { document, error in
+//            if let document = document, document.exists {
+//                let data = document.data()
+//                print("Данные пользователя: \(data ?? [:])")
+//                
+//                self.emailText = (data?["email"]! as? String)!
+//                self.passwordText = (data?["password"]! as? String)!
+//                self.fioText = (data?["fio"]! as? String)!
+//                self.instituteText = (data?["institute"]! as? String)!
+//                
+//                self.emailTextField.text = self.emailText
+//                self.passwordTextField.text = self.passwordText
+//                self.FIOTextField.text = self.fioText
+//                self.instituteTextField.text = self.instituteText
+//                
+//            } else {
+//                print("Документ пользователя не найден")
+//            }
+//        }
+            
+        emailText = UserModel.email
+        passwordText = UserModel.password
+        fioText = UserModel.fio
+        instituteText = UserModel.institute
+        
+        emailTextField.text = emailText
+        passwordTextField.text = passwordText
+        FIOTextField.text = fioText
+        instituteTextField.text = instituteText
+        
+        print("Данные пользователя: \(emailText) \(passwordText) \(fioText) \(instituteText)")
     }
     
     private func addSubviews() {

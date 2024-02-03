@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class InfoViewController: UIViewController {
+final class InfoViewController: UIViewController {
     
     //MARK: -Properties
     

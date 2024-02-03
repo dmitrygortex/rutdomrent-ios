@@ -305,6 +305,14 @@ final class RegisterViewController: UIViewController {
                 let uid = result!.user.uid
                 let userData = ["email": email!, "password": password!, "fio": fio!, "institute": institute!, "uid": uid]
                 
+                // MARK: Add user to UserDefaults to save data locally
+                
+                UserModel.email = email!
+                UserModel.password = password!
+                UserModel.fio = fio!
+                UserModel.institute = institute!
+                UserModel.uid = uid
+                
                 db.collection("users").document(uid).setData(userData) { error in
                     if let error = error {
                         print("Ошибка записи данных в Firestore: \(error.localizedDescription)")

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8E234D192B6B570B0028B8E6 /* BookingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E234D182B6B570B0028B8E6 /* BookingView.swift */; };
+		8E234D1B2B6E7EE70028B8E6 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E234D1A2B6E7EE70028B8E6 /* UserModel.swift */; };
 		8E293EE52B55A12900C9ADA3 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E293EE42B55A12900C9ADA3 /* InfoViewController.swift */; };
 		8E293EE72B55A14C00C9ADA3 /* BookingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E293EE62B55A14C00C9ADA3 /* BookingViewController.swift */; };
 		8E293EE92B55A15C00C9ADA3 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E293EE82B55A15C00C9ADA3 /* AccountViewController.swift */; };
@@ -63,6 +65,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8E234D182B6B570B0028B8E6 /* BookingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookingView.swift; sourceTree = "<group>"; };
+		8E234D1A2B6E7EE70028B8E6 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		8E293EE42B55A12900C9ADA3 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		8E293EE62B55A14C00C9ADA3 /* BookingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookingViewController.swift; sourceTree = "<group>"; };
 		8E293EE82B55A15C00C9ADA3 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
@@ -198,6 +202,8 @@
 				8EE81D892B5C3D36003D3596 /* Validate.swift */,
 				8E8D84E92B58214400EA6A8E /* PaddedLabel.swift */,
 				8EEA8BDA2B5639EB00BC5AEB /* AppColors.swift */,
+				8E234D182B6B570B0028B8E6 /* BookingView.swift */,
+				8E234D1A2B6E7EE70028B8E6 /* UserModel.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -306,11 +312,13 @@
 			files = (
 				8EEA8BDB2B5639EB00BC5AEB /* AppColors.swift in Sources */,
 				8E57BAF42B5540B30012E598 /* LoginViewController.swift in Sources */,
+				8E234D192B6B570B0028B8E6 /* BookingView.swift in Sources */,
 				8EFCC2CD2B55AC90003EBD7E /* TabBarController.swift in Sources */,
 				8EA2C95F2B6591AB00E9C35A /* MyBookingsViewController.swift in Sources */,
 				8EE81D8A2B5C3D36003D3596 /* Validate.swift in Sources */,
 				8EDEC66A2B5456F4007146D6 /* RegisterViewController.swift in Sources */,
 				8E293EE92B55A15C00C9ADA3 /* AccountViewController.swift in Sources */,
+				8E234D1B2B6E7EE70028B8E6 /* UserModel.swift in Sources */,
 				8EDEC6662B5456F4007146D6 /* AppDelegate.swift in Sources */,
 				8EDEC6682B5456F4007146D6 /* SceneDelegate.swift in Sources */,
 				8E293EE72B55A14C00C9ADA3 /* BookingViewController.swift in Sources */,

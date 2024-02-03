@@ -10,7 +10,7 @@ import SnapKit
 import Firebase
 import FirebaseAuth
 
-class ScheduleViewController: UIViewController {
+final class ScheduleViewController: UIViewController {
     
     //MARK: -Properties
     

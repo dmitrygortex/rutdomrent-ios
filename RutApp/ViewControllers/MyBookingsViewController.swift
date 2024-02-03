@@ -5,14 +5,15 @@
 //  Created by Michael Kivo on 27/01/2024.
 //
 
+import Foundation
 import UIKit
 import SnapKit
 import Firebase
 import FirebaseAuth
 
-class MyBookingsViewController: UIViewController {
+final class MyBookingsViewController: UIViewController {
     
-    //MARK: -Properties
+    // MARK: -Properties
     
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -26,94 +27,14 @@ class MyBookingsViewController: UIViewController {
         return view
     }()
     
-    let firstView: UIView = {
-        let view = UIView()
-        view.frame = CGRect(x: 21, y: 25, width: 334, height: 164)
-        view.backgroundColor = AppColors.backViewColor
-        view.layer.cornerRadius = 12
-        
-        let image = UIImageView(image: .init(named: "bookingView"))
-        view.addSubview(image)
-        image.snp.makeConstraints { make in
-            make.leading.trailing.bottom.top.equalToSuperview()
-        }
-        view.sendSubviewToBack(image)
-        
-        return view
-    }()
-    
-    let yearLabel: UILabel = {
-        let date = UILabel()
-        date.text = "2024"
-        date.font = .systemFont(ofSize: 18, weight: .bold)
-        date.textColor = .black
-        date.frame = CGRect(x: 34, y: 23, width: 85, height: 35)
-        
-        return date
-    }()
-    
-    let monthLabel: UILabel = {
-        let month = UILabel()
-        month.text = "26 Января"
-        month.font = .systemFont(ofSize: 17, weight: .bold)
-        month.textColor = .black
-        month.frame = CGRect(x: 12, y: 39, width: 95, height: 50)
-        
-        return month
-    }()
-    
-    let timeLabel: UILabel = {
-        let date = UILabel()
-        date.text = "10.00-11.00"
-        date.font = .systemFont(ofSize: 17, weight: .bold)
-        date.textColor = .black
-        date.frame = CGRect(x: 10, y: 90, width: 100, height: 35)
-        
-        return date
-    }()
-    
-    let roomLabel: UILabel = {
-        let date = UILabel()
-        date.text = "Переговорная"
-        date.font = .systemFont(ofSize: 18, weight: .bold)
-        date.textColor = .black
-        date.frame = CGRect(x: 156, y: 8, width: 185, height: 34)
-        
-        return date
-    }()
-    
-    let purposeLabel: UILabel = {
-        let date = UILabel()
-        date.text = "Обсуждение проекта"
-        date.font = .systemFont(ofSize: 15, weight: .medium)
-        date.textColor = .black
-        date.frame = CGRect(x: 144, y: 40, width: 188, height: 48)
-        
-        return date
-    }()
-    
-    let cancelBookingButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Отменить бронь", for: .normal)
-        button.backgroundColor = AppColors.miitColor
-        button.setTitleColor(.white, for: .normal)
-        button.frame = CGRect(x: 135, y: 100, width: 180, height: 46)
-        button.layer.cornerRadius = 12
-        button.titleLabel?.font = .systemFont(ofSize: 19, weight: .bold)
-        button.addTarget(self, action: #selector(cancelBookingButtonTapped), for: .touchUpInside)
-        button.tag = 1
-        
-        return button
-    }()
-    
     // MARK: -Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setUp()
         addSubviews()
         setUpConstraints()
+        setUp()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -136,16 +57,15 @@ class MyBookingsViewController: UIViewController {
 
         self.navigationController?.navigationBar.standardAppearance = standardAppearance
         self.navigationController?.navigationBar.scrollEdgeAppearance = standardAppearance
+        
+        let view1 = BookingView().mainView
+        viewback.addSubview(view1)
     }
     
     private func addSubviews() {
         view.addSubview(scrollView)
         scrollView.addSubview(viewback)
-        viewback.addSubview(firstView)
         
-        [yearLabel, monthLabel, timeLabel, roomLabel, purposeLabel].forEach { firstView.addSubview($0) }
-        
-        firstView.addSubview(cancelBookingButton)
     }
     
     private func setUpConstraints() {
@@ -161,7 +81,118 @@ class MyBookingsViewController: UIViewController {
         
     }
     
-    @objc private func cancelBookingButtonTapped() {
-        
-    }
+//    private func getBookingView() -> UIView {
+//        let mainView = UIView()
+//        mainView.backgroundColor = AppColors.backViewColor
+//        mainView.layer.cornerRadius = 12
+//        
+//        let image = UIImageView(image: .init(named: "bookingView"))
+//        mainView.addSubview(image)
+//        image.snp.makeConstraints { make in
+//            make.leading.trailing.bottom.top.equalToSuperview()
+//        }
+//        mainView.sendSubviewToBack(image)
+//        viewback.addSubview(mainView)
+//        
+//        let yearLabel = UILabel()
+//        yearLabel.text = "2024"
+//        yearLabel.font = .systemFont(ofSize: 18, weight: .bold)
+//        yearLabel.textColor = .black
+//        
+//        let monthLabel = UILabel()
+//        monthLabel.text = "26 Января"
+//        monthLabel.font = .systemFont(ofSize: 17, weight: .bold)
+//        monthLabel.textColor = .black
+//            
+//        let timeLabel = UILabel()
+//        timeLabel.text = "10.00-11.00"
+//        timeLabel.font = .systemFont(ofSize: 17, weight: .bold)
+//        timeLabel.textColor = .black
+//        
+//        let roomLabel = UILabel()
+//        roomLabel.text = "Переговорная"
+//        roomLabel.font = .systemFont(ofSize: 18, weight: .bold)
+//        roomLabel.textColor = .black
+//        
+//        let purposeLabel = UILabel()
+//        purposeLabel.text = "Обсуждение проекта"
+//        purposeLabel.font = .systemFont(ofSize: 15, weight: .medium)
+//        purposeLabel.textColor = .black
+//        
+//        let cancelBookingButton = UIButton(type: .system)
+//        cancelBookingButton.setTitle("Отменить бронь", for: .normal)
+//        cancelBookingButton.backgroundColor = AppColors.miitColor
+//        cancelBookingButton.setTitleColor(.white, for: .normal)
+//        cancelBookingButton.layer.cornerRadius = 12
+//        cancelBookingButton.titleLabel?.font = .systemFont(ofSize: 19, weight: .bold)
+//        cancelBookingButton.addTarget(self, action: #selector(cancelBookingButtonTapped), for: .touchUpInside)
+//        cancelBookingButton.tag = 1
+//        
+//        [yearLabel, monthLabel, timeLabel, roomLabel, purposeLabel].forEach { mainView.addSubview($0) }
+//        mainView.addSubview(cancelBookingButton)
+//        
+//        mainView.snp.makeConstraints { make in
+//            make.top.equalTo(25)
+//            make.leading.equalTo(21)
+//            make.height.equalTo(164)
+//            make.width.equalTo(334)
+//        }
+//        
+//        yearLabel.snp.makeConstraints { make in
+//            make.top.equalToSuperview().inset(23)
+//            make.leading.equalToSuperview().inset(34)
+//            make.height.equalTo(35)
+//            make.width.equalTo(85)
+//        }
+//        
+//        monthLabel.snp.makeConstraints { make in
+//            make.top.equalToSuperview().inset(39)
+//            make.leading.equalToSuperview().inset(12)
+//            make.height.equalTo(50)
+//            make.width.equalTo(95)
+//        }
+//        
+//        timeLabel.snp.makeConstraints { make in
+//            make.top.equalToSuperview().inset(100)
+//            make.leading.equalToSuperview().inset(10)
+//            make.height.equalTo(35)
+//            make.width.equalTo(100)
+//        }
+//        
+//        roomLabel.snp.makeConstraints { make in
+//            make.top.equalToSuperview().inset(8)
+//            make.leading.equalToSuperview().inset(156)
+//            make.height.equalTo(34)
+//            make.width.equalTo(185)
+//        }
+//        
+//        purposeLabel.snp.makeConstraints { make in
+//            make.top.equalToSuperview().inset(40)
+//            make.leading.equalToSuperview().inset(144)
+//            make.height.equalTo(48)
+//            make.width.equalTo(188)
+//        }
+//        
+//        cancelBookingButton.snp.makeConstraints { make in
+//            make.top.equalToSuperview().inset(100)
+//            make.leading.equalToSuperview().inset(135)
+//            make.height.equalTo(46)
+//            make.width.equalTo(180)
+//        }
+//        
+//        func changeTop(multiplier: Int = 25) {
+//            mainView.snp.makeConstraints { make in
+//                make.top.equalTo(multiplier)
+//                make.leading.equalTo(21)
+//                make.height.equalTo(164)
+//                make.width.equalTo(334)
+//            }
+//        }
+//        
+//        return mainView
+//    }
+    
+//    @objc func cancelBookingButtonTapped() {
+//        print("cancelBookingButtonTapped tapped")
+//    }
 }
