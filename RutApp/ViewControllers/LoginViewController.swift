@@ -204,6 +204,8 @@ final class LoginViewController: UIViewController {
                 
                 let uid = Auth.auth().currentUser?.uid
                 
+                // TODO: - ADD USER BOOKINGS LOCALLY!!!!!!!!!!!!!
+                
                 // MARK: Add user to UserDefaults to save data locally
                 
                 Firestore.firestore().collection("users").document(uid!).getDocument { document, error in

@@ -113,19 +113,19 @@ final class MyBookingsViewController: UIViewController {
     
     private class BookingView {
         
-        var mainView: UIView = {
+        let mainView: UIView = {
             var mainView = UIView()
             mainView.backgroundColor = AppColors.backViewColor
             mainView.layer.cornerRadius = 12
             
-            let image = UIImageView(image: .init(named: "bookingView"))
-            mainView.addSubview(image)
-            image.snp.makeConstraints { make in
-                make.leading.trailing.bottom.top.equalToSuperview()
-            }
-            mainView.sendSubviewToBack(image)
-            
             return mainView
+        }()
+        
+        let lineView: UIView = {
+            let line = UIView()
+            line.backgroundColor = .black
+            
+            return line
         }()
         
         let yearLabel: UILabel = {
@@ -192,6 +192,7 @@ final class MyBookingsViewController: UIViewController {
         func setViewConstraints(multiplier: Int) {
             [yearLabel, monthLabel, timeLabel, roomLabel, purposeLabel].forEach { mainView.addSubview($0) }
             mainView.addSubview(cancelButton)
+            mainView.addSubview(lineView)
             
             mainView.snp.makeConstraints { make in
                 make.top.equalTo(multiplier)
@@ -211,12 +212,12 @@ final class MyBookingsViewController: UIViewController {
                 make.top.equalToSuperview().inset(39)
                 make.leading.equalToSuperview().inset(12)
                 make.height.equalTo(50)
-                make.width.equalTo(95)
+                make.width.equalTo(104)
             }
             
             timeLabel.snp.makeConstraints { make in
                 make.top.equalToSuperview().inset(100)
-                make.leading.equalToSuperview().inset(8)
+                make.leading.equalToSuperview().inset(12)
                 make.height.equalTo(35)
                 make.width.equalTo(100)
             }
@@ -237,9 +238,17 @@ final class MyBookingsViewController: UIViewController {
             
             cancelButton.snp.makeConstraints { make in
                 make.top.equalToSuperview().inset(103)
-                make.leading.equalToSuperview().inset(135)
+                make.leading.equalToSuperview().inset(140)
                 make.height.equalTo(46)
                 make.width.equalTo(180)
+            }
+            
+            lineView.snp.makeConstraints { make in
+                make.width.equalTo(1)
+                make.height.equalTo(134)
+                make.leading.equalTo(120)
+                make.top.equalTo(15)
+                make.bottom.equalTo(-15)
             }
         }
         
