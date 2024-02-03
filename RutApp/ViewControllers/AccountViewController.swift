@@ -255,7 +255,7 @@ final class AccountViewController: UIViewController {
         
         viewback.snp.makeConstraints { make in
             make.top.leading.trailing.bottom.equalToSuperview()
-            make.height.equalTo(740)
+            make.height.equalTo(700)
             make.width.equalTo(self.view)
         }
         

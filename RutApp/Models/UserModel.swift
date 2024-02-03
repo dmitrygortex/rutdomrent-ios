@@ -10,10 +10,50 @@ import Foundation
 final class UserModel {
     
     private enum UserKeys: String {
-        case userEmail, userPassword, userFio, userInstitute, userUID
+        case userEmail, userPassword, userFio, userInstitute, userUID, bookings
     }
     
     private static let defaults = UserDefaults.standard
+    
+    static var bookingsModel: [BookingsModel]! {
+        get {
+            let key = UserKeys.bookings.rawValue
+            
+            if let data = defaults.data(forKey: key) {
+                do {
+                    let decoder = JSONDecoder()
+                    
+                    let booking = try decoder.decode([BookingsModel].self, from: data)
+                    
+                    return booking
+                } catch {
+                    print("Unable to Decode Bookings (\(error))")
+                }
+            }
+            return nil
+        } set {
+            let key = UserKeys.bookings.rawValue
+            
+            var allBookings = [BookingsModel]()
+            allBookings.append(newValue[0])
+            
+            if UserModel.bookingsModel != nil {
+                UserModel.bookingsModel.forEach { booking in
+                    allBookings.append(booking)
+                }
+            }
+            
+            do {
+                let encoder = JSONEncoder()
+                
+                let data = try encoder.encode(allBookings)
+                
+                defaults.set(data, forKey: key)
+            } catch {
+                print("Unable to Encode Booking (\(error))")
+            }
+        }
+    }
     
     static var email: String {
         get {

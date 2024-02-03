@@ -264,7 +264,11 @@ final class BookingViewController: UIViewController {
     }
         
     @objc private func myBookingsButtonTapped() {
-        navigationController?.pushViewController(MyBookingsViewController(), animated: true)
+//        navigationController?.pushViewController(MyBookingsViewController(), animated: true)
+        let arrayBookings = UserModel.bookingsModel!
+        for i in arrayBookings {
+            print(i.purpose)
+        }
     }
     
     @objc func keyboardWillShow(_ notification: Notification) {

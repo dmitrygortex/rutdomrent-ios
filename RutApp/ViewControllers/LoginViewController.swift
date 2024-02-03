@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import FirebaseAuth
+import Firebase
 
 final class LoginViewController: UIViewController {
     
@@ -200,6 +201,24 @@ final class LoginViewController: UIViewController {
                 self?.present(alert, animated: true)
             } else {
                 print("Вход успешно выполнен")
+                
+                let uid = Auth.auth().currentUser?.uid
+                
+                // MARK: Add user to UserDefaults to save data locally
+                
+                Firestore.firestore().collection("users").document(uid!).getDocument { document, error in
+                    if let document = document, document.exists {
+                        let data = document.data()
+                        
+                        UserModel.email = email!
+                        UserModel.password = password!
+                        UserModel.fio = data!["fio"]! as! String
+                        UserModel.institute = data!["institute"]! as! String
+                        UserModel.uid = uid!
+                        UserModel.synchronize()
+                    }
+                }
+                
                 self?.navigationController?.setNavigationBarHidden(true, animated: false)
                 self?.navigationController?.pushViewController(TabBarController(), animated: true)
             }

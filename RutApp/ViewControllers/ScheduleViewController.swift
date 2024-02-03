@@ -395,6 +395,12 @@ final class ScheduleViewController: UIViewController {
             }
         }
         
+        // MARK: Add to UserDefaults
+        
+        let booking = BookingsModel(date: dataFull, time: time, purpose: purpose, room: room, uid: uid!)
+        UserModel.bookingsModel = [booking]
+        print(UserModel.bookingsModel.count)
+        
         self.checkFreeTime()
         
         [firstButton, secondButton, thirdButton, fourthButton, fifthButton, sixthButton, seventhButton, eighthButton, ninthButton, tenthButton].forEach { button in

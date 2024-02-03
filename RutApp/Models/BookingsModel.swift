@@ -7,16 +7,20 @@
 
 import Foundation
 
-final class BookingsModel {
+final class BookingsModel: Codable {
+    
     var date: String?
     var time: String?
     var purpose: String?
     var room: String?
+    var uid: String?
     
-    init(date: String? = nil, time: String? = nil, purpose: String? = nil, room: String? = nil) {
+    init(date: String, time: String, purpose: String, room: String, uid: String) {
         self.date = date
         self.time = time
         self.purpose = purpose
         self.room = room
+        self.uid = uid
     }
+
 }
