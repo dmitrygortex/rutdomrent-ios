@@ -312,6 +312,7 @@ final class RegisterViewController: UIViewController {
                 UserModel.fio = fio!
                 UserModel.institute = institute!
                 UserModel.uid = uid
+                UserModel.synchronize()
                 
                 db.collection("users").document(uid).setData(userData) { error in
                     if let error = error {

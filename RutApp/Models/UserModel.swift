@@ -1,26 +1,24 @@
 //
-//  UserMode.swift
+//  UserModel.swift
 //  RutApp
 //
 //  Created by Michael Kivo on 03/02/2024.
 //
 
 import Foundation
-import UIKit
-import Firebase
-import FirebaseAuth
 
-class UserModel {
+final class UserModel {
     
     private enum UserKeys: String {
         case userEmail, userPassword, userFio, userInstitute, userUID
     }
     
+    private static let defaults = UserDefaults.standard
+    
     static var email: String {
         get {
-            return UserDefaults.standard.string(forKey: UserKeys.userEmail.rawValue) ?? ""
+            return defaults.string(forKey: UserKeys.userEmail.rawValue) ?? ""
         } set {
-            let defaults = UserDefaults.standard
             let key = UserKeys.userEmail.rawValue
             
             if Validate.emailIsValid(newValue) {
@@ -34,9 +32,8 @@ class UserModel {
     
     static var password: String {
         get {
-            return UserDefaults.standard.string(forKey: UserKeys.userPassword.rawValue) ?? ""
+            return defaults.string(forKey: UserKeys.userPassword.rawValue) ?? ""
         } set {
-            let defaults = UserDefaults.standard
             let key = UserKeys.userPassword.rawValue
             
             if Validate.passwordIsValid(newValue) {
@@ -50,9 +47,8 @@ class UserModel {
     
     static var fio: String {
         get {
-            return UserDefaults.standard.string(forKey: UserKeys.userFio.rawValue) ?? ""
+            return defaults.string(forKey: UserKeys.userFio.rawValue) ?? ""
         } set {
-            let defaults = UserDefaults.standard
             let key = UserKeys.userFio.rawValue
             
             if Validate.fioIsValid(newValue) {
@@ -66,9 +62,8 @@ class UserModel {
     
     static var institute: String {
         get {
-            return UserDefaults.standard.string(forKey: UserKeys.userInstitute.rawValue) ?? ""
+            return defaults.string(forKey: UserKeys.userInstitute.rawValue) ?? ""
         } set {
-            let defaults = UserDefaults.standard
             let key = UserKeys.userInstitute.rawValue
             
             if Validate.instituteIsValid(newValue) {
@@ -82,14 +77,27 @@ class UserModel {
     
     static var uid: String {
         get {
-            return UserDefaults.standard.string(forKey: UserKeys.userUID.rawValue) ?? ""
+            return defaults.string(forKey: UserKeys.userUID.rawValue) ?? ""
         } set {
-            let defaults = UserDefaults.standard
             let key = UserKeys.userUID.rawValue
             
             defaults.set(newValue, forKey: key)
             print("value: \(newValue) was added to key: \(key)")
             
         }
+    }
+    
+    static func synchronize() {
+        defaults.synchronize()
+    }
+    
+    static func deleteUser() {
+        defaults.removeObject(forKey: UserKeys.userEmail.rawValue)
+        defaults.removeObject(forKey: UserKeys.userPassword.rawValue)
+        defaults.removeObject(forKey: UserKeys.userFio.rawValue)
+        defaults.removeObject(forKey: UserKeys.userInstitute.rawValue)
+        defaults.removeObject(forKey: UserKeys.userUID.rawValue)
+        
+        synchronize()
     }
 }

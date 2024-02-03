@@ -378,6 +378,8 @@ final class AccountViewController: UIViewController {
         
         let user = Auth.auth().currentUser
         
+        // MARK: Delete user account from Firestore
+        
         Firestore.firestore().collection("users").document(user!.uid).delete { error in
             if error != nil {
                 print(error!.localizedDescription)
@@ -388,17 +390,23 @@ final class AccountViewController: UIViewController {
             }
         }
         
+        // MARK: Delete user account from Firebase
+        
         user?.delete { error in
           if let error = error {
-              print(error.localizedDescription)
-              print("User account doesn't deleted.")
+              print("User account doesn't deleted. \(error.localizedDescription)")
           } else {
-            print("User Account successfully deleted.")
+              print("User Account successfully deleted.")
               [self.passwordTextField, self.FIOTextField, self.instituteTextField, self.emailTextField].forEach { $0.text = "" }
+              
               let alert = Validate.showAlert(title: "Готово", message: "Вы успешно удалили аккаунт")
               self.present(alert, animated: true)
           }
         }
+        
+        // MARK: Delete user info from UserDefaults
+        
+        UserModel.deleteUser()
         
     }
     
