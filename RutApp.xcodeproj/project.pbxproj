@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8E234D192B6B570B0028B8E6 /* BookingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E234D182B6B570B0028B8E6 /* BookingView.swift */; };
 		8E234D1B2B6E7EE70028B8E6 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E234D1A2B6E7EE70028B8E6 /* UserModel.swift */; };
 		8E234D1F2B6EA4A00028B8E6 /* BookingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E234D1E2B6EA4A00028B8E6 /* BookingsModel.swift */; };
 		8E293EE52B55A12900C9ADA3 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E293EE42B55A12900C9ADA3 /* InfoViewController.swift */; };
@@ -66,7 +65,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		8E234D182B6B570B0028B8E6 /* BookingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookingView.swift; sourceTree = "<group>"; };
 		8E234D1A2B6E7EE70028B8E6 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		8E234D1E2B6EA4A00028B8E6 /* BookingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookingsModel.swift; sourceTree = "<group>"; };
 		8E293EE42B55A12900C9ADA3 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
@@ -126,14 +124,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		8E234D1C2B6E95910028B8E6 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				8E234D182B6B570B0028B8E6 /* BookingView.swift */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
 		8E234D1D2B6EA46B0028B8E6 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -206,7 +196,6 @@
 				8E7359742B65049100AD3C80 /* Application */,
 				8EE81D8D2B5ECFF1003D3596 /* Helpers */,
 				8E234D1D2B6EA46B0028B8E6 /* Models */,
-				8E234D1C2B6E95910028B8E6 /* Views */,
 				8E8FD0082B5571B50085C16A /* ViewControllers */,
 				8EDEC6732B5456F6007146D6 /* Info.plist */,
 				8EE81D8B2B5C4177003D3596 /* GoogleService-Info.plist */,
@@ -331,7 +320,6 @@
 			files = (
 				8EEA8BDB2B5639EB00BC5AEB /* AppColors.swift in Sources */,
 				8E57BAF42B5540B30012E598 /* LoginViewController.swift in Sources */,
-				8E234D192B6B570B0028B8E6 /* BookingView.swift in Sources */,
 				8EFCC2CD2B55AC90003EBD7E /* TabBarController.swift in Sources */,
 				8EA2C95F2B6591AB00E9C35A /* MyBookingsViewController.swift in Sources */,
 				8EE81D8A2B5C3D36003D3596 /* Validate.swift in Sources */,

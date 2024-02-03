@@ -94,7 +94,7 @@ class BookingView: UIView {
         cancelBookingButton.setTitleColor(.white, for: .normal)
         cancelBookingButton.layer.cornerRadius = 12
         cancelBookingButton.titleLabel?.font = .systemFont(ofSize: 19, weight: .bold)
-        cancelBookingButton.addTarget(self, action: #selector(cancelBookingButtonTapped), for: .touchUpInside)
+        cancelBookingButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
         cancelBookingButton.tag = 1
         
         return cancelBookingButton

@@ -137,6 +137,7 @@ final class UserModel {
         defaults.removeObject(forKey: UserKeys.userFio.rawValue)
         defaults.removeObject(forKey: UserKeys.userInstitute.rawValue)
         defaults.removeObject(forKey: UserKeys.userUID.rawValue)
+        defaults.removeObject(forKey: UserKeys.bookings.rawValue)
         
         synchronize()
     }
