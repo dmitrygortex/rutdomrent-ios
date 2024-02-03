@@ -354,7 +354,7 @@ final class AccountViewController: UIViewController {
     }
     
     @objc private func changeDataButtonTapped() {
-        [passwordTextField, FIOTextField, instituteTextField, emailTextField].forEach {
+        [emailTextField, passwordTextField, FIOTextField, instituteTextField].forEach {
             $0.isUserInteractionEnabled = true
         }
     }
@@ -365,9 +365,12 @@ final class AccountViewController: UIViewController {
         do {
           try firebaseAuth.signOut()
             print("Пользователь успешно вышел из аккаунта")
-            [passwordTextField, FIOTextField, instituteTextField, emailTextField].forEach { $0.text = "" }
-//            let alert = Validate.showAlert(title: "Готово", message: "Вы успешно вышли из аккаунта")
-//            present(alert, animated: true)
+            [emailTextField, passwordTextField, FIOTextField, instituteTextField].forEach { $0.text = "" }
+            
+            // MARK: Delete user info from UserDefaults
+            
+            UserModel.deleteUser()
+            
         } catch let signOutError as NSError {
           print("Error signing out: %@", signOutError)
         }
@@ -474,9 +477,10 @@ extension AccountViewController: UITextFieldDelegate {
             let updatedData = ["email": newEmail, "password": newPassword, "fio": newFIO, "institute": newInstitute, "uid": uid!]
             
             if uid != nil {
+                
+                // MARK: Update email
+                
                 if emailTextField.text != emailText {
-                    
-                    // MARK: Update email
                     
                     Auth.auth().currentUser?.sendEmailVerification(beforeUpdatingEmail: newEmail) { error in
                         if let error = error {
@@ -508,7 +512,7 @@ extension AccountViewController: UITextFieldDelegate {
                 
                 let userDocument = Firestore.firestore().collection("users").document(uid!)
                 
-                // MARK: Update user data
+                // MARK: Update user data in Firestore
                 
                 userDocument.updateData(updatedData) { error in
                     if let error = error {
@@ -519,6 +523,16 @@ extension AccountViewController: UITextFieldDelegate {
                         self.present(alert, animated: true)
                     }
                 }
+                
+                // MARK: Update user data in UserDefaults
+                
+                UserModel.email = newEmail
+                UserModel.password = newPassword
+                UserModel.fio = newFIO
+                UserModel.institute = newInstitute
+                UserModel.uid = uid!
+                UserModel.synchronize()
+                
             }
         }
         return true
