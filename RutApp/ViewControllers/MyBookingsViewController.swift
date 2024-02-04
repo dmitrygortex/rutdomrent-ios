@@ -15,6 +15,10 @@ final class MyBookingsViewController: UIViewController {
     
     // MARK: - Properties
     
+    let bookings = UserModel.bookingsModel
+    
+    private var viewsArray = [BookingView]()
+    
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         
@@ -36,6 +40,8 @@ final class MyBookingsViewController: UIViewController {
         setUpConstraints()
         setUp()
         setBookings()
+        
+        deleteUserBooking(room: "Лекторий", date: "4.2.2024", time: "15.00-16.00")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -68,21 +74,21 @@ final class MyBookingsViewController: UIViewController {
     }
     
     private func setBookings() {
-        let bookings = UserModel.bookingsModel
         let bookingsNumber = bookings?.count ?? 0
         
         if bookingsNumber != 0 {
-            var viewsArray = [BookingView]()
+            
             var mltp = 25
             var cnt = 0
             
             // MARK: Add user bookings to view
             
-            for booking in 0..<bookingsNumber {
+            for i in 0..<bookingsNumber {
                 
                 let view = BookingView()
                 viewback.addSubview(view.mainView)
                 view.setViewConstraints(multiplier: mltp)
+                view.cancelButton.tag = i
                 
                 viewsArray.append(view)
                 mltp += 189
@@ -323,7 +329,7 @@ final class MyBookingsViewController: UIViewController {
         return result
     }
     
-    @objc func cancelButtonTapped() {
+    @objc func cancelButtonTapped(sender: UIButton) {
         
         // MARK: Delete booking from Firestore collection
         
@@ -331,7 +337,7 @@ final class MyBookingsViewController: UIViewController {
         
         // MARK: Delete booking from users collection
         
-        
+//        deleteUserBooking(room: "", date: "", time: "")
         
         // MARK: Delete booking from UserDefaults
         
@@ -354,6 +360,30 @@ final class MyBookingsViewController: UIViewController {
                                     
                     documentRef.setData(data)
                     
+                }
+            }
+        }
+    }
+    
+    private func deleteUserBooking(room: String, date: String, time: String) {
+        let uid = Auth.auth().currentUser?.uid
+        let documentRef = Firestore.firestore().collection("users").document(uid!)
+        var updatedBooking = [[String: Any]]()
+        
+        documentRef.getDocument { document, error in
+            if let error = error {
+                print("Error updating document: \(error.localizedDescription)")
+            } else {
+                if var data = document?.data() {
+                    var bookings = data["bookings"] as! [[String: Any]]
+                    for booking in bookings {
+                        if booking["date"]! as! String == date && booking["time"]! as! String == time && booking["room"]! as! String == room {
+                            continue
+                        } else {
+                            updatedBooking.append(booking)
+                        }
+                    }
+                    documentRef.updateData(["bookings": updatedBooking])
                 }
             }
         }
