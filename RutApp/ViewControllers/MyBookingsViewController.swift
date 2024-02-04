@@ -106,6 +106,8 @@ final class MyBookingsViewController: UIViewController {
                 
                 let backHeight = (bookingsNumber * 164) + ((bookingsNumber + 1) * 25) - 10
                 setBackHeight(multiplier: backHeight)
+            } else {
+                setBackHeight(multiplier: 600)
             }
             
         } else {
@@ -113,6 +115,8 @@ final class MyBookingsViewController: UIViewController {
             // TODO: Check for bookings in firestore
             
             
+            
+            showEmptyLabel()
             
         }
         
@@ -127,8 +131,18 @@ final class MyBookingsViewController: UIViewController {
         scrollView.snp.makeConstraints { make in
             make.top.leading.bottom.trailing.equalToSuperview()
         }
+    }
+    
+    private func showEmptyLabel() {
+        let alert = UIAlertController(title: "Упс", message: "У вас пока нет бронирований!", preferredStyle: .alert)
         
-//        setBackHeight(multiplier: 900)
+        alert.addAction(UIAlertAction(title: "Понятно", style: .cancel, handler: { action in
+            self.navigationController?.setNavigationBarHidden(true, animated: false)
+            self.navigationController?.popViewController(animated: true)
+            
+            print("Alert successful")
+        }))
+        present(alert, animated: true)
     }
     
     private func setBackHeight(multiplier: Int) {

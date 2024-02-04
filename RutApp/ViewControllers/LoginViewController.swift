@@ -178,7 +178,7 @@ final class LoginViewController: UIViewController {
     }
     
     @objc private func loginButtonPressed() {
-                
+        
         let email = emailTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         let password = passwordTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         
@@ -204,8 +204,6 @@ final class LoginViewController: UIViewController {
                 
                 let uid = Auth.auth().currentUser?.uid
                 
-                // TODO: - ADD USER BOOKINGS LOCALLY!!!!!!!!!!!!!
-                
                 // MARK: Add user to UserDefaults to save data locally
                 
                 Firestore.firestore().collection("users").document(uid!).getDocument { document, error in
@@ -218,11 +216,21 @@ final class LoginViewController: UIViewController {
                         UserModel.institute = data!["institute"]! as! String
                         UserModel.uid = uid!
                         UserModel.synchronize()
+                        
+                        let bookings = data!["bookings"] as? [[String: Any]]
+                        
+                        if let unwrappedBookings = bookings {
+                            for array in unwrappedBookings {
+                                let model = BookingsModel(date: array["date"] as! String, time: array["time"] as! String, purpose: array["purpose"] as! String, room: array["room"] as! String, uid: uid!)
+                                UserModel.bookingsModel = [model]
+                                print("Bookings successfully added to UserDefaults: \(model)")
+                            }
+                        }
                     }
+                    
+                    self?.navigationController?.setNavigationBarHidden(true, animated: false)
+                    self?.navigationController?.pushViewController(TabBarController(), animated: true)
                 }
-                
-                self?.navigationController?.setNavigationBarHidden(true, animated: false)
-                self?.navigationController?.pushViewController(TabBarController(), animated: true)
             }
         }
     }

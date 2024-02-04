@@ -261,6 +261,9 @@ final class BookingViewController: UIViewController {
         scheduleVC.room = userRoom
         scheduleVC.date = userDate
         scheduleVC.purpose = userPurpose
+        
+        purposeTextField.resignFirstResponder()
+        
         navigationController?.pushViewController(scheduleVC, animated: true)
     }
         

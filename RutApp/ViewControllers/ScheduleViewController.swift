@@ -384,8 +384,9 @@ final class ScheduleViewController: UIViewController {
         
         // MARK: Add to users collection
         
-        let ref = db.collection(room).document(dataFull)
-        let userData = ["bookings": FieldValue.arrayUnion([ref])]
+        let bookingArray = ["date": dataFull, "time": time, "room": room, "purpose": purpose]
+        
+        let userData = ["bookings": FieldValue.arrayUnion([bookingArray])]
         
         db.collection("users").document(uid!).updateData(userData) { error in
             if let error = error {
