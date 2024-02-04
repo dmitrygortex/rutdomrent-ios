@@ -112,14 +112,10 @@ final class MyBookingsViewController: UIViewController {
             
         } else {
             
-            // TODO: Check for bookings in firestore
-            
-            
+            // TODO: Check for bookings in firestore ???
             
             showEmptyLabel()
-            
         }
-        
     }
     
     private func addSubviews() {
@@ -322,14 +318,45 @@ final class MyBookingsViewController: UIViewController {
     private func getMonth(_ tuple: (day: Int, month: Int)) -> String {
         let months = [1 : "Января", 2 : "Февраля", 3 : "Марта", 4 : "Апреля", 5 : "Мая", 6 : "Июня", 7 : "Июля", 8 : "Августа", 9 : "Сентября", 10 : "Октября", 11 : "Ноября", 12 : "Декабря"]
         
-        var result = String(tuple.day) + " " + months[tuple.month]!
+        let result = String(tuple.day) + " " + months[tuple.month]!
         
         return result
     }
     
     @objc func cancelButtonTapped() {
-        // TODO: Delete booking
+        
+        // MARK: Delete booking from Firestore collection
+        
+//        deleteBooking(room: "", date: "", time: "")
+        
+        // MARK: Delete booking from users collection
+        
+        
+        
+        // MARK: Delete booking from UserDefaults
+        
+//        UserModel.deleteBooking()
         
         print("cancelBookingButtonTapped tapped")
     }
+    
+    private func deleteBooking(room: String, date: String, time: String) {
+        let documentRef = Firestore.firestore().collection(room).document(date)
+                
+        var updatedData = [String: Any]()
+        
+        documentRef.getDocument { document, error in
+            if let error = error {
+                print("Error updating document: \(error.localizedDescription)")
+            } else {
+                if var data = document?.data() {
+                    data[time] = nil
+                                    
+                    documentRef.setData(data)
+                    
+                }
+            }
+        }
+    }
+    
 }
