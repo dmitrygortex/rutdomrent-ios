@@ -48,7 +48,8 @@ final class BookingViewController: UIViewController {
     private lazy var calendar: UICalendarView = {
         let calendarView = UICalendarView()
         calendarView.calendar = .current
-        calendarView.locale = .current
+        calendarView.calendar.firstWeekday = 2
+        calendarView.locale = Locale(identifier: "ru")
         calendarView.fontDesign = .rounded
         calendarView.layer.cornerRadius = 12
         calendarView.delegate = self
@@ -265,11 +266,6 @@ final class BookingViewController: UIViewController {
         
     @objc private func myBookingsButtonTapped() {
         navigationController?.pushViewController(MyBookingsViewController(), animated: true)
-        
-//        let arrayBookings = UserModel.bookingsModel!
-//        for i in arrayBookings {
-//            print(i.purpose)
-//        }
     }
     
     @objc func keyboardWillShow(_ notification: Notification) {

@@ -44,12 +44,18 @@ final class MyBookingsViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        setBookings()
+    }
+    
     private func setUp() {
         view.backgroundColor = .white
         navigationController?.setNavigationBarHidden(false, animated: true)
         navigationItem.title = "Мои бронирования"
         navigationController?.navigationBar.isTranslucent = true
-        navigationItem.backButtonTitle = "Назад"
+        navigationController?.navigationBar.backItem?.title = "Назад"
         
         let standardAppearance = UINavigationBarAppearance()
         standardAppearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
@@ -62,22 +68,27 @@ final class MyBookingsViewController: UIViewController {
     }
     
     private func setBookings() {
-        let bookingsNumber = UserModel.bookingsModel.count
         let bookings = UserModel.bookingsModel
+        let bookingsNumber = bookings?.count ?? 0
         
         if bookingsNumber != 0 {
             var viewsArray = [BookingView]()
             var mltp = 25
             var cnt = 0
             
+            // MARK: Add user bookings to view
+            
             for booking in 0..<bookingsNumber {
                 
                 let view = BookingView()
                 viewback.addSubview(view.mainView)
                 view.setViewConstraints(multiplier: mltp)
+                
                 viewsArray.append(view)
                 mltp += 189
             }
+            
+            // MARK: Addjust user bookings to display info
             
             for view in viewsArray {
                 view.timeLabel.text = bookings![cnt].time!
@@ -88,6 +99,20 @@ final class MyBookingsViewController: UIViewController {
                 view.monthLabel.text = String(month)
                 cnt += 1
             }
+            
+            // MARK: Change scrollView height
+            
+            if bookingsNumber > 3 {
+                
+                let backHeight = (bookingsNumber * 164) + ((bookingsNumber + 1) * 25) - 10
+                setBackHeight(multiplier: backHeight)
+            }
+            
+        } else {
+            
+            // TODO: Check for bookings in firestore
+            
+            
             
         }
         
@@ -103,12 +128,15 @@ final class MyBookingsViewController: UIViewController {
             make.top.leading.bottom.trailing.equalToSuperview()
         }
         
+//        setBackHeight(multiplier: 900)
+    }
+    
+    private func setBackHeight(multiplier: Int) {
         viewback.snp.makeConstraints { make in
             make.top.leading.trailing.bottom.equalToSuperview()
-            make.height.equalTo(930)
+            make.height.equalTo(multiplier)
             make.width.equalTo(self.view)
         }
-        
     }
     
     private class BookingView {
@@ -195,7 +223,7 @@ final class MyBookingsViewController: UIViewController {
             mainView.addSubview(lineView)
             
             mainView.snp.makeConstraints { make in
-                make.top.equalTo(multiplier)
+                make.top.equalTo(multiplier) // changeable only
                 make.leading.equalTo(21)
                 make.height.equalTo(164)
                 make.width.equalTo(334)
@@ -246,7 +274,7 @@ final class MyBookingsViewController: UIViewController {
             lineView.snp.makeConstraints { make in
                 make.width.equalTo(1)
                 make.height.equalTo(134)
-                make.leading.equalTo(120)
+                make.leading.equalTo(127)
                 make.top.equalTo(15)
                 make.bottom.equalTo(-15)
             }
