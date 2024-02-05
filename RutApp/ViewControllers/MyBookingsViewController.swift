@@ -350,16 +350,20 @@ final class MyBookingsViewController: UIViewController {
         
         print("Bookings successfully deleted: \(date) \(time) \(room)")
         
-        let alert = Validate.showAlert(title: "Готово", message: "Вы успешно отменили бронирование!")
-        present(alert, animated: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 6, execute: {
+            let alert = Validate.showAlert(title: "Готово", message: "Вы успешно отменили бронирование!")
+            self.present(alert, animated: true)
+            
+            self.viewsArray.forEach { view in
+                view.mainView.removeFromSuperview()
+            }
+            
+            self.bookings = UserModel.bookingsModel
+            self.viewsArray = []
+            self.setBookings()
+        })
         
-        viewsArray.forEach { view in
-            view.mainView.removeFromSuperview()
-        }
-        
-        self.bookings = UserModel.bookingsModel
-        self.viewsArray = []
-        setBookings()
+        view.mainView.disintegrate(direction: .upperRight, estimatedTrianglesCount: 200)
     }
     
     private func deleteBooking(room: String, date: String, time: String) {
