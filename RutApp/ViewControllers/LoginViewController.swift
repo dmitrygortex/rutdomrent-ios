@@ -224,6 +224,7 @@ final class LoginViewController: UIViewController {
                                 let model = BookingsModel(date: array["date"] as! String, time: array["time"] as! String, purpose: array["purpose"] as! String, room: array["room"] as! String, uid: uid!)
                                 UserModel.bookingsModel = [model]
                                 print("Bookings successfully added to UserDefaults: \(model)")
+                                print(unwrappedBookings.count)
                             }
                         }
                     }

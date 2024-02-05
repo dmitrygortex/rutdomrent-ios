@@ -140,6 +140,28 @@ final class UserModel {
         deleteBooking()
     }
     
+    static func deleteBooking(booking: BookingsModel) {
+                
+        var newArray: [BookingsModel] = [BookingsModel]()
+        
+        let bookings = bookingsModel
+        
+        for book in bookings! {
+            if book == booking {
+                continue
+            } else {
+                newArray.append(book)
+            }
+        }
+        
+        deleteBooking()
+        
+        for book in newArray {
+            UserModel.bookingsModel = [book]
+        }
+        
+    }
+    
     static func deleteBooking() {
         defaults.removeObject(forKey: UserKeys.bookings.rawValue)
         

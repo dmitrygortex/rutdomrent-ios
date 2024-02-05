@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class BookingsModel: Codable {
+final class BookingsModel: Codable, Equatable {
     
     var date: String?
     var time: String?
@@ -21,6 +21,10 @@ final class BookingsModel: Codable {
         self.purpose = purpose
         self.room = room
         self.uid = uid
+    }
+    
+    static func == (lhs: BookingsModel, rhs: BookingsModel) -> Bool {
+        return lhs.room == rhs.room && lhs.date == rhs.date && lhs.time == rhs.time && lhs.purpose == rhs.purpose && lhs.uid == rhs.uid
     }
 
 }

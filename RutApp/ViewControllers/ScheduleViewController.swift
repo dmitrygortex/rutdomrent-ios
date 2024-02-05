@@ -400,7 +400,6 @@ final class ScheduleViewController: UIViewController {
         
         let booking = BookingsModel(date: dataFull, time: time, purpose: purpose, room: room, uid: uid!)
         UserModel.bookingsModel = [booking]
-        print(UserModel.bookingsModel.count)
         
         self.checkFreeTime()
         

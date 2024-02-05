@@ -15,7 +15,7 @@ final class MyBookingsViewController: UIViewController {
     
     // MARK: - Properties
     
-    let bookings = UserModel.bookingsModel
+    var bookings = UserModel.bookingsModel
     
     private var viewsArray = [BookingView]()
     
@@ -39,9 +39,6 @@ final class MyBookingsViewController: UIViewController {
         addSubviews()
         setUpConstraints()
         setUp()
-        setBookings()
-        
-        deleteUserBooking(room: "Лекторий", date: "4.2.2024", time: "15.00-16.00")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -54,6 +51,7 @@ final class MyBookingsViewController: UIViewController {
         super.viewWillAppear(animated)
         
         setBookings()
+        setUp()
     }
     
     private func setUp() {
@@ -331,26 +329,42 @@ final class MyBookingsViewController: UIViewController {
     
     @objc func cancelButtonTapped(sender: UIButton) {
         
-        // MARK: Delete booking from Firestore collection
+        let bookingToDelete = bookings![sender.tag]
+        let view = viewsArray[sender.tag]
         
-//        deleteBooking(room: "", date: "", time: "")
+        let room = bookingToDelete.room!
+        let date = bookingToDelete.date!
+        let time = bookingToDelete.time!
+        
+        // MARK: Delete booking from Firestore booking collection
+        
+        deleteBooking(room: room, date: date, time: time)
         
         // MARK: Delete booking from users collection
         
-//        deleteUserBooking(room: "", date: "", time: "")
+        deleteUserBooking(room: room, date: date, time: time)
         
         // MARK: Delete booking from UserDefaults
         
-//        UserModel.deleteBooking()
+        UserModel.deleteBooking(booking: bookingToDelete)
         
-        print("cancelBookingButtonTapped tapped")
+        print("Bookings successfully deleted: \(date) \(time) \(room)")
+        
+        let alert = Validate.showAlert(title: "Готово", message: "Вы успешно отменили бронирование!")
+        present(alert, animated: true)
+        
+        viewsArray.forEach { view in
+            view.mainView.removeFromSuperview()
+        }
+        
+        self.bookings = UserModel.bookingsModel
+        self.viewsArray = []
+        setBookings()
     }
     
     private func deleteBooking(room: String, date: String, time: String) {
         let documentRef = Firestore.firestore().collection(room).document(date)
-                
-        var updatedData = [String: Any]()
-        
+                        
         documentRef.getDocument { document, error in
             if let error = error {
                 print("Error updating document: \(error.localizedDescription)")
@@ -374,8 +388,8 @@ final class MyBookingsViewController: UIViewController {
             if let error = error {
                 print("Error updating document: \(error.localizedDescription)")
             } else {
-                if var data = document?.data() {
-                    var bookings = data["bookings"] as! [[String: Any]]
+                if let data = document?.data() {
+                    let bookings = data["bookings"] as! [[String: Any]]
                     for booking in bookings {
                         if booking["date"]! as! String == date && booking["time"]! as! String == time && booking["room"]! as! String == room {
                             continue
