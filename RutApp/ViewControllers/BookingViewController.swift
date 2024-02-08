@@ -52,9 +52,7 @@ final class BookingViewController: UIViewController {
         calendarView.locale = Locale(identifier: "ru")
         calendarView.fontDesign = .rounded
         calendarView.layer.cornerRadius = 12
-        calendarView.delegate = self
         calendarView.backgroundColor = AppColors.miitColor
-        calendarView.delegate = self
         calendarView.availableDateRange = DateInterval.init(start: Date.now, end: Date.distantFuture)
         
         let dateSelection = UICalendarSelectionSingleDate(delegate: self)
@@ -198,8 +196,7 @@ final class BookingViewController: UIViewController {
         }
         
         calendar.snp.makeConstraints { make in
-            make.height.equalTo(440) //420
-//            make.width.equalTo(414)
+            make.height.equalTo(425)
             make.top.equalToSuperview().inset(100)
             make.leading.equalToSuperview().inset(10)
             make.trailing.equalToSuperview().inset(10)
@@ -304,16 +301,6 @@ extension BookingViewController: UIPickerViewDataSource, UIPickerViewDelegate {
         roomTextField.resignFirstResponder()
     }
     
-}
-
-extension BookingViewController: UICalendarViewDelegate {
-    func calendarView(_ calendarView: UICalendarView, decorationFor dateComponents: DateComponents) -> UICalendarView.Decoration? {
-        return .customView {
-            let emoji = UILabel()
-            emoji.text = "🟢"
-            return emoji
-        }
-    }
 }
 
 extension BookingViewController: UICalendarSelectionSingleDateDelegate {

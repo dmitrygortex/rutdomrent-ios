@@ -12,6 +12,8 @@ import FirebaseAuth
 final class AdminCalendarViewController: UIViewController {
     
     //MARK: -Properties
+    
+    var adminDateListVC = AdminDateListViewController()
         
     let rooms = ["Все", "Лекторий", "Переговорная", "Фотостудия"]
     
@@ -112,6 +114,15 @@ final class AdminCalendarViewController: UIViewController {
         setUpConstraints()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        adminDateListVC.date = adminDate
+        adminDateListVC.room = adminRoom
+        
+        navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
     private func setUp() {
         view.backgroundColor = .white
         
@@ -139,7 +150,7 @@ final class AdminCalendarViewController: UIViewController {
         
         viewback.snp.makeConstraints { make in
             make.top.leading.trailing.bottom.equalToSuperview()
-            make.height.equalTo(930)
+            make.height.equalTo(780)
             make.width.equalTo(self.view)
         }
         
@@ -151,8 +162,7 @@ final class AdminCalendarViewController: UIViewController {
         }
         
         calendar.snp.makeConstraints { make in
-            make.height.equalTo(440) //420
-//            make.width.equalTo(414)
+            make.height.equalTo(440)
             make.top.equalToSuperview().inset(100)
             make.leading.equalToSuperview().inset(10)
             make.trailing.equalToSuperview().inset(10)
@@ -162,27 +172,36 @@ final class AdminCalendarViewController: UIViewController {
             make.height.equalTo(55)
             make.width.equalTo(280)
             make.leading.equalTo(20)
-            make.top.equalTo(533)
+            make.top.equalTo(553)
         }
         
         roomTextField.snp.makeConstraints { make in
             make.height.equalTo(44)
             make.width.equalTo(334)
             make.leading.equalTo(20)
-            make.top.equalTo(578)
+            make.top.equalTo(598)
         }
         
         showBookings.snp.makeConstraints { make in
             make.height.equalTo(63)
             make.width.equalTo(315)
-            make.top.equalToSuperview().inset(829)
+            make.top.equalToSuperview().inset(677)
             make.centerX.equalToSuperview()
         }
     }
         
     @objc private func showBookingsTapped() {
-        // TODO: add new screen
-        navigationController?.pushViewController(MyBookingsViewController(), animated: true)
+        
+        if adminDate == nil || adminRoom == "" {
+            let alert = Validate.showAlert(title: "Ошибка", message: "Выберите дату и комнату")
+            present(alert, animated: true)
+            return
+        }
+        
+        adminDateListVC.date = adminDate
+        adminDateListVC.room = adminRoom
+        
+        navigationController?.pushViewController(adminDateListVC, animated: true)
     }
     
     @objc func keyboardWillShow(_ notification: Notification) {
@@ -215,6 +234,7 @@ extension AdminCalendarViewController: UIPickerViewDataSource, UIPickerViewDeleg
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         roomTextField.text = rooms[row]
+        adminRoom = roomTextField.text!
         roomTextField.resignFirstResponder()
     }
     
@@ -222,11 +242,11 @@ extension AdminCalendarViewController: UIPickerViewDataSource, UIPickerViewDeleg
 
 extension AdminCalendarViewController: UICalendarViewDelegate {
     func calendarView(_ calendarView: UICalendarView, decorationFor dateComponents: DateComponents) -> UICalendarView.Decoration? {
-        return .customView {
-            let emoji = UILabel()
-            emoji.text = "🟢"
-            return emoji
-        }
+        if !dateComponents.day!.isMultiple(of: 2) {
+                return UICalendarView.Decoration.default(color: .systemGreen, size: .large)
+            }
+
+            return nil
     }
 }
 

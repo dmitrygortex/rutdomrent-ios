@@ -26,7 +26,7 @@ final class TabBarController: UITabBarController {
     private func generateTabBar() {
         viewControllers = [
             generateVC(vc: InfoViewController(), title: "Информация", image: UIImage(systemName: "info.circle")),
-            generateVC(vc: BookingViewController(), title: "Бронирование", image: UIImage(systemName: "calendar.circle")),
+            generateVC(vc: AdminCalendarViewController(), title: "Бронирование", image: UIImage(systemName: "calendar.circle")),
             generateVC(vc: AccountViewController(), title: "Аккаунт", image: UIImage(systemName: "person.crop.circle"))
         ]
     }
