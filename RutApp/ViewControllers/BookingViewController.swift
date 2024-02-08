@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import FirebaseAuth
+import UserNotifications
 
 final class BookingViewController: UIViewController {
     
@@ -157,6 +158,12 @@ final class BookingViewController: UIViewController {
         scheduleVC.purpose = userPurpose
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        getPermisson()
+    }
+    
     private func setUp() {
         view.backgroundColor = .white
         
@@ -165,6 +172,22 @@ final class BookingViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    private func getPermisson() {
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+            if settings.authorizationStatus != .authorized {
+                UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+                    if granted {
+                        print("Разрешение на отправку уведомлений получено")
+                    } else {
+                        print("Пользователь отклонил разрешение на отправку уведомлений")
+                    }
+                }
+            } else {
+                print("Разрешение на отправку уведомлений есть")
+            }
+        }
     }
     
     private func addSubviews() {

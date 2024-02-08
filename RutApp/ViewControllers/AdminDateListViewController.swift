@@ -49,6 +49,7 @@ class AdminDateListViewController: UIViewController {
         super.viewWillAppear(animated)
         
         navigationItem.title = getFullDate(date)
+        print(room)
     }
     
     private func setUp() {

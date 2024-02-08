@@ -184,6 +184,8 @@ final class MyBookingsViewController: UIViewController {
             monthLabel.text = "26 Января"
             monthLabel.font = .systemFont(ofSize: 17, weight: .bold)
             monthLabel.textColor = .black
+            monthLabel.adjustsFontSizeToFitWidth = true
+            monthLabel.minimumScaleFactor = 0.5
             
             return monthLabel
         }()
@@ -193,6 +195,8 @@ final class MyBookingsViewController: UIViewController {
             timeLabel.text = "10.00-11.00"
             timeLabel.font = .systemFont(ofSize: 17, weight: .bold)
             timeLabel.textColor = .black
+            timeLabel.adjustsFontSizeToFitWidth = true
+            timeLabel.minimumScaleFactor = 0.5
             
             return timeLabel
         }()
@@ -214,6 +218,8 @@ final class MyBookingsViewController: UIViewController {
             purposeLabel.textColor = .black
             purposeLabel.textAlignment = .center
             purposeLabel.numberOfLines = 0
+            purposeLabel.adjustsFontSizeToFitWidth = true
+            purposeLabel.minimumScaleFactor = 0.5
             
             return purposeLabel
         }()

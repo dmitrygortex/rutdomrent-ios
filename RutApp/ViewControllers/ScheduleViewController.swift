@@ -411,6 +411,36 @@ final class ScheduleViewController: UIViewController {
                 button.tag = 0
             }
         }
+        
+        // MARK: Make a notification
+        
+        UNUserNotificationCenter.current().getNotificationSettings { [self] settings in
+            if settings.authorizationStatus == .authorized {
+                let calendar = Calendar.current
+                let notificationDate = calendar.date(byAdding: .day, value: -1, to: (date?.date)!)!
+                
+                let content = UNMutableNotificationContent()
+                
+                content.title = "У вас бронирование"
+                content.body = "Завтра, в \(time) \(dataFull) в \(room)"
+                
+                let components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: notificationDate)
+                let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
+                let identifier = uid! + time + dataFull + room
+                
+                let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+                
+                UNUserNotificationCenter.current().add(request) { error in
+                    if let error = error {
+                        print("Error on notification: \(error.localizedDescription)")
+                    } else {
+                        print("Successfully add a new notification for user booking")
+                    }
+                }
+                
+            }
+        }
+        
         disableButtons(disable: false)
         self.time = ""
     }
