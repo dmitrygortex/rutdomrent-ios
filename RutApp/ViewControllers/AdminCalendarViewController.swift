@@ -1,31 +1,27 @@
 //
-//  BookingViewController.swift
+//  AdminCalendarViewController.swift
 //  RutApp
 //
-//  Created by Michael Kivo on 15/01/2024.
+//  Created by Michael Kivo on 08/02/2024.
 //
 
 import UIKit
 import SnapKit
 import FirebaseAuth
 
-final class BookingViewController: UIViewController {
+final class AdminCalendarViewController: UIViewController {
     
     //MARK: -Properties
+        
+    let rooms = ["Все", "Лекторий", "Переговорная", "Фотостудия"]
     
-    var scheduleVC = ScheduleViewController()
-    
-    let rooms = ["Лекторий", "Переговорная", "Фотостудия"]
-    
-    var userRoom = ""
-    
-    var userPurpose = ""
-    
-    var userDate: DateComponents?
+    var adminRoom = ""
+        
+    var adminDate: DateComponents?
         
     private lazy var titlelabel: UILabel = {
         let label = UILabel()
-        label.text = "Бронирование"
+        label.text = "Бронирования"
         label.font = .systemFont(ofSize: 30, weight: .bold)
         label.textColor = AppColors.miitColor
         label.numberOfLines = 0
@@ -72,15 +68,6 @@ final class BookingViewController: UIViewController {
         return label
     }()
     
-    private lazy var purposeLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Цель посещения:"
-        label.textColor = AppColors.placeholderColor
-        label.font = UIFont(name: "Extra Light", size: 20)
-        
-        return label
-    }()
-    
     private lazy var roomPicker: UIPickerView = {
         var picker = UIPickerView()
         
@@ -103,41 +90,14 @@ final class BookingViewController: UIViewController {
         return room
     }()
     
-    private lazy var purposeTextField: UITextField = {
-        let purpose = UITextField()
-        purpose.textColor = .black
-        purpose.backgroundColor = AppColors.grayColor
-        purpose.layer.cornerRadius = 12
-        purpose.returnKeyType = .go
-        purpose.delegate = self
-        
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 11, height: purpose.frame.height))
-        purpose.leftView = paddingView
-        purpose.leftViewMode = .always
-        
-        return purpose
-    }()
-    
-    private lazy var continueButton: UIButton = {
+    private lazy var showBookings: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Далее", for: .normal)
+        button.setTitle("Показать бронирования", for: .normal)
         button.backgroundColor = AppColors.miitColor
         button.layer.cornerRadius = 12
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
-        button.addTarget(self, action: #selector(continueButtonTapped), for: .touchUpInside)
-        
-        return button
-    }()
-    
-    private lazy var myBookingsButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Мои Бронирования", for: .normal)
-        button.backgroundColor = AppColors.miitColor
-        button.layer.cornerRadius = 12
-        button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
-        button.addTarget(self, action: #selector(myBookingsButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(showBookingsTapped), for: .touchUpInside)
         
         return button
     }()
@@ -150,13 +110,6 @@ final class BookingViewController: UIViewController {
         setUp()
         addSubviews()
         setUpConstraints()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        scheduleVC.room = userRoom
-        scheduleVC.date = userDate
-        scheduleVC.purpose = userPurpose
     }
     
     private func setUp() {
@@ -174,9 +127,9 @@ final class BookingViewController: UIViewController {
         scrollView.addSubview(viewback)
         viewback.addSubview(titlelabel)
         viewback.addSubview(calendar)
-        [continueButton, myBookingsButton].forEach { viewback.addSubview($0) }
-        [roomLabel, purposeLabel].forEach { viewback.addSubview($0) }
-        [roomTextField, purposeTextField].forEach { viewback.addSubview($0) }
+        [showBookings].forEach { viewback.addSubview($0) }
+        [roomLabel].forEach { viewback.addSubview($0) }
+        [roomTextField].forEach { viewback.addSubview($0) }
     }
     
     private func setUpConstraints() {
@@ -219,55 +172,16 @@ final class BookingViewController: UIViewController {
             make.top.equalTo(578)
         }
         
-        purposeLabel.snp.makeConstraints { make in
-            make.height.equalTo(55)
-            make.width.equalTo(280)
-            make.leading.equalTo(20)
-            make.top.equalTo(626)
-        }
-        
-        purposeTextField.snp.makeConstraints { make in
-            make.height.equalTo(44)
-            make.width.equalTo(334)
-            make.leading.equalTo(20)
-            make.top.equalTo(671)
-        }
-        
-        continueButton.snp.makeConstraints { make in
-            make.height.equalTo(63)
-            make.width.equalTo(215)
-            make.top.equalToSuperview().inset(742)
-            make.centerX.equalToSuperview()
-        }
-        
-        myBookingsButton.snp.makeConstraints { make in
+        showBookings.snp.makeConstraints { make in
             make.height.equalTo(63)
             make.width.equalTo(315)
             make.top.equalToSuperview().inset(829)
             make.centerX.equalToSuperview()
         }
     }
-    
-    @objc private func continueButtonTapped() {
-        if roomTextField.text == "" || purposeTextField.text == "" || userDate == nil {
-            let alert = Validate.showAlert(title: "Ошибка", message: "Заполните все поля")
-            present(alert, animated: true)
-            return
-        }
         
-        userRoom = roomTextField.text!
-        userPurpose = purposeTextField.text!
-        
-        scheduleVC.room = userRoom
-        scheduleVC.date = userDate
-        scheduleVC.purpose = userPurpose
-        
-        purposeTextField.resignFirstResponder()
-        
-        navigationController?.pushViewController(scheduleVC, animated: true)
-    }
-        
-    @objc private func myBookingsButtonTapped() {
+    @objc private func showBookingsTapped() {
+        // TODO: add new screen
         navigationController?.pushViewController(MyBookingsViewController(), animated: true)
     }
     
@@ -286,13 +200,13 @@ final class BookingViewController: UIViewController {
     
 }
 
-extension BookingViewController: UIPickerViewDataSource, UIPickerViewDelegate {
+extension AdminCalendarViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return 3
+        return 4
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
@@ -306,7 +220,7 @@ extension BookingViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     
 }
 
-extension BookingViewController: UICalendarViewDelegate {
+extension AdminCalendarViewController: UICalendarViewDelegate {
     func calendarView(_ calendarView: UICalendarView, decorationFor dateComponents: DateComponents) -> UICalendarView.Decoration? {
         return .customView {
             let emoji = UILabel()
@@ -316,14 +230,14 @@ extension BookingViewController: UICalendarViewDelegate {
     }
 }
 
-extension BookingViewController: UICalendarSelectionSingleDateDelegate {
+extension AdminCalendarViewController: UICalendarSelectionSingleDateDelegate {
     func dateSelection(_ selection: UICalendarSelectionSingleDate, didSelectDate dateComponents: DateComponents?) {
         guard let data = dateComponents else {
             print("Error on data")
             return
         }
         print("Выбранная дата: \(data)")
-        self.userDate = data
+        self.adminDate = data
     }
 
       
@@ -333,7 +247,7 @@ extension BookingViewController: UICalendarSelectionSingleDateDelegate {
     
 }
 
-extension BookingViewController: UITextFieldDelegate {
+extension AdminCalendarViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.endEditing(true)
         return true
