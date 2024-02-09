@@ -423,7 +423,7 @@ final class ScheduleViewController: UIViewController {
                 let content = UNMutableNotificationContent()
                 
                 content.title = "У вас бронирование"
-                content.body = "Завтра, в \(time) \(dataFull) в \(room)"
+                content.body = "Завтра, \(dataFull) в \(booking.time!) \(room)"
                 
                 var components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: notificationDate)
                 let temp = Int(booking.time!.split(separator: "-")[0].split(separator: ".")[0])!
@@ -442,7 +442,6 @@ final class ScheduleViewController: UIViewController {
                         print("Successfully add a new notification for user booking ")
                     }
                 }
-                
             }
         }
         

@@ -507,6 +507,7 @@
 				DEVELOPMENT_TEAM = 4P2882G4R7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RutApp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Мой Дом";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -539,6 +540,7 @@
 				DEVELOPMENT_TEAM = 4P2882G4R7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RutApp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Мой Дом";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;

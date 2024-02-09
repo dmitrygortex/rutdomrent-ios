@@ -37,6 +37,7 @@ class AdminDateListViewController: UIViewController {
 
         setUp()
         setUpConstraints()
+        setUpViews()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -49,7 +50,6 @@ class AdminDateListViewController: UIViewController {
         super.viewWillAppear(animated)
         
         navigationItem.title = getFullDate(date)
-        print(room)
     }
     
     private func setUp() {
@@ -68,12 +68,28 @@ class AdminDateListViewController: UIViewController {
         self.navigationController?.navigationBar.scrollEdgeAppearance = standardAppearance
     }
     
-    private func setUpConstraints() {
-        
+    private func setUpViews() {
+        var view1 = BookingViews()
+        viewback.addSubview(view1.mainView)
+        view1.setViewConstraints(multiplier: 25)
     }
     
-    //TODO: Finish
+    private func setUpConstraints() {
+        scrollView.snp.makeConstraints { make in
+            make.top.leading.bottom.trailing.equalToSuperview()
+        }
+        
+        setBackHeight(multiplier: 650)
+    }
     
+    private func setBackHeight(multiplier: Int) {
+        viewback.snp.makeConstraints { make in
+            make.top.leading.trailing.bottom.equalToSuperview()
+            make.height.equalTo(multiplier)
+            make.width.equalTo(self.view)
+        }
+    }
+        
     private func getFullDate(_ date: DateComponents?) -> String {
         if let day = date?.day, let month = date?.month, let year = date?.year {
             let months = [1 : "Января", 2 : "Февраля", 3 : "Марта", 4 : "Апреля", 5 : "Мая", 6 : "Июня", 7 : "Июля", 8 : "Августа", 9 : "Сентября", 10 : "Октября", 11 : "Ноября", 12 : "Декабря"]
@@ -86,7 +102,7 @@ class AdminDateListViewController: UIViewController {
         return ""
     }
     
-    private class BookingView {
+    private class BookingViews {
         
         let mainView: UIView = {
             var mainView = UIView()
@@ -117,6 +133,8 @@ class AdminDateListViewController: UIViewController {
             timeLabel.text = "10.00-11.00"
             timeLabel.font = .systemFont(ofSize: 17, weight: .bold)
             timeLabel.textColor = .black
+            timeLabel.adjustsFontSizeToFitWidth = true
+            timeLabel.minimumScaleFactor = 0.5
             
             return timeLabel
         }()
@@ -138,6 +156,8 @@ class AdminDateListViewController: UIViewController {
             purposeLabel.textColor = .black
             purposeLabel.textAlignment = .center
             purposeLabel.numberOfLines = 0
+            purposeLabel.adjustsFontSizeToFitWidth = true
+            purposeLabel.minimumScaleFactor = 0.5
             
             return purposeLabel
         }()
@@ -149,7 +169,7 @@ class AdminDateListViewController: UIViewController {
             cancelButton.setTitleColor(.white, for: .normal)
             cancelButton.layer.cornerRadius = 12
             cancelButton.titleLabel?.font = .systemFont(ofSize: 19, weight: .bold)
-            cancelButton.addTarget(AdminDateListViewController.BookingView.self, action: #selector(emailTapped), for: .touchUpInside)
+            cancelButton.addTarget(AdminDateListViewController.BookingViews.self, action: #selector(emailTapped), for: .touchUpInside)
             cancelButton.tag = 1
             
             return cancelButton
@@ -168,22 +188,22 @@ class AdminDateListViewController: UIViewController {
             }
             
             roomLabel.snp.makeConstraints { make in
-                make.top.equalToSuperview().inset(23)
-                make.leading.equalToSuperview().inset(34)
+                make.top.equalToSuperview().inset(43)
+                make.leading.equalToSuperview().inset(8)
                 make.height.equalTo(35)
                 make.width.equalTo(85)
             }
             
             instituteLabel.snp.makeConstraints { make in
-                make.top.equalToSuperview().inset(39)
-                make.leading.equalToSuperview().inset(12)
+                make.top.equalToSuperview().inset(115)
+                make.leading.equalToSuperview().inset(29)
                 make.height.equalTo(50)
                 make.width.equalTo(104)
             }
             
             timeLabel.snp.makeConstraints { make in
-                make.top.equalToSuperview().inset(100)
-                make.leading.equalToSuperview().inset(12)
+                make.top.equalToSuperview().inset(72)
+                make.leading.equalToSuperview().inset(9)
                 make.height.equalTo(35)
                 make.width.equalTo(100)
             }
@@ -196,23 +216,23 @@ class AdminDateListViewController: UIViewController {
             }
             
             purposeLabel.snp.makeConstraints { make in
-                make.top.equalToSuperview().inset(40)
+                make.top.equalToSuperview().inset(52)
                 make.leading.equalToSuperview().inset(135)
-                make.height.equalTo(48)
+                make.height.equalTo(38)
                 make.width.equalTo(180)
             }
             
             cancelButton.snp.makeConstraints { make in
-                make.top.equalToSuperview().inset(103)
-                make.leading.equalToSuperview().inset(140)
-                make.height.equalTo(46)
-                make.width.equalTo(180)
+                make.top.equalToSuperview().inset(108)
+                make.leading.equalToSuperview().inset(152)
+                make.height.equalTo(41)
+                make.width.equalTo(152)
             }
             
             lineView.snp.makeConstraints { make in
                 make.width.equalTo(1)
                 make.height.equalTo(134)
-                make.leading.equalTo(127)
+                make.leading.equalToSuperview().inset(127)
                 make.top.equalTo(15)
                 make.bottom.equalTo(-15)
             }

@@ -360,57 +360,99 @@ final class AccountViewController: UIViewController {
     }
     
     @objc private func signOutButtonTapped() {
-        let firebaseAuth = Auth.auth()
         
-        do {
-          try firebaseAuth.signOut()
-            print("Пользователь успешно вышел из аккаунта")
-            [emailTextField, passwordTextField, FIOTextField, instituteTextField].forEach { $0.text = "" }
+        let alert = UIAlertController(title: "Выйти из аккаунта", message: "Вы уверены что хотите выйти из аккаунта?", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Отменить", style: .cancel, handler: { action in
+            return
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Выйти", style: .destructive, handler: { action in
+            print("Выход из аккаунта...")
+            
+            let firebaseAuth = Auth.auth()
+            
+            do {
+                try firebaseAuth.signOut()
+                print("Пользователь успешно вышел из аккаунта")
+                
+                // MARK: Delete user info from UserDefaults
+                
+                UserModel.deleteUser()
+                
+            } catch let signOutError as NSError {
+                print("Error signing out: %@", signOutError)
+            }
+        }))
+        present(alert, animated: true)
+    }
+            
+    
+    @objc private func deleteAccountButtonTapped() {
+        
+        let alert = UIAlertController(title: "Удалить аккаунт", message: "Вы уверены что хотите удалить аккаунт?", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Отменить", style: .cancel, handler: { action in
+            return
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Удалить", style: .destructive, handler: { action in
+            print("Deleting account...")
+            
+            self.signInUser()
+            
+            let user = Auth.auth().currentUser
+            
+            // MARK: Delete user account from Firestore
+            
+            Firestore.firestore().collection("users").document(user!.uid).delete { error in
+                if error != nil {
+                    print(error!.localizedDescription)
+                    print("Account in Firestore doesn't deleted.")
+                    
+                } else {
+                    print("Account in Firestore successfully deleted.")
+                }
+            }
+            
+            // MARK: Delete user account from Firebase
+            
+            self.signInUser()
+            
+            user?.delete { error in
+              if let error = error {
+                  print("User account doesn't deleted. \(error.localizedDescription)")
+              } else {
+                  print("User Account successfully deleted.")
+                  [self.passwordTextField, self.FIOTextField, self.instituteTextField, self.emailTextField].forEach { $0.text = "" }
+                  
+                  let alert = Validate.showAlert(title: "Готово", message: "Вы успешно удалили аккаунт")
+                  self.present(alert, animated: true)
+              }
+            }
             
             // MARK: Delete user info from UserDefaults
             
             UserModel.deleteUser()
             
-        } catch let signOutError as NSError {
-          print("Error signing out: %@", signOutError)
-        }
-    }
-    
-    @objc private func deleteAccountButtonTapped() {
-        signInUser()
+            // MARK: Delete all notifications
+            
+            UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+            
+            self.signInUser()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 4, execute: {
+                do {
+                try Auth.auth().signOut()
+                    print("Successfully sign out")
+                } catch let signOutError as NSError {
+                  print("Error signing out: %@", signOutError)
+                }
+            })
+            
+        }))
         
-        let user = Auth.auth().currentUser
-        
-        // MARK: Delete user account from Firestore
-        
-        Firestore.firestore().collection("users").document(user!.uid).delete { error in
-            if error != nil {
-                print(error!.localizedDescription)
-                print("Account in Firestore doesn't deleted.")
-                
-            } else {
-                print("Account in Firestore successfully deleted.")
-            }
-        }
-        
-        // MARK: Delete user account from Firebase
-        
-        user?.delete { error in
-          if let error = error {
-              print("User account doesn't deleted. \(error.localizedDescription)")
-          } else {
-              print("User Account successfully deleted.")
-              [self.passwordTextField, self.FIOTextField, self.instituteTextField, self.emailTextField].forEach { $0.text = "" }
-              
-              let alert = Validate.showAlert(title: "Готово", message: "Вы успешно удалили аккаунт")
-              self.present(alert, animated: true)
-          }
-        }
-        
-        // MARK: Delete user info from UserDefaults
-        
-        UserModel.deleteUser()
-        
+        present(alert, animated: true)
     }
     
     @objc func keyboardWillShow(_ notification: Notification) {
