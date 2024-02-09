@@ -143,6 +143,7 @@ final class ScheduleViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         checkFreeTime()
         setUp()
     }
@@ -424,9 +425,13 @@ final class ScheduleViewController: UIViewController {
                 content.title = "У вас бронирование"
                 content.body = "Завтра, в \(time) \(dataFull) в \(room)"
                 
-                let components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: notificationDate)
+                var components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: notificationDate)
+                let temp = Int(booking.time!.split(separator: "-")[0].split(separator: ".")[0])!
+                components.hour = temp
+                components.minute = 0
+                
                 let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
-                let identifier = uid! + time + dataFull + room
+                let identifier = uid! + booking.time! + dataFull + room
                 
                 let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
                 
@@ -434,7 +439,7 @@ final class ScheduleViewController: UIViewController {
                     if let error = error {
                         print("Error on notification: \(error.localizedDescription)")
                     } else {
-                        print("Successfully add a new notification for user booking")
+                        print("Successfully add a new notification for user booking ")
                     }
                 }
                 
