@@ -354,6 +354,12 @@ final class MyBookingsViewController: UIViewController {
         
         UserModel.deleteBooking(booking: bookingToDelete)
         
+        // MARK: Delete booking notification
+        
+        let identifier = Auth.auth().currentUser!.uid + time + date + room
+        
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [identifier])
+        
         print("Bookings successfully deleted: \(date) \(time) \(room)")
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 6, execute: {
