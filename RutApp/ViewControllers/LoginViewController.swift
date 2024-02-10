@@ -59,8 +59,8 @@ final class LoginViewController: UIViewController {
         return email
     }()
     
-    private lazy var passwordTextField: UITextField = {
-        let password = UITextField()
+    private lazy var passwordTextField: CustomTextField = {
+        let password = CustomTextField()
         password.textColor = .black
         password.textAlignment = .center
         password.isSecureTextEntry = true
@@ -72,6 +72,20 @@ final class LoginViewController: UIViewController {
         )
         password.delegate = self
         password.returnKeyType = .go
+        
+        let eye = UIButton(type: .custom)
+        eye.setImage(UIImage(systemName: "eye.slash"), for: .normal)
+        eye.setImage(UIImage(systemName: "eye"), for: .selected)
+        eye.addTarget(self, action: #selector(eyeTapped), for: .touchUpInside)
+        eye.tintColor = AppColors.hintColor
+        eye.frame = CGRect(x: 0, y: 0, width: 45, height: 20)
+        
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 46, height: 20))
+        eye.center = view.center
+        view.addSubview(eye)
+        
+        password.rightView = view
+        password.rightViewMode = .always
         
         return password
     }()
@@ -243,6 +257,11 @@ final class LoginViewController: UIViewController {
     
     @objc private func handleTap() {
         view.endEditing(true)
+    }
+    
+    @objc private func eyeTapped(sender: UIButton) {
+        passwordTextField.isSecureTextEntry.toggle()
+        sender.isSelected.toggle()
     }
 
 }

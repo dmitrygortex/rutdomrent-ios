@@ -14,6 +14,7 @@
 		8E293EE52B55A12900C9ADA3 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E293EE42B55A12900C9ADA3 /* InfoViewController.swift */; };
 		8E293EE72B55A14C00C9ADA3 /* BookingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E293EE62B55A14C00C9ADA3 /* BookingViewController.swift */; };
 		8E293EE92B55A15C00C9ADA3 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E293EE82B55A15C00C9ADA3 /* AccountViewController.swift */; };
+		8E342A972B777337000E3ED2 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E342A962B777337000E3ED2 /* CustomTextField.swift */; };
 		8E57BAF42B5540B30012E598 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E57BAF32B5540B30012E598 /* LoginViewController.swift */; };
 		8E828DFE2B71234A0030CBAF /* CALayer+Disintegrate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E828DFD2B71234A0030CBAF /* CALayer+Disintegrate.swift */; };
 		8E828E002B7123520030CBAF /* DisintegrationDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E828DFF2B7123520030CBAF /* DisintegrationDirection.swift */; };
@@ -77,6 +78,7 @@
 		8E293EE42B55A12900C9ADA3 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		8E293EE62B55A14C00C9ADA3 /* BookingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookingViewController.swift; sourceTree = "<group>"; };
 		8E293EE82B55A15C00C9ADA3 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
+		8E342A962B777337000E3ED2 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		8E57BAF32B5540B30012E598 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		8E828DFD2B71234A0030CBAF /* CALayer+Disintegrate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CALayer+Disintegrate.swift"; sourceTree = "<group>"; };
 		8E828DFF2B7123520030CBAF /* DisintegrationDirection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisintegrationDirection.swift; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 				8EE81D892B5C3D36003D3596 /* Validate.swift */,
 				8E8D84E92B58214400EA6A8E /* PaddedLabel.swift */,
 				8EEA8BDA2B5639EB00BC5AEB /* AppColors.swift */,
+				8E342A962B777337000E3ED2 /* CustomTextField.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -355,6 +358,7 @@
 				8E234D1B2B6E7EE70028B8E6 /* UserModel.swift in Sources */,
 				8EDEC6662B5456F4007146D6 /* AppDelegate.swift in Sources */,
 				8EDEC6682B5456F4007146D6 /* SceneDelegate.swift in Sources */,
+				8E342A972B777337000E3ED2 /* CustomTextField.swift in Sources */,
 				8E234D1F2B6EA4A00028B8E6 /* BookingsModel.swift in Sources */,
 				8E293EE72B55A14C00C9ADA3 /* BookingViewController.swift in Sources */,
 				8E8D84EA2B58214400EA6A8E /* PaddedLabel.swift in Sources */,
