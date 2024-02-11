@@ -32,6 +32,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             } else {
                 let vc = LoginViewController()
                 let navController = UINavigationController(rootViewController: vc)
+                navController.setNavigationBarHidden(true, animated: false)
                 
                 window.rootViewController = navController
                 

@@ -129,7 +129,7 @@ final class MyBookingsViewController: UIViewController {
     
     private func setUpConstraints() {
         scrollView.snp.makeConstraints { make in
-            make.top.leading.bottom.trailing.equalToSuperview()
+            make.edges.equalToSuperview()
         }
     }
     
@@ -147,7 +147,7 @@ final class MyBookingsViewController: UIViewController {
     
     private func setBackHeight(multiplier: Int) {
         viewback.snp.makeConstraints { make in
-            make.top.leading.trailing.bottom.equalToSuperview()
+            make.edges.equalToSuperview()
             make.height.equalTo(multiplier)
             make.width.equalTo(self.view)
         }

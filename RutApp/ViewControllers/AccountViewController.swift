@@ -208,8 +208,21 @@ final class AccountViewController: UIViewController {
         setData()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
     private func setUp() {
         view.backgroundColor = .white
+        navigationController?.setNavigationBarHidden(true, animated: false)
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -264,19 +277,18 @@ final class AccountViewController: UIViewController {
     
     private func setUpConstraints() {
         scrollView.snp.makeConstraints { make in
-            make.top.leading.bottom.trailing.equalToSuperview()
+            make.edges.equalToSuperview()
         }
         
         viewback.snp.makeConstraints { make in
-            make.top.leading.trailing.bottom.equalToSuperview()
+            make.edges.equalToSuperview()
             make.height.equalTo(700)
             make.width.equalTo(self.view)
         }
         
         titlelabel.snp.makeConstraints { make in
             make.height.equalTo(56)
-            make.width.equalTo(340)
-            make.leading.equalTo(44)
+            make.centerX.equalToSuperview()
             make.top.equalToSuperview().inset(4)
         }
         

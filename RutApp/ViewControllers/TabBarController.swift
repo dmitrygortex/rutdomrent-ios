@@ -6,9 +6,16 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 final class TabBarController: UITabBarController {
+    
+    // MARK: - Properties
 
+    let adminUIDs = ["diOt4ObiLrNZPrsJgNNlxEl3zdh2"]
+    
+    // MARK: - Methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -24,9 +31,12 @@ final class TabBarController: UITabBarController {
     }
     
     private func generateTabBar() {
+        let uid = Auth.auth().currentUser?.uid
+        let flag = adminUIDs.contains(uid!)
+        
         viewControllers = [
             generateVC(vc: InfoViewController(), title: "Информация", image: UIImage(systemName: "info.circle")),
-            generateVC(vc: BookingViewController(), title: "Бронирование", image: UIImage(systemName: "calendar.circle")),
+            generateVC(vc: flag ? AdminCalendarViewController() : BookingViewController(), title: flag ? "Бронирования" : "Бронирование", image: UIImage(systemName: "calendar.circle")),
             generateVC(vc: AccountViewController(), title: "Аккаунт", image: UIImage(systemName: "person.crop.circle"))
         ]
     }

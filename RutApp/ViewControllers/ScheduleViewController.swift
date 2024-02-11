@@ -173,11 +173,11 @@ final class ScheduleViewController: UIViewController {
     
     private func setUpConstraints() {
         scrollView.snp.makeConstraints { make in
-            make.top.leading.bottom.trailing.equalToSuperview()
+            make.edges.equalToSuperview()
         }
         
         viewback.snp.makeConstraints { make in
-            make.top.leading.trailing.bottom.equalToSuperview()
+            make.edges.equalToSuperview()
             make.height.equalTo(830)
             make.width.equalTo(self.view)
         }

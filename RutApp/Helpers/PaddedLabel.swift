@@ -7,11 +7,11 @@
 
 import UIKit
 
-class PaddedLabel: UILabel {
+final class PaddedLabel: UILabel {
     let padding: CGFloat = 12
     
     override func drawText(in rect: CGRect) {
-        let insets = UIEdgeInsets(top: 0, left: padding, bottom: 0, right: 0)
+        let insets = UIEdgeInsets(top: 0, left: padding, bottom: 0, right: padding)
         super.drawText(in: rect.inset(by: insets))
     }
 }

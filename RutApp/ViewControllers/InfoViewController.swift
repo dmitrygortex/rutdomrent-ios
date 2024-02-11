@@ -10,7 +10,7 @@ import SnapKit
 
 final class InfoViewController: UIViewController {
     
-    //MARK: -Properties
+    //MARK: - Properties
     
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -224,7 +224,7 @@ final class InfoViewController: UIViewController {
         return label
     }()
     
-    // MARK: -Methods
+    // MARK: - Methods
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -234,8 +234,21 @@ final class InfoViewController: UIViewController {
         setUpConstraints()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
     private func setUp() {
         view.backgroundColor = .white
+        navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
     private func addSubviews() {
@@ -250,19 +263,18 @@ final class InfoViewController: UIViewController {
     
     private func setUpConstraints() {
         scrollView.snp.makeConstraints { make in
-            make.top.leading.bottom.trailing.equalToSuperview()
+            make.edges.equalToSuperview()
         }
         
         viewback.snp.makeConstraints { make in
-            make.top.leading.trailing.bottom.equalToSuperview()
+            make.edges.equalToSuperview()
             make.height.equalTo(2015)
             make.width.equalTo(self.view)
         }
         
         titlelabel.snp.makeConstraints { make in
             make.height.equalTo(56)
-            make.width.equalTo(370)
-            make.leading.equalTo(95)
+            make.centerX.equalToSuperview()
             make.top.equalToSuperview().inset(4)
         }
         
@@ -277,6 +289,7 @@ final class InfoViewController: UIViewController {
             make.height.equalTo(220)
             make.width.equalTo(334)
             make.leading.equalTo(20)
+            make.trailing.equalTo(-20)
             make.top.equalTo(114)
         }
         
@@ -291,6 +304,7 @@ final class InfoViewController: UIViewController {
             make.height.equalTo(44)
             make.width.equalTo(334)
             make.leading.equalTo(20)
+            make.trailing.equalTo(-20)
             make.top.equalTo(400)
         }
         
@@ -305,14 +319,14 @@ final class InfoViewController: UIViewController {
             make.height.equalTo(44)
             make.width.equalTo(334)
             make.leading.equalTo(20)
+            make.trailing.equalTo(-20)
             make.top.equalTo(485)
         }
         
         roomtitle.snp.makeConstraints { make in
             make.height.equalTo(56)
-            make.width.equalTo(370)
-            make.leading.equalTo(95)
-            make.top.equalToSuperview().inset(549)
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().inset(553)
         }
         
         lectureLabel.snp.makeConstraints { make in
@@ -326,6 +340,7 @@ final class InfoViewController: UIViewController {
             make.height.equalTo(199)
             make.width.equalTo(337)
             make.leading.equalTo(20)
+            make.trailing.equalTo(-20)
             make.top.equalTo(663)
         }
         
@@ -333,6 +348,7 @@ final class InfoViewController: UIViewController {
             make.height.equalTo(72)
             make.width.equalTo(337)
             make.leading.equalTo(20)
+            make.trailing.equalTo(-20)
             make.top.equalTo(873)
         }
         
@@ -347,6 +363,7 @@ final class InfoViewController: UIViewController {
             make.height.equalTo(199)
             make.width.equalTo(337)
             make.leading.equalTo(20)
+            make.trailing.equalTo(-20)
             make.top.equalTo(1012)
         }
         
@@ -354,6 +371,7 @@ final class InfoViewController: UIViewController {
             make.height.equalTo(72)
             make.width.equalTo(337)
             make.leading.equalTo(20)
+            make.trailing.equalTo(-20)
             make.top.equalTo(1222)
         }
         
@@ -368,6 +386,7 @@ final class InfoViewController: UIViewController {
             make.height.equalTo(199)
             make.width.equalTo(337)
             make.leading.equalTo(20)
+            make.trailing.equalTo(-20)
             make.top.equalTo(1361)
         }
         
@@ -375,6 +394,7 @@ final class InfoViewController: UIViewController {
             make.height.equalTo(72)
             make.width.equalTo(337)
             make.leading.equalTo(20)
+            make.trailing.equalTo(-20)
             make.top.equalTo(1571)
         }
         
@@ -389,6 +409,7 @@ final class InfoViewController: UIViewController {
             make.height.equalTo(199)
             make.width.equalTo(337)
             make.leading.equalTo(20)
+            make.trailing.equalTo(-20)
             make.top.equalTo(1710)
         }
         
@@ -396,6 +417,7 @@ final class InfoViewController: UIViewController {
             make.height.equalTo(72)
             make.width.equalTo(337)
             make.leading.equalTo(20)
+            make.trailing.equalTo(-20)
             make.top.equalTo(1920)
         }
     }

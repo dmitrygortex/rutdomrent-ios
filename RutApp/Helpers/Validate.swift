@@ -7,7 +7,7 @@
 
 import UIKit
 
-class Validate {
+final class Validate {
     
     static func emailIsValid(_ email: String?) -> Bool {
         guard let email = email else { return false }

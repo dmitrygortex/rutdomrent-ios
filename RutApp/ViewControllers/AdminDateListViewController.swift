@@ -10,7 +10,7 @@ import SnapKit
 import Firebase
 import FirebaseAuth
 
-class AdminDateListViewController: UIViewController {
+final class AdminDateListViewController: UIViewController {
     
     // MARK: - Properties
     
@@ -46,6 +46,12 @@ class AdminDateListViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -75,6 +81,7 @@ class AdminDateListViewController: UIViewController {
     }
     
     private func setUpConstraints() {
+        view.addSubview(scrollView)
         scrollView.snp.makeConstraints { make in
             make.top.leading.bottom.trailing.equalToSuperview()
         }
@@ -83,6 +90,7 @@ class AdminDateListViewController: UIViewController {
     }
     
     private func setBackHeight(multiplier: Int) {
+        scrollView.addSubview(viewback)
         viewback.snp.makeConstraints { make in
             make.top.leading.trailing.bottom.equalToSuperview()
             make.height.equalTo(multiplier)
@@ -119,64 +127,80 @@ class AdminDateListViewController: UIViewController {
             return line
         }()
         
-        let instituteLabel: UILabel = {
-            let monthLabel = UILabel()
-            monthLabel.text = "26 Января"
-            monthLabel.font = .systemFont(ofSize: 17, weight: .bold)
-            monthLabel.textColor = .black
+        let fioLabel: UILabel = {
+            let fio = UILabel()
+            fio.text = "Киво Михаил Андреевич"
+            fio.font = .systemFont(ofSize: 16, weight: .bold)
+            fio.textColor = .black
+            fio.numberOfLines = 2
+            fio.textAlignment = .center
+//            fio.adjustsFontSizeToFitWidth = true
+//            fio.minimumScaleFactor = 0.5
             
-            return monthLabel
+            return fio
+        }()
+        
+        let instituteLabel: UILabel = {
+            let institute = UILabel()
+            institute.text = "ИУЦТ"
+            institute.font = .systemFont(ofSize: 17, weight: .bold)
+            institute.textColor = .black
+            
+            return institute
         }()
         
         var timeLabel: UILabel = {
-            let timeLabel = UILabel()
-            timeLabel.text = "10.00-11.00"
-            timeLabel.font = .systemFont(ofSize: 17, weight: .bold)
-            timeLabel.textColor = .black
-            timeLabel.adjustsFontSizeToFitWidth = true
-            timeLabel.minimumScaleFactor = 0.5
+            let time = UILabel()
+            time.text = "10.00-11.00"
+            time.font = .systemFont(ofSize: 17, weight: .bold)
+            time.textColor = .black
+            time.textAlignment = .center
+            time.adjustsFontSizeToFitWidth = true
+            time.minimumScaleFactor = 0.5
             
-            return timeLabel
+            return time
         }()
         
         let roomLabel: UILabel = {
-            let roomLabel = UILabel()
-            roomLabel.text = "Переговорная"
-            roomLabel.font = .systemFont(ofSize: 18, weight: .bold)
-            roomLabel.textColor = .black
-            roomLabel.textAlignment = .center
+            let room = UILabel()
+            room.text = "Переговорная"
+            room.font = .systemFont(ofSize: 18, weight: .bold)
+            room.textColor = .black
+            room.textAlignment = .center
+            room.adjustsFontSizeToFitWidth = true
+            room.minimumScaleFactor = 0.5
             
-            return roomLabel
+            return room
         }()
         
         let purposeLabel: UILabel = {
-            let purposeLabel = UILabel()
-            purposeLabel.text = "Обсуждение проекта"
-            purposeLabel.font = .systemFont(ofSize: 15, weight: .medium)
-            purposeLabel.textColor = .black
-            purposeLabel.textAlignment = .center
-            purposeLabel.numberOfLines = 0
-            purposeLabel.adjustsFontSizeToFitWidth = true
-            purposeLabel.minimumScaleFactor = 0.5
+            let purpose = UILabel()
+            purpose.text = "Обсуждение проекта"
+            purpose.font = .systemFont(ofSize: 16, weight: .medium)
+            purpose.textColor = .black
+            purpose.textAlignment = .center
+            purpose.numberOfLines = 0
+            purpose.adjustsFontSizeToFitWidth = true
+            purpose.minimumScaleFactor = 0.5
             
-            return purposeLabel
+            return purpose
         }()
         
         let cancelButton: UIButton = {
-            let cancelButton = UIButton(type: .system)
-            cancelButton.setTitle("Отменить бронь", for: .normal)
-            cancelButton.backgroundColor = AppColors.miitColor
-            cancelButton.setTitleColor(.white, for: .normal)
-            cancelButton.layer.cornerRadius = 12
-            cancelButton.titleLabel?.font = .systemFont(ofSize: 19, weight: .bold)
-            cancelButton.addTarget(AdminDateListViewController.BookingViews.self, action: #selector(emailTapped), for: .touchUpInside)
-            cancelButton.tag = 1
+            let cancel = UIButton(type: .system)
+            cancel.setTitle("example@gmail.com", for: .normal)
+            cancel.backgroundColor = AppColors.miitColor
+            cancel.setTitleColor(.white, for: .normal)
+            cancel.layer.cornerRadius = 12
+            cancel.titleLabel?.font = .systemFont(ofSize: 17, weight: .bold)
+            cancel.addTarget(AdminDateListViewController.BookingViews.self, action: #selector(emailTapped), for: .touchUpInside)
+            cancel.tag = 1
             
-            return cancelButton
+            return cancel
         }()
         
         func setViewConstraints(multiplier: Int) {
-            [roomLabel, instituteLabel, timeLabel, roomLabel, purposeLabel].forEach { mainView.addSubview($0) }
+            [roomLabel, instituteLabel, timeLabel, roomLabel, purposeLabel, fioLabel].forEach { mainView.addSubview($0) }
             mainView.addSubview(cancelButton)
             mainView.addSubview(lineView)
             
@@ -187,52 +211,52 @@ class AdminDateListViewController: UIViewController {
                 make.width.equalTo(334)
             }
             
-            roomLabel.snp.makeConstraints { make in
-                make.top.equalToSuperview().inset(43)
-                make.leading.equalToSuperview().inset(8)
-                make.height.equalTo(35)
-                make.width.equalTo(85)
-            }
-            
             instituteLabel.snp.makeConstraints { make in
-                make.top.equalToSuperview().inset(115)
-                make.leading.equalToSuperview().inset(29)
+                make.top.equalToSuperview().inset(110)
+                make.leading.equalToSuperview().inset(32)
                 make.height.equalTo(50)
                 make.width.equalTo(104)
             }
             
+            fioLabel.snp.makeConstraints { make in
+                make.top.equalToSuperview().inset(10)
+                make.leading.equalToSuperview().inset(137)
+                make.height.equalTo(40)
+                make.width.equalTo(190)
+            }
+            
             timeLabel.snp.makeConstraints { make in
-                make.top.equalToSuperview().inset(72)
-                make.leading.equalToSuperview().inset(9)
+                make.top.equalToSuperview().inset(75)
+                make.leading.equalToSuperview().inset(13)
                 make.height.equalTo(35)
                 make.width.equalTo(100)
             }
             
             roomLabel.snp.makeConstraints { make in
-                make.top.equalToSuperview().inset(8)
-                make.leading.equalToSuperview().inset(135)
+                make.top.equalToSuperview().inset(45)
+                make.leading.equalToSuperview()
                 make.height.equalTo(34)
-                make.width.equalTo(180)
+                make.width.equalTo(140)
             }
             
             purposeLabel.snp.makeConstraints { make in
-                make.top.equalToSuperview().inset(52)
-                make.leading.equalToSuperview().inset(135)
+                make.top.equalToSuperview().inset(53)
+                make.leading.equalToSuperview().inset(138)
                 make.height.equalTo(38)
                 make.width.equalTo(180)
             }
             
             cancelButton.snp.makeConstraints { make in
                 make.top.equalToSuperview().inset(108)
-                make.leading.equalToSuperview().inset(152)
+                make.leading.equalToSuperview().inset(144)
                 make.height.equalTo(41)
-                make.width.equalTo(152)
+                make.width.equalTo(190)
             }
             
             lineView.snp.makeConstraints { make in
                 make.width.equalTo(1)
                 make.height.equalTo(134)
-                make.leading.equalToSuperview().inset(127)
+                make.leading.equalToSuperview().inset(132)
                 make.top.equalTo(15)
                 make.bottom.equalTo(-15)
             }

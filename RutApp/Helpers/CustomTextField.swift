@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CustomTextField: UITextField {
+final class CustomTextField: UITextField {
     override func textRect(forBounds bounds: CGRect) -> CGRect {
         let offsetX: CGFloat = 10
         return bounds.insetBy(dx: offsetX, dy: 0)

@@ -123,6 +123,12 @@ final class AdminCalendarViewController: UIViewController {
         navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
     private func setUp() {
         view.backgroundColor = .white
         
@@ -145,11 +151,11 @@ final class AdminCalendarViewController: UIViewController {
     
     private func setUpConstraints() {
         scrollView.snp.makeConstraints { make in
-            make.top.leading.bottom.trailing.equalToSuperview()
+            make.edges.equalToSuperview()
         }
         
         viewback.snp.makeConstraints { make in
-            make.top.leading.trailing.bottom.equalToSuperview()
+            make.edges.equalToSuperview()
             make.height.equalTo(780)
             make.width.equalTo(self.view)
         }

@@ -152,7 +152,8 @@ final class LoginViewController: UIViewController {
             make.width.equalTo(289)
             make.height.equalTo(439)
             make.top.equalToSuperview().inset(200)
-            make.leading.equalToSuperview().inset(43)
+            make.leading.equalTo(43)
+            make.trailing.equalTo(-43)
         }
         
         loginLabel.snp.makeConstraints { make in

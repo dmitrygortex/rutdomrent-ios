@@ -55,6 +55,7 @@ final class BookingViewController: UIViewController {
         calendarView.layer.cornerRadius = 12
         calendarView.backgroundColor = AppColors.miitColor
         calendarView.availableDateRange = DateInterval.init(start: Date.now, end: Date.distantFuture)
+        calendarView.tintColor = .white
         
         let dateSelection = UICalendarSelectionSingleDate(delegate: self)
         calendarView.selectionBehavior = dateSelection
@@ -151,6 +152,12 @@ final class BookingViewController: UIViewController {
         setUpConstraints()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         scheduleVC.room = userRoom
@@ -202,19 +209,18 @@ final class BookingViewController: UIViewController {
     
     private func setUpConstraints() {
         scrollView.snp.makeConstraints { make in
-            make.top.leading.bottom.trailing.equalToSuperview()
+            make.edges.equalToSuperview()
         }
         
         viewback.snp.makeConstraints { make in
-            make.top.leading.trailing.bottom.equalToSuperview()
+            make.edges.equalToSuperview()
             make.height.equalTo(930)
             make.width.equalTo(self.view)
         }
         
         titlelabel.snp.makeConstraints { make in
             make.height.equalTo(56)
-            make.width.equalTo(370)
-            make.leading.equalTo(75)
+            make.centerX.equalToSuperview()
             make.top.equalToSuperview().inset(4)
         }
         
@@ -236,6 +242,7 @@ final class BookingViewController: UIViewController {
             make.height.equalTo(44)
             make.width.equalTo(334)
             make.leading.equalTo(20)
+            make.trailing.equalTo(-20)
             make.top.equalTo(578)
         }
         
@@ -250,6 +257,7 @@ final class BookingViewController: UIViewController {
             make.height.equalTo(44)
             make.width.equalTo(334)
             make.leading.equalTo(20)
+            make.trailing.equalTo(-20)
             make.top.equalTo(671)
         }
         
