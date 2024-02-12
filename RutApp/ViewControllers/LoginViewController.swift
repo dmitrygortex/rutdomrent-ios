@@ -238,9 +238,11 @@ final class LoginViewController: UIViewController {
                             for array in unwrappedBookings {
                                 let model = BookingsModel(date: array["date"] as! String, time: array["time"] as! String, purpose: array["purpose"] as! String, room: array["room"] as! String, uid: uid!)
                                 UserModel.bookingsModel = [model]
-                                print("Bookings successfully added to UserDefaults: \(model)")
+                                print("Bookings successfully added to UserDefaults: \(String(describing: model.purpose))")
                                 print(unwrappedBookings.count)
                             }
+                        } else {
+                            print("No bookings yet")
                         }
                     }
                     
