@@ -390,6 +390,9 @@ final class MyBookingsViewController: UIViewController {
                                     
                     documentRef.setData(data)
                     
+                    if data.count == 0 {
+                        documentRef.delete()
+                    }
                 }
             }
         }

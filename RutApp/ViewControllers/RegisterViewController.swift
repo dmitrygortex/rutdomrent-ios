@@ -313,6 +313,8 @@ final class RegisterViewController: UIViewController {
                 UserModel.uid = uid
                 UserModel.synchronize()
                 
+                // MARK: Add user to Firestore to save data
+                
                 db.collection("users").document(uid).setData(userData) { error in
                     if let error = error {
                         print("Ошибка записи данных в Firestore: \(error.localizedDescription)")
