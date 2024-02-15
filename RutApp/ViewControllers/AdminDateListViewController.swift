@@ -18,11 +18,15 @@ final class AdminDateListViewController: UIViewController {
     
     var date: DateComponents?
     
+    var bookingArray = [BookingsModel]()
+    
+    private var viewArray = [BookingViews]()
+    
     private lazy var scrollView: UIScrollView = {
-        let scrollView = UIScrollView()
-        
-        return scrollView
-    }()
+    let scrollView = UIScrollView()
+    
+    return scrollView
+}()
     
     private lazy var viewback: UIView = {
         let view = UIView()
@@ -37,7 +41,6 @@ final class AdminDateListViewController: UIViewController {
 
         setUp()
         setUpConstraints()
-        setUpViews()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -49,12 +52,19 @@ final class AdminDateListViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
+        viewArray.forEach { item in
+            item.mainView.removeFromSuperview()
+        }
+        
+        bookingArray = []
+        viewArray = []
         navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        setUpViews()
         navigationItem.title = getFullDate(date)
     }
     
@@ -75,15 +85,52 @@ final class AdminDateListViewController: UIViewController {
     }
     
     private func setUpViews() {
-        var view1 = BookingViews()
-        viewback.addSubview(view1.mainView)
-        view1.setViewConstraints(multiplier: 25)
+        let number = bookingArray.count
+        
+        if number != 0 {
+            var mlt = 25
+            var cnt = 0
+            
+            // MARK: Add bookings to view
+            
+            for i in 0..<number {
+                let view = BookingViews()
+                viewback.addSubview(view.mainView)
+                view.setViewConstraints(multiplier: mlt)
+                view.cancelButton.tag = i
+                mlt += 189
+                
+                viewArray.append(view)
+            }
+            
+            // MARK: Addjust user bookings to display info
+            
+            for view in viewArray {
+                view.roomLabel.text = bookingArray[cnt].room!
+                view.timeLabel.text = bookingArray[cnt].time!
+                view.fioLabel.text = bookingArray[cnt].fio!
+                view.purposeLabel.text = bookingArray[cnt].purpose!
+                view.instituteLabel.text = bookingArray[cnt].institute!
+                view.cancelButton.setTitle(bookingArray[cnt].email!, for: .normal)
+                cnt += 1
+            }
+            
+            // MARK: Change scrollView height
+            
+            if number > 3 {
+                let backHeight = (number * 164) + ((number + 1) * 25) - 10
+                setBackHeight(multiplier: backHeight)
+            } else {
+                setBackHeight(multiplier: 650)
+            }
+            
+        }
     }
     
     private func setUpConstraints() {
         view.addSubview(scrollView)
         scrollView.snp.makeConstraints { make in
-            make.top.leading.bottom.trailing.equalToSuperview()
+            make.edges.equalToSuperview()
         }
         
         setBackHeight(multiplier: 650)
@@ -92,7 +139,7 @@ final class AdminDateListViewController: UIViewController {
     private func setBackHeight(multiplier: Int) {
         scrollView.addSubview(viewback)
         viewback.snp.makeConstraints { make in
-            make.top.leading.trailing.bottom.equalToSuperview()
+            make.edges.equalToSuperview()
             make.height.equalTo(multiplier)
             make.width.equalTo(self.view)
         }
@@ -134,8 +181,6 @@ final class AdminDateListViewController: UIViewController {
             fio.textColor = .black
             fio.numberOfLines = 2
             fio.textAlignment = .center
-//            fio.adjustsFontSizeToFitWidth = true
-//            fio.minimumScaleFactor = 0.5
             
             return fio
         }()
@@ -161,7 +206,7 @@ final class AdminDateListViewController: UIViewController {
             return time
         }()
         
-        let roomLabel: UILabel = {
+        var roomLabel: UILabel = {
             let room = UILabel()
             room.text = "Переговорная"
             room.font = .systemFont(ofSize: 18, weight: .bold)
@@ -193,7 +238,7 @@ final class AdminDateListViewController: UIViewController {
             cancel.setTitleColor(.white, for: .normal)
             cancel.layer.cornerRadius = 12
             cancel.titleLabel?.font = .systemFont(ofSize: 17, weight: .bold)
-            cancel.addTarget(AdminDateListViewController.BookingViews.self, action: #selector(emailTapped), for: .touchUpInside)
+            cancel.addTarget(self, action: #selector(emailTapped), for: .touchUpInside)
             cancel.tag = 1
             
             return cancel
@@ -206,42 +251,43 @@ final class AdminDateListViewController: UIViewController {
             
             mainView.snp.makeConstraints { make in
                 make.top.equalTo(multiplier) // changeable only
-                make.leading.equalTo(21)
+                make.leading.equalTo(14)
+                make.trailing.equalTo(-14)
                 make.height.equalTo(164)
-                make.width.equalTo(334)
+                make.width.equalTo(355)
             }
             
             instituteLabel.snp.makeConstraints { make in
-                make.top.equalToSuperview().inset(110)
-                make.leading.equalToSuperview().inset(32)
+                make.top.equalToSuperview().inset(106)
+                make.leading.equalToSuperview().inset(45)
                 make.height.equalTo(50)
                 make.width.equalTo(104)
             }
             
             fioLabel.snp.makeConstraints { make in
                 make.top.equalToSuperview().inset(10)
-                make.leading.equalToSuperview().inset(137)
+                make.leading.equalToSuperview().inset(144)
                 make.height.equalTo(40)
                 make.width.equalTo(190)
             }
             
             timeLabel.snp.makeConstraints { make in
-                make.top.equalToSuperview().inset(75)
-                make.leading.equalToSuperview().inset(13)
+                make.top.equalToSuperview().inset(70)
+                make.leading.equalToSuperview().inset(16)
                 make.height.equalTo(35)
                 make.width.equalTo(100)
             }
             
             roomLabel.snp.makeConstraints { make in
-                make.top.equalToSuperview().inset(45)
-                make.leading.equalToSuperview()
+                make.top.equalToSuperview().inset(46)
+                make.leading.equalToSuperview().inset(-2)
                 make.height.equalTo(34)
                 make.width.equalTo(140)
             }
             
             purposeLabel.snp.makeConstraints { make in
                 make.top.equalToSuperview().inset(53)
-                make.leading.equalToSuperview().inset(138)
+                make.leading.equalTo(lineView).inset(15)
                 make.height.equalTo(38)
                 make.width.equalTo(180)
             }
@@ -256,7 +302,7 @@ final class AdminDateListViewController: UIViewController {
             lineView.snp.makeConstraints { make in
                 make.width.equalTo(1)
                 make.height.equalTo(134)
-                make.leading.equalToSuperview().inset(132)
+                make.leading.equalToSuperview().inset(135)
                 make.top.equalTo(15)
                 make.bottom.equalTo(-15)
             }
@@ -265,9 +311,11 @@ final class AdminDateListViewController: UIViewController {
         // TODO: email write
         
         @objc private func emailTapped(sender: UIButton) {
-            
+            let email = sender.titleLabel!
+            if let url = URL(string: "mailto:\(email)") {
+                UIApplication.shared.open(url)
+            }
         }
-        
     }
     
 }

@@ -14,13 +14,19 @@ final class BookingsModel: Codable, Equatable {
     var purpose: String?
     var room: String?
     var uid: String?
+    var email: String?
+    var fio: String?
+    var institute: String?
     
-    init(date: String, time: String, purpose: String, room: String, uid: String) {
+    init(date: String, time: String, purpose: String, room: String, uid: String, email: String?, fio: String?, institute: String?) {
         self.date = date
         self.time = time
         self.purpose = purpose
         self.room = room
         self.uid = uid
+        self.fio = fio
+        self.email = email
+        self.institute = institute
     }
     
     static func == (lhs: BookingsModel, rhs: BookingsModel) -> Bool {

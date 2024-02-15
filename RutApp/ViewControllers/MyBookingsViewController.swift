@@ -115,9 +115,6 @@ final class MyBookingsViewController: UIViewController {
             }
             
         } else {
-            
-            // TODO: Check for bookings in firestore ???
-            
             showEmptyLabel()
         }
     }

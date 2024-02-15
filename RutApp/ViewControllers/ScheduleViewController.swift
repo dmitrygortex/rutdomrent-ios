@@ -12,7 +12,7 @@ import FirebaseAuth
 
 final class ScheduleViewController: UIViewController {
     
-    //MARK: -Properties
+    // MARK: -Properties
     
     var room = ""
     
@@ -21,6 +21,12 @@ final class ScheduleViewController: UIViewController {
     var date: DateComponents?
     
     var time = ""
+    
+    private var email = ""
+    
+    private var fio = ""
+    
+    private var institute = ""
     
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -128,6 +134,7 @@ final class ScheduleViewController: UIViewController {
         setUp()
         addSubviews()
         setUpConstraints()
+        setUserInfo()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -267,7 +274,7 @@ final class ScheduleViewController: UIViewController {
         
         db.collection(self.room).document(dataFull).getDocument { document, error in
             if error != nil {
-                print("Error on checking date for bookings: \(error?.localizedDescription)")
+                print("Error on checking date for bookings: \(String(describing: error?.localizedDescription))")
             }
             
             if let document = document, document.exists {
@@ -316,6 +323,23 @@ final class ScheduleViewController: UIViewController {
         return String(date!.day!) + "." + String(date!.month!) + "." + String(date!.year!)
     }
     
+    private func setUserInfo() {
+        let uid = Auth.auth().currentUser?.uid
+        
+        Firestore.firestore().collection("users").document(uid!).getDocument { doc, err in
+            if let err = err {
+                print("Error: \(err.localizedDescription)")
+            } else {
+                if let doc = doc {
+                    let data = doc.data()
+                    self.email = data!["email"]! as! String
+                    self.fio = data!["email"]! as! String
+                    self.institute = data!["institute"]! as! String
+                }
+            }
+        }
+    }
+    
     @objc private func timeButtonTapped(sender: UIButton) {
         self.time = sender.titleLabel!.text!
         
@@ -327,7 +351,7 @@ final class ScheduleViewController: UIViewController {
             disableButtons(disable: true)
             
             print("User time - \(time)")
-            print(date?.day, date?.month, date?.year)
+            print(date?.day ?? "", date?.month ?? "", date?.year ?? "")
             print(room)
             print(purpose)
             
@@ -371,7 +395,7 @@ final class ScheduleViewController: UIViewController {
         let db = Firestore.firestore()
         let dataFull = getFullDate(date)
         let uid = Auth.auth().currentUser?.uid
-        let bookingData = [time: ["uid": uid, "purpose": purpose]]
+        let bookingData = [time: ["uid": uid, "purpose": purpose, "email": email, "fio": fio, "institute": institute]]
         
         var fl = false
         
@@ -419,7 +443,7 @@ final class ScheduleViewController: UIViewController {
             
             // MARK: Add to UserDefaults
             
-            let booking = BookingsModel(date: dataFull, time: time, purpose: purpose, room: room, uid: uid!)
+            let booking = BookingsModel(date: dataFull, time: time, purpose: purpose, room: room, uid: uid!, email: self.email, fio: self.fio, institute: self.institute)
             UserModel.bookingsModel = [booking]
             
             self.checkFreeTime()

@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import FirebaseAuth
+import Firebase
 
 final class AdminCalendarViewController: UIViewController {
     
@@ -52,6 +53,7 @@ final class AdminCalendarViewController: UIViewController {
         calendarView.layer.cornerRadius = 12
         calendarView.delegate = self
         calendarView.backgroundColor = AppColors.miitColor
+        calendarView.tintColor = .white
         calendarView.delegate = self
         calendarView.availableDateRange = DateInterval.init(start: Date.now, end: Date.distantFuture)
         
@@ -204,10 +206,40 @@ final class AdminCalendarViewController: UIViewController {
             return
         }
         
-        adminDateListVC.date = adminDate
-        adminDateListVC.room = adminRoom
+        // MARK: Get all bookings on data
         
-        navigationController?.pushViewController(adminDateListVC, animated: true)
+        let db = Firestore.firestore()
+        let fullDate = String(adminDate!.day!) + "." + String(adminDate!.month!) + "." + String(adminDate!.year!)
+        
+        db.collection(adminRoom).document(fullDate).getDocument { document, error in
+            if let error = error {
+                print("Error: \(error.localizedDescription)")
+            } else {
+                if let doc = document {
+                    if let data = doc.data() as? [String : [String : String]] {
+                        let keys = Array(data.keys)
+                        
+                        for time in keys {
+                            let uid = data[time]!["uid"]!
+                            let purpose = data[time]!["purpose"]!
+                            let email = data[time]!["email"]!
+                            let fio = data[time]!["fio"]!
+                            let institute = data[time]!["institute"]!
+                            
+                            let model = BookingsModel(date: fullDate, time: time, purpose: purpose, room: self.adminRoom, uid: uid, email: email, fio: fio, institute: institute)
+                            
+                            self.adminDateListVC.bookingArray.append(model)
+                        }
+                    }
+                }
+            }
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
+            self.navigationController?.setNavigationBarHidden(false, animated: true)
+            self.navigationController?.pushViewController(self.adminDateListVC, animated: true)
+        })
+        
     }
     
     @objc func keyboardWillShow(_ notification: Notification) {

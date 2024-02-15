@@ -228,29 +228,7 @@ final class AccountViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    private func setData() {
-//        let uid = Auth.auth().currentUser?.uid
-        
-//        Firestore.firestore().collection("users").document(uid!).getDocument { document, error in
-//            if let document = document, document.exists {
-//                let data = document.data()
-//                print("Данные пользователя: \(data ?? [:])")
-//                
-//                self.emailText = (data?["email"]! as? String)!
-//                self.passwordText = (data?["password"]! as? String)!
-//                self.fioText = (data?["fio"]! as? String)!
-//                self.instituteText = (data?["institute"]! as? String)!
-//                
-//                self.emailTextField.text = self.emailText
-//                self.passwordTextField.text = self.passwordText
-//                self.FIOTextField.text = self.fioText
-//                self.instituteTextField.text = self.instituteText
-//                
-//            } else {
-//                print("Документ пользователя не найден")
-//            }
-//        }
-            
+    private func setData() {          
         emailText = UserModel.email
         passwordText = UserModel.password
         fioText = UserModel.fio
