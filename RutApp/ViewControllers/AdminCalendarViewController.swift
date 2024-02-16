@@ -21,6 +21,8 @@ final class AdminCalendarViewController: UIViewController {
     var adminRoom = ""
         
     var adminDate: DateComponents?
+    
+    static let db = Firestore.firestore()
         
     private lazy var titlelabel: UILabel = {
         let label = UILabel()
@@ -207,11 +209,22 @@ final class AdminCalendarViewController: UIViewController {
         }
         
         // MARK: Get all bookings on data
+                
+        if adminRoom != "Все" {
+            
+            getAllBookingsFromDB(room: adminRoom)
+            
+        } else if adminRoom == "Все" {
+            for currentRoom in ["Лекторий", "Переговорная", "Фотостудия"] {
+                getAllBookingsFromDB(room: currentRoom)
+            }
+        }
+    }
+    
+    private func getAllBookingsFromDB(room: String) {
+        let fullDate = getFullDate()
         
-        let db = Firestore.firestore()
-        let fullDate = String(adminDate!.day!) + "." + String(adminDate!.month!) + "." + String(adminDate!.year!)
-        
-        db.collection(adminRoom).document(fullDate).getDocument { document, error in
+        AdminCalendarViewController.db.collection(room).document(fullDate).getDocument { document, error in
             if let error = error {
                 print("Error: \(error.localizedDescription)")
             } else {
@@ -225,6 +238,7 @@ final class AdminCalendarViewController: UIViewController {
                             let email = data[time]!["email"]!
                             let fio = data[time]!["fio"]!
                             let institute = data[time]!["institute"]!
+                            print(uid, purpose, email, fio, institute)
                             
                             let model = BookingsModel(date: fullDate, time: time, purpose: purpose, room: self.adminRoom, uid: uid, email: email, fio: fio, institute: institute)
                             
@@ -239,7 +253,10 @@ final class AdminCalendarViewController: UIViewController {
             self.navigationController?.setNavigationBarHidden(false, animated: true)
             self.navigationController?.pushViewController(self.adminDateListVC, animated: true)
         })
-        
+    }
+    
+    private func getFullDate() -> String {
+        return String(adminDate!.day!) + "." + String(adminDate!.month!) + "." + String(adminDate!.year!)
     }
     
     @objc func keyboardWillShow(_ notification: Notification) {
@@ -280,11 +297,11 @@ extension AdminCalendarViewController: UIPickerViewDataSource, UIPickerViewDeleg
 
 extension AdminCalendarViewController: UICalendarViewDelegate {
     func calendarView(_ calendarView: UICalendarView, decorationFor dateComponents: DateComponents) -> UICalendarView.Decoration? {
-        if !dateComponents.day!.isMultiple(of: 2) {
-                return UICalendarView.Decoration.default(color: .systemGreen, size: .large)
-            }
-
-            return nil
+        //        if !dateComponents.day!.isMultiple(of: 2) {
+        //                return UICalendarView.Decoration.default(color: .systemGreen, size: .large)
+        //            }
+        return nil
+        //    }
     }
 }
 

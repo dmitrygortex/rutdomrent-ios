@@ -23,10 +23,10 @@ final class AdminDateListViewController: UIViewController {
     private var viewArray = [BookingViews]()
     
     private lazy var scrollView: UIScrollView = {
-    let scrollView = UIScrollView()
-    
-    return scrollView
-}()
+        let scrollView = UIScrollView()
+        
+        return scrollView
+    }()
     
     private lazy var viewback: UIView = {
         let view = UIView()
@@ -38,9 +38,10 @@ final class AdminDateListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        setUp()
+        
+        addSubviews()
         setUpConstraints()
+        setUp()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -78,8 +79,8 @@ final class AdminDateListViewController: UIViewController {
         standardAppearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         standardAppearance.configureWithOpaqueBackground()
         standardAppearance.backgroundColor = AppColors.miitColor
-
-
+        
+        
         self.navigationController?.navigationBar.standardAppearance = standardAppearance
         self.navigationController?.navigationBar.scrollEdgeAppearance = standardAppearance
     }
@@ -127,24 +128,25 @@ final class AdminDateListViewController: UIViewController {
         }
     }
     
-    private func setUpConstraints() {
+    private func addSubviews() {
         view.addSubview(scrollView)
+        scrollView.addSubview(viewback)
+    }
+    
+    private func setUpConstraints() {
         scrollView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        
-        setBackHeight(multiplier: 650)
     }
     
     private func setBackHeight(multiplier: Int) {
-        scrollView.addSubview(viewback)
         viewback.snp.makeConstraints { make in
             make.edges.equalToSuperview()
             make.height.equalTo(multiplier)
             make.width.equalTo(self.view)
         }
     }
-        
+    
     private func getFullDate(_ date: DateComponents?) -> String {
         if let day = date?.day, let month = date?.month, let year = date?.year {
             let months = [1 : "Января", 2 : "Февраля", 3 : "Марта", 4 : "Апреля", 5 : "Мая", 6 : "Июня", 7 : "Июля", 8 : "Августа", 9 : "Сентября", 10 : "Октября", 11 : "Ноября", 12 : "Декабря"]
@@ -250,7 +252,7 @@ final class AdminDateListViewController: UIViewController {
             mainView.addSubview(lineView)
             
             mainView.snp.makeConstraints { make in
-                make.top.equalTo(multiplier) // changeable only
+                make.top.equalTo(multiplier) // changeable only 66ggZl&7bb!!!
                 make.leading.equalTo(14)
                 make.trailing.equalTo(-14)
                 make.height.equalTo(164)
@@ -272,14 +274,14 @@ final class AdminDateListViewController: UIViewController {
             }
             
             timeLabel.snp.makeConstraints { make in
-                make.top.equalToSuperview().inset(70)
+                make.top.equalToSuperview().inset(66)
                 make.leading.equalToSuperview().inset(16)
                 make.height.equalTo(35)
                 make.width.equalTo(100)
             }
             
             roomLabel.snp.makeConstraints { make in
-                make.top.equalToSuperview().inset(46)
+                make.top.equalToSuperview().inset(42)
                 make.leading.equalToSuperview().inset(-2)
                 make.height.equalTo(34)
                 make.width.equalTo(140)
@@ -308,14 +310,10 @@ final class AdminDateListViewController: UIViewController {
             }
         }
         
-        // TODO: email write
-        
         @objc private func emailTapped(sender: UIButton) {
-            let email = sender.titleLabel!
-            if let url = URL(string: "mailto:\(email)") {
-                UIApplication.shared.open(url)
-            }
+            
+            print("emailTapped")
+            
         }
     }
-    
 }

@@ -333,7 +333,7 @@ final class ScheduleViewController: UIViewController {
                 if let doc = doc {
                     let data = doc.data()
                     self.email = data!["email"]! as! String
-                    self.fio = data!["email"]! as! String
+                    self.fio = data!["fio"]! as! String
                     self.institute = data!["institute"]! as! String
                 }
             }
