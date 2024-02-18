@@ -448,98 +448,99 @@ final class ScheduleViewController: UIViewController {
             if let err = error {
                 print("Error: \(err.localizedDescription)")
             } else {
-                if let doc = doc {
-                    if let dataFS = doc.data() {
-                        if dataFS[self.time] != nil {
-                            let alert = Validate.showAlert(title: "Данное время забронировано", message: "Выберите другое время")
-                            self.present(alert, animated: true)
-                            fl = true
-                            return
-                        }
+                if let doc = doc, doc.exists {
+                    let data = doc.data().map(String.init(describing:))
+                    if data!.contains(self.time) {
+                        let alert = Validate.showAlert(title: "Данное время забронировано", message: "Выберите другое время")
+                        self.present(alert, animated: true)
+                        fl = true
+                        return
                     }
                 }
             }
         }
         
-        if !fl {
-            db.collection(room).document(dataFull).setData(bookingData, merge: true) { error in
-                if let error = error {
-                    print("Error on booking to firestore: \(error.localizedDescription)")
-                } else {
-                    print("Successfully added a new booking to firestore")
-                    let alert = Validate.showAlert(title: "Готово", message: "Вы успешно забронированы")
-                    self.present(alert, animated: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+            if !fl {
+                self.db.collection(self.room).document(dataFull).setData(bookingData, merge: true) { error in
+                    if let error = error {
+                        print("Error on booking to firestore: \(error.localizedDescription)")
+                    } else {
+                        print("Successfully added a new booking to firestore")
+                        let alert = Validate.showAlert(title: "Готово", message: "Вы успешно забронированы")
+                        self.present(alert, animated: true)
+                    }
                 }
-            }
-            
-            // MARK: Add to users collection
-            
-            let bookingArray = ["date": dataFull, "time": time, "room": room, "purpose": purpose]
-            
-            let userData = ["bookings": FieldValue.arrayUnion([bookingArray])]
-            
-            db.collection("users").document(uid!).updateData(userData) { error in
-                if let error = error {
-                    print("Error: \(error.localizedDescription)")
-                } else {
-                    print("Successfully added to user account booking")
+                
+                // MARK: Add to users collection
+                
+                let bookingArray = ["date": dataFull, "time": self.time, "room": self.room, "purpose": self.purpose]
+                
+                let userData = ["bookings": FieldValue.arrayUnion([bookingArray])]
+                
+                self.db.collection("users").document(uid!).updateData(userData) { error in
+                    if let error = error {
+                        print("Error: \(error.localizedDescription)")
+                    } else {
+                        print("Successfully added to user account booking")
+                    }
                 }
-            }
-            
-            // MARK: Add to UserDefaults
-            
-            let booking = BookingsModel(date: dataFull, time: time, purpose: purpose, room: room, uid: uid!, email: self.email, fio: self.fio, institute: self.institute)
-            UserModel.bookingsModel = [booking]
-            
-            self.checkFreeTime()
-            
-            [firstButton, secondButton, thirdButton, fourthButton, fifthButton, sixthButton, seventhButton, eighthButton, ninthButton, tenthButton].forEach { button in
-                if button.layer.borderColor != AppColors.busyColor.cgColor {
-                    button.setTitleColor(AppColors.freeColor, for: .normal)
-                    button.layer.borderColor = AppColors.freeColor.cgColor
-                    button.layer.borderWidth = 2
-                    button.tag = 0
+                
+                // MARK: Add to UserDefaults
+                
+                let booking = BookingsModel(date: dataFull, time: self.time, purpose: self.purpose, room: self.room, uid: uid!, email: self.email, fio: self.fio, institute: self.institute)
+                UserModel.bookingsModel = [booking]
+                
+                self.checkFreeTime()
+                
+                [self.firstButton, self.secondButton, self.thirdButton, self.fourthButton, self.fifthButton, self.sixthButton, self.seventhButton, self.eighthButton, self.ninthButton, self.tenthButton].forEach { button in
+                    if button.layer.borderColor != AppColors.busyColor.cgColor {
+                        button.setTitleColor(AppColors.freeColor, for: .normal)
+                        button.layer.borderColor = AppColors.freeColor.cgColor
+                        button.layer.borderWidth = 2
+                        button.tag = 0
+                    }
                 }
-            }
-            
-            // MARK: Make a notification
-            
-            UNUserNotificationCenter.current().getNotificationSettings { [self] settings in
-                if settings.authorizationStatus == .authorized {
-                    let calendar = Calendar.current
-                    let notificationDate = calendar.date(byAdding: .day, value: -1, to: (date?.date)!)!
-                    
-                    let content = UNMutableNotificationContent()
-                    
-                    content.title = "У вас бронирование"
-                    content.body = "Завтра, \(dataFull) в \(booking.time!) \(room)"
-                    
-                    var components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: notificationDate)
-                    let temp = Int(booking.time!.split(separator: "-")[0].split(separator: ".")[0])!
-                    components.hour = temp
-                    components.minute = 0
-                    
-                    let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
-                    let identifier = uid! + booking.time! + dataFull + room
-                    
-                    let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
-                    
-                    UNUserNotificationCenter.current().add(request) { error in
-                        if let error = error {
-                            print("Error on notification: \(error.localizedDescription)")
-                        } else {
-                            print("Successfully add a new notification for user booking ")
+                
+                // MARK: Make a notification
+                
+                UNUserNotificationCenter.current().getNotificationSettings { [self] settings in
+                    if settings.authorizationStatus == .authorized {
+                        let calendar = Calendar.current
+                        let notificationDate = calendar.date(byAdding: .day, value: -1, to: (date?.date)!)!
+                        
+                        let content = UNMutableNotificationContent()
+                        
+                        content.title = "У вас бронирование"
+                        content.body = "Завтра, \(dataFull) в \(booking.time!) \(room)"
+                        
+                        var components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: notificationDate)
+                        let temp = Int(booking.time!.split(separator: "-")[0].split(separator: ".")[0])!
+                        components.hour = temp
+                        components.minute = 0
+                        
+                        let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
+                        let identifier = uid! + booking.time! + dataFull + room
+                        
+                        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+                        
+                        UNUserNotificationCenter.current().add(request) { error in
+                            if let error = error {
+                                print("Error on notification: \(error.localizedDescription)")
+                            } else {
+                                print("Successfully add a new notification for user booking ")
+                            }
                         }
                     }
                 }
+            } else {
+                self.checkFreeTime()
+                return
             }
-        } else {
-            checkFreeTime()
-            return
-        }
-        
-        disableButtons(disable: false)
-        self.time = ""
+            
+            self.disableButtons(disable: false)
+            self.time = ""
+        })
     }
     
     private func disableButtons(disable: Bool) {

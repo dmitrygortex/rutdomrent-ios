@@ -189,6 +189,7 @@ final class AdminCalendarViewController: UIViewController {
             make.height.equalTo(44)
             make.width.equalTo(334)
             make.leading.equalTo(20)
+            make.trailing.equalTo(-20)
             make.top.equalTo(598)
         }
         

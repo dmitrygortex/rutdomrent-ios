@@ -12,7 +12,7 @@ import Firebase
 
 final class AccountViewController: UIViewController {
 
-    // MARK: -Properties
+    // MARK: - Properties
     
     private var emailText = ""
     
@@ -197,7 +197,7 @@ final class AccountViewController: UIViewController {
         return button
     }()
 
-    // MARK: -Methods
+    // MARK: - Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -300,29 +300,25 @@ final class AccountViewController: UIViewController {
         
         emailLabel.snp.makeConstraints { make in
             make.height.equalTo(17)
-            make.width.equalTo(200)
-            make.leading.equalToSuperview().inset(70)
+            make.leading.equalTo(emailTextField.snp.leading)
             make.top.equalToSuperview().inset(86)
         }
         
         passwordLabel.snp.makeConstraints { make in
             make.height.equalTo(17)
-            make.width.equalTo(200)
-            make.leading.equalToSuperview().inset(70)
+            make.leading.equalTo(passwordTextField.snp.leading)
             make.top.equalToSuperview().inset(177)
         }
         
         fioLabel.snp.makeConstraints { make in
             make.height.equalTo(17)
-            make.width.equalTo(200)
-            make.leading.equalToSuperview().inset(70)
+            make.leading.equalTo(FIOTextField.snp.leading)
             make.top.equalToSuperview().inset(268)
         }
         
         instituteLabel.snp.makeConstraints { make in
             make.height.equalTo(17)
-            make.width.equalTo(200)
-            make.leading.equalToSuperview().inset(70)
+            make.leading.equalTo(instituteTextField.snp.leading)
             make.top.equalToSuperview().inset(359)
         }
         

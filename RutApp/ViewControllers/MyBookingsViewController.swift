@@ -243,6 +243,7 @@ final class MyBookingsViewController: UIViewController {
             mainView.snp.makeConstraints { make in
                 make.top.equalTo(multiplier)
                 make.leading.equalTo(21)
+                make.trailing.equalTo(-21)
                 make.height.equalTo(164)
                 make.width.equalTo(334)
             }
@@ -271,6 +272,7 @@ final class MyBookingsViewController: UIViewController {
             roomLabel.snp.makeConstraints { make in
                 make.top.equalToSuperview().inset(8)
                 make.leading.equalToSuperview().inset(135)
+                make.trailing.equalToSuperview().inset(8)
                 make.height.equalTo(34)
                 make.width.equalTo(180)
             }
@@ -278,6 +280,7 @@ final class MyBookingsViewController: UIViewController {
             purposeLabel.snp.makeConstraints { make in
                 make.top.equalToSuperview().inset(40)
                 make.leading.equalToSuperview().inset(135)
+                make.trailing.equalToSuperview().inset(8)
                 make.height.equalTo(48)
                 make.width.equalTo(180)
             }
@@ -285,6 +288,7 @@ final class MyBookingsViewController: UIViewController {
             cancelButton.snp.makeConstraints { make in
                 make.top.equalToSuperview().inset(103)
                 make.leading.equalToSuperview().inset(140)
+                make.trailing.equalToSuperview().inset(13)
                 make.height.equalTo(46)
                 make.width.equalTo(180)
             }

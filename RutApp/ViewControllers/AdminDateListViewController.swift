@@ -284,6 +284,7 @@ final class AdminDateListViewController: UIViewController {
             fioLabel.snp.makeConstraints { make in
                 make.top.equalToSuperview().inset(10)
                 make.leading.equalToSuperview().inset(144)
+                make.trailing.equalToSuperview().inset(9)
                 make.height.equalTo(40)
                 make.width.equalTo(190)
             }
@@ -305,6 +306,7 @@ final class AdminDateListViewController: UIViewController {
             purposeLabel.snp.makeConstraints { make in
                 make.top.equalToSuperview().inset(53)
                 make.leading.equalTo(lineView).inset(15)
+                make.trailing.equalToSuperview().inset(15)
                 make.height.equalTo(38)
                 make.width.equalTo(180)
             }
@@ -312,6 +314,7 @@ final class AdminDateListViewController: UIViewController {
             cancelButton.snp.makeConstraints { make in
                 make.top.equalToSuperview().inset(108)
                 make.leading.equalToSuperview().inset(144)
+                make.trailing.equalToSuperview().inset(9)
                 make.height.equalTo(41)
                 make.width.equalTo(190)
             }
