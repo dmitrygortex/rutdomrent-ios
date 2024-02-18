@@ -101,7 +101,6 @@ final class AdminDateListViewController: UIViewController {
                 let view = BookingViews()
                 viewback.addSubview(view.mainView)
                 view.setViewConstraints(multiplier: mlt)
-                view.cancelButton.tag = i
                 
                 mlt += 189
                 viewArray.append(view)
@@ -258,7 +257,6 @@ final class AdminDateListViewController: UIViewController {
             button.layer.cornerRadius = 12
             button.titleLabel?.font = .systemFont(ofSize: 17, weight: .bold)
             button.addTarget(self, action: #selector(emailTapped), for: .touchUpInside)
-            button.tag = 1
             
             return button
         }()

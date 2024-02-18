@@ -12,7 +12,7 @@ import FirebaseAuth
 
 final class ScheduleViewController: UIViewController {
     
-    // MARK: -Properties
+    // MARK: - Properties
     
     var room = ""
     
@@ -27,6 +27,10 @@ final class ScheduleViewController: UIViewController {
     private var fio = ""
     
     private var institute = ""
+    
+    var listener: ListenerRegistration?
+    
+    let db = Firestore.firestore()
     
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -100,20 +104,6 @@ final class ScheduleViewController: UIViewController {
         return button
     }()
     
-    private func getButton(text: String) -> UIButton {
-        let button = UIButton(type: .system)
-        button.setTitle(text, for: .normal)
-        button.backgroundColor = .white
-        button.layer.cornerRadius = 12
-        button.setTitleColor(AppColors.freeColor, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 25, weight: .bold)
-        button.layer.borderWidth = 2
-        button.layer.borderColor = AppColors.freeColor.cgColor
-        button.addTarget(self, action: #selector(timeButtonTapped), for: .touchUpInside)
-        
-        return button
-    }
-
     private lazy var bookingButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Забронировать", for: .normal)
@@ -135,6 +125,7 @@ final class ScheduleViewController: UIViewController {
         addSubviews()
         setUpConstraints()
         setUserInfo()
+        checkForUpdates()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -146,6 +137,8 @@ final class ScheduleViewController: UIViewController {
             button.layer.borderColor = AppColors.freeColor.cgColor
             button.isEnabled = true
         }
+        
+        listener?.remove()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -155,6 +148,33 @@ final class ScheduleViewController: UIViewController {
         setUp()
     }
     
+    private func checkForUpdates() {
+        let bookingsCollection = db.collection(room)
+        listener = bookingsCollection.addSnapshotListener { (snapshot, error) in
+            
+            guard let snapshot = snapshot else {
+                print("Error fetching snapshots: \(String(describing: error?.localizedDescription))")
+                return
+            }
+            
+            self.checkFreeTime()
+        }
+    }
+    
+    private func getButton(text: String) -> UIButton {
+        let button = UIButton(type: .system)
+        button.setTitle(text, for: .normal)
+        button.backgroundColor = .white
+        button.layer.cornerRadius = 12
+        button.setTitleColor(AppColors.freeColor, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 25, weight: .bold)
+        button.layer.borderWidth = 2
+        button.layer.borderColor = AppColors.freeColor.cgColor
+        button.addTarget(self, action: #selector(timeButtonTapped), for: .touchUpInside)
+        
+        return button
+    }
+
     private func setUp() {
         view.backgroundColor = .white
         navigationController?.setNavigationBarHidden(false, animated: true)
@@ -270,7 +290,6 @@ final class ScheduleViewController: UIViewController {
     
     func checkFreeTime() {
         let dataFull = getFullDate(self.date)
-        let db = Firestore.firestore()
         
         db.collection(self.room).document(dataFull).getDocument { document, error in
             if error != nil {
@@ -282,28 +301,55 @@ final class ScheduleViewController: UIViewController {
                 if let data = data {
                     print("Данные о бронировании: \(data)")
                     
+                    [self.firstButton, self.secondButton, self.thirdButton, self.fourthButton, self.fifthButton, self.sixthButton, self.seventhButton, self.eighthButton, self.ninthButton, self.tenthButton].forEach { button in
+                        if button.tag != 1 {
+                            button.setTitleColor(AppColors.freeColor, for: .normal)
+                            button.layer.borderColor = AppColors.freeColor.cgColor
+                            button.layer.borderWidth = 2
+                            button.tag = 0
+                        }
+                    }
+                    
                     for (time, _) in data {
                         print(time)
                         
                         if time == "10.00-11.00" {
                             self.disableButton(button: self.firstButton)
-                        } else if time == "11.00-12.00" {
+                        }
+                        
+                        if time == "11.00-12.00" {
                             self.disableButton(button: self.secondButton)
-                        } else if time == "12.00-13.00" {
+                        }
+                        
+                        if time == "12.00-13.00" {
                             self.disableButton(button: self.thirdButton)
-                        } else if time == "13.00-14.00" {
+                        }
+                        
+                        if time == "13.00-14.00" {
                             self.disableButton(button: self.fourthButton)
-                        } else if time == "14.00-15.00" {
+                        }
+                        
+                        if time == "14.00-15.00" {
                             self.disableButton(button: self.fifthButton)
-                        } else if time == "15.00-16.00" {
+                        }
+                        
+                        if time == "15.00-16.00" {
                             self.disableButton(button: self.sixthButton)
-                        } else if time == "16.00-17.00" {
+                        }
+                        
+                        if time == "16.00-17.00" {
                             self.disableButton(button: self.seventhButton)
-                        } else if time == "17.00-18.00" {
+                        }
+                        
+                        if time == "17.00-18.00" {
                             self.disableButton(button: self.eighthButton)
-                        } else if time == "18.00-19.00" {
+                        }
+                        
+                        if time == "18.00-19.00" {
                             self.disableButton(button: self.ninthButton)
-                        } else if time == "19.00-20.00" {
+                        }
+                        
+                        if time == "19.00-20.00" {
                             self.disableButton(button: self.tenthButton)
                         }
                     }
@@ -326,7 +372,7 @@ final class ScheduleViewController: UIViewController {
     private func setUserInfo() {
         let uid = Auth.auth().currentUser?.uid
         
-        Firestore.firestore().collection("users").document(uid!).getDocument { doc, err in
+        db.collection("users").document(uid!).getDocument { doc, err in
             if let err = err {
                 print("Error: \(err.localizedDescription)")
             } else {
@@ -392,7 +438,6 @@ final class ScheduleViewController: UIViewController {
         
         // MARK: Add to firestore
         
-        let db = Firestore.firestore()
         let dataFull = getFullDate(date)
         let uid = Auth.auth().currentUser?.uid
         let bookingData = [time: ["uid": uid, "purpose": purpose, "email": email, "fio": fio, "institute": institute]]
