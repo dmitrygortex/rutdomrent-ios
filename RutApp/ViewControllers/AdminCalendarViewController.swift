@@ -7,12 +7,12 @@
 
 import UIKit
 import SnapKit
-import FirebaseAuth
 import Firebase
+import FirebaseAuth
 
 final class AdminCalendarViewController: UIViewController {
     
-    //MARK: -Properties
+    // MARK: - Properties
     
     var adminDateListVC = AdminDateListViewController()
         
@@ -219,6 +219,10 @@ final class AdminCalendarViewController: UIViewController {
                 getAllBookingsFromDB(room: currentRoom)
             }
         }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
+            self.navigationController?.pushViewController(self.adminDateListVC, animated: true)
+        })
     }
     
     private func getAllBookingsFromDB(room: String) {
@@ -238,9 +242,8 @@ final class AdminCalendarViewController: UIViewController {
                             let email = data[time]!["email"]!
                             let fio = data[time]!["fio"]!
                             let institute = data[time]!["institute"]!
-                            print(uid, purpose, email, fio, institute)
                             
-                            let model = BookingsModel(date: fullDate, time: time, purpose: purpose, room: self.adminRoom, uid: uid, email: email, fio: fio, institute: institute)
+                            let model = BookingsModel(date: fullDate, time: time, purpose: purpose, room: room, uid: uid, email: email, fio: fio, institute: institute)
                             
                             self.adminDateListVC.bookingArray.append(model)
                         }
@@ -248,11 +251,6 @@ final class AdminCalendarViewController: UIViewController {
                 }
             }
         }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
-            self.navigationController?.setNavigationBarHidden(false, animated: true)
-            self.navigationController?.pushViewController(self.adminDateListVC, animated: true)
-        })
     }
     
     private func getFullDate() -> String {

@@ -38,7 +38,7 @@ final class AdminDateListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print("viewDidLoad")
         addSubviews()
         setUpConstraints()
         setUp()
@@ -46,27 +46,29 @@ final class AdminDateListViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
+        print("viewWillDisappear")
         navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        
+        print("viewDidDisappear")
         viewArray.forEach { item in
             item.mainView.removeFromSuperview()
         }
         
         bookingArray = []
         viewArray = []
-        navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        print("viewWillAppear")
         setUpViews()
+        setUp()
         navigationItem.title = getFullDate(date)
+        navigationController?.navigationBar.backItem?.title = "Назад"
+        navigationItem.backButtonTitle = "Назад"
     }
     
     private func setUp() {
@@ -74,6 +76,7 @@ final class AdminDateListViewController: UIViewController {
         navigationController?.setNavigationBarHidden(false, animated: true)
         navigationController?.navigationBar.isTranslucent = true
         navigationController?.navigationBar.backItem?.title = "Назад"
+        navigationItem.backButtonTitle = "Назад"
         
         let standardAppearance = UINavigationBarAppearance()
         standardAppearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
@@ -87,7 +90,7 @@ final class AdminDateListViewController: UIViewController {
     
     private func setUpViews() {
         let number = bookingArray.count
-        
+            
         if number != 0 {
             var mlt = 25
             var cnt = 0
@@ -99,8 +102,8 @@ final class AdminDateListViewController: UIViewController {
                 viewback.addSubview(view.mainView)
                 view.setViewConstraints(multiplier: mlt)
                 view.cancelButton.tag = i
-                mlt += 189
                 
+                mlt += 189
                 viewArray.append(view)
             }
             
@@ -119,12 +122,14 @@ final class AdminDateListViewController: UIViewController {
             // MARK: Change scrollView height
             
             if number > 3 {
-                let backHeight = (number * 164) + ((number + 1) * 25) - 10
+                let backHeight = (number * 189) + 15
                 setBackHeight(multiplier: backHeight)
             } else {
-                setBackHeight(multiplier: 650)
+                setBackHeight(multiplier: 600)
             }
             
+        } else {
+            showEmptyLabel()
         }
     }
     
@@ -145,6 +150,18 @@ final class AdminDateListViewController: UIViewController {
             make.height.equalTo(multiplier)
             make.width.equalTo(self.view)
         }
+    }
+    
+    private func showEmptyLabel() {
+        let alert = UIAlertController(title: "Упс", message: "Бронирований пока нет", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Понятно", style: .cancel, handler: { action in
+            self.navigationController?.setNavigationBarHidden(true, animated: false)
+            self.navigationController?.popViewController(animated: true)
+            
+            print("Alert successful")
+        }))
+        present(alert, animated: true)
     }
     
     private func getFullDate(_ date: DateComponents?) -> String {
@@ -234,16 +251,16 @@ final class AdminDateListViewController: UIViewController {
         }()
         
         let cancelButton: UIButton = {
-            let cancel = UIButton(type: .system)
-            cancel.setTitle("example@gmail.com", for: .normal)
-            cancel.backgroundColor = AppColors.miitColor
-            cancel.setTitleColor(.white, for: .normal)
-            cancel.layer.cornerRadius = 12
-            cancel.titleLabel?.font = .systemFont(ofSize: 17, weight: .bold)
-            cancel.addTarget(self, action: #selector(emailTapped), for: .touchUpInside)
-            cancel.tag = 1
+            let button = UIButton(type: .system)
+            button.setTitle("example@gmail.com", for: .normal)
+            button.backgroundColor = AppColors.miitColor
+            button.setTitleColor(.white, for: .normal)
+            button.layer.cornerRadius = 12
+            button.titleLabel?.font = .systemFont(ofSize: 17, weight: .bold)
+            button.addTarget(self, action: #selector(emailTapped), for: .touchUpInside)
+            button.tag = 1
             
-            return cancel
+            return button
         }()
         
         func setViewConstraints(multiplier: Int) {
@@ -309,11 +326,14 @@ final class AdminDateListViewController: UIViewController {
                 make.bottom.equalTo(-15)
             }
         }
+    }
+    
+    @objc private func emailTapped(sender: UIButton) {
+        UIPasteboard.general.string = sender.titleLabel?.text ?? ""
+        print("copied!")
         
-        @objc private func emailTapped(sender: UIButton) {
-            
-            print("emailTapped")
-            
-        }
+        let alert = UIAlertController(title: "Скопировано", message: "Текст скопирован в буфер обмена", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ок", style: .default))
+        present(alert, animated: true)
     }
 }

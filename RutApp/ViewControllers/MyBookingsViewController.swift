@@ -60,6 +60,7 @@ final class MyBookingsViewController: UIViewController {
         navigationItem.title = "Мои бронирования"
         navigationController?.navigationBar.isTranslucent = true
         navigationController?.navigationBar.backItem?.title = "Назад"
+        navigationItem.backButtonTitle = "Назад"
         
         let standardAppearance = UINavigationBarAppearance()
         standardAppearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
@@ -222,16 +223,16 @@ final class MyBookingsViewController: UIViewController {
         }()
         
         let cancelButton: UIButton = {
-            let cancelButton = UIButton(type: .system)
-            cancelButton.setTitle("Отменить бронь", for: .normal)
-            cancelButton.backgroundColor = AppColors.miitColor
-            cancelButton.setTitleColor(.white, for: .normal)
-            cancelButton.layer.cornerRadius = 12
-            cancelButton.titleLabel?.font = .systemFont(ofSize: 19, weight: .bold)
-            cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
-            cancelButton.tag = 1
+            let button = UIButton(type: .system)
+            button.setTitle("Отменить бронь", for: .normal)
+            button.backgroundColor = AppColors.miitColor
+            button.setTitleColor(.white, for: .normal)
+            button.layer.cornerRadius = 12
+            button.titleLabel?.font = .systemFont(ofSize: 19, weight: .bold)
+            button.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
+            button.tag = 1
             
-            return cancelButton
+            return button
         }()
         
         func setViewConstraints(multiplier: Int) {
@@ -240,7 +241,7 @@ final class MyBookingsViewController: UIViewController {
             mainView.addSubview(lineView)
             
             mainView.snp.makeConstraints { make in
-                make.top.equalTo(multiplier) // changeable only
+                make.top.equalTo(multiplier)
                 make.leading.equalTo(21)
                 make.height.equalTo(164)
                 make.width.equalTo(334)
@@ -359,7 +360,7 @@ final class MyBookingsViewController: UIViewController {
         
         print("Bookings successfully deleted: \(date) \(time) \(room)")
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 6, execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5, execute: {
             let alert = Validate.showAlert(title: "Готово", message: "Вы успешно отменили бронирование!")
             self.present(alert, animated: true)
             
@@ -372,7 +373,7 @@ final class MyBookingsViewController: UIViewController {
             self.setBookings()
         })
         
-        view.mainView.disintegrate(direction: .upperRight, estimatedTrianglesCount: 200)
+        view.mainView.disintegrate(direction: .upperRight, estimatedTrianglesCount: 500)
     }
     
     private func deleteBooking(room: String, date: String, time: String) {

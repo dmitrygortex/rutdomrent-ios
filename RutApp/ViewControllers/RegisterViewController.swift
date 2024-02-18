@@ -302,7 +302,7 @@ final class RegisterViewController: UIViewController {
                 let db = Firestore.firestore()
                 
                 let uid = result!.user.uid
-                let userData = ["email": email!, "password": password!, "fio": fio!, "institute": institute!, "uid": uid]
+                let userData = ["email": email!, "password": password!, "fio": fio!, "institute": institute!.uppercased(), "uid": uid]
                 
                 // MARK: Add user to UserDefaults to save data locally
                 

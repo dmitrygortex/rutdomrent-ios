@@ -12,7 +12,7 @@ import UserNotifications
 
 final class BookingViewController: UIViewController {
     
-    //MARK: -Properties
+    // MARK: - Properties
     
     var scheduleVC = ScheduleViewController()
     
@@ -291,6 +291,8 @@ final class BookingViewController: UIViewController {
         scheduleVC.purpose = userPurpose
         
         purposeTextField.resignFirstResponder()
+        roomTextField.resignFirstResponder()
+        roomPicker.resignFirstResponder()
         
         navigationController?.pushViewController(scheduleVC, animated: true)
     }
